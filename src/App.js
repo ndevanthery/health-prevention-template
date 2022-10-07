@@ -1,13 +1,14 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
 import { useEffect, useState } from "react";
+
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
 import Logout from "./pages/Logout";
+import Profile from "./pages/Profile";
 
 export default function App() {
   /* Current user state */
@@ -16,7 +17,7 @@ export default function App() {
   /* Watch for authentication state changes */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("User is", user);
+      // console.log("User is", user);
       setCurrentUser(user);
     });
 
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/profile" element={<Profile currentUser={currentUser} />} />
         </Routes>
       </header>
     </div>

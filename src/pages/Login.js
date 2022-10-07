@@ -11,7 +11,7 @@ export default function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
+      navigate("/profile");
     } catch (e) {
       console.error(e);
     }
