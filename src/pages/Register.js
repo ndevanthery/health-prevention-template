@@ -1,7 +1,9 @@
 import UserForm from "../components/UserForm";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../initFirebase";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+
+import {doc, setDoc } from "firebase/firestore";
+import {auth, db} from "../initFirebase";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -11,11 +13,28 @@ export default function Register() {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      console.log("new userid : " +auth.currentUser.uid);
+      await handleCreateNewUser( email);
+
       navigate("/");
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error("Register error : " +error);
     }
   };
+
+  const handleCreateNewUser = async ( email) => {
+
+    console.log("auth.currentUser.uid : " +auth.currentUser.uid + " My email is : " +email);
+
+        await setDoc(doc(db, "users", auth.currentUser.uid), {
+            Email: email,
+            IdRole: 2,
+            IdUser: auth.currentUser.uid,
+            Firstname: "",
+            LastName: "",
+        });
+
+  }
 
   return (
     <div>
