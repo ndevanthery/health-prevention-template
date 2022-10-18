@@ -79,7 +79,14 @@ export default function NormalValues() {
             diabeteWHypertension: e.target[29].value,
             diabeteWHighBloodSugar: e.target[30].value,
             diabeteWSport: e.target[31].value,
-            diabeteWAlim: e.target[32].value
+            diabeteWAlim: e.target[32].value,
+
+            nInfarctusAge: e.target[33].value,
+            nInfarctusSmoking: e.target[34].value,
+            nInfarctusSyst: e.target[35].value,
+            nInfarctusCHOL: e.target[36].value,
+            nInfarctusHDL: e.target[37].value,
+            nInfarctusAfinf: e.target[38].value,
         })
 
         console.log("Submit")
@@ -193,6 +200,26 @@ export default function NormalValues() {
 
                     <label>Alimentation </label>
                     <input type="number" step="0.1" value={nValues.diabeteWAlim} name="diabeteWAlim" onChange={handleChange}/>
+
+                    <h2>Non Infarct Values</h2>
+
+                    <label>Age </label>
+                    <input type="number" value={nValues.nInfarctusAge} name="nInfarctusAge" onChange={handleChange}/>
+
+                    <label>Smoking </label>
+                    <input type="number" min="0" max="1" value={nValues.nInfarctusSmoking} name="nInfarctusMSmoking" onChange={handleChange}/>
+
+                    <label>Systolic mmHg </label>
+                    <input type="number" min="90" max="200" value={nValues.nInfarctusSyst} name="nInfarctusMSyst" onChange={handleChange}/><br/>
+
+                    <label>Cholesterol mmol/l </label>
+                    <input type="number" min="2.5" max="8" step="0.1" value={nValues.nInfarctusCHOL} name="nInfarctusMCHOL" onChange={handleChange}/>
+
+                    <label>HDL mmol/l </label>
+                    <input type="number" min="0.1" max="2.5" step="0.1" value={nValues.nInfarctusHDL} name="nInfarctusMHDL" onChange={handleChange}/><br/>
+
+                    <label>Parents Infarct </label>
+                    <input type="number" min="0" max="1" value={nValues.nInfarctusAfinf} name="nInfarctusMAfinf" onChange={handleChange}/>
 
                     <input type="submit" value="Submit"/>
                 </form>
