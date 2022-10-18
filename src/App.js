@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Logout from "./pages/Logout";
 import Profile from "./pages/Profile";
+import {Questionnaire} from "./pages/Questionnaires";
 
 export default function App() {
   /* Current user state */
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<Profile currentUser={currentUser} />} />
+          <Route path="/questionnaire" element={<Questionnaire />} />
         </Routes>
       </header>
     </div>
