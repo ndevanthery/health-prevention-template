@@ -7,7 +7,6 @@ import Survey from "./pages/Survey";
 import Navbar from "./components/Navbar";
 import Test from "./pages/Test";
 import Logout from "./pages/Logout";
-
 import { Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
@@ -22,7 +21,7 @@ export default function App() {
   /* Watch for authentication state changes */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("User is", user);
+      // console.log("User is", user);
       setCurrentUser(user);
     });
 
