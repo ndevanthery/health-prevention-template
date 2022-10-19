@@ -1,9 +1,9 @@
-import UserForm from "../components/UserForm";
 import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged} from "firebase/auth";
-import {useNavigate} from "react-router-dom";
-
 import {doc, setDoc} from "firebase/firestore";
-import {auth, db} from "../initFirebase";
+import UserFormLogin from "../components/UserFormLogin";
+import { auth } from "../initFirebase";
+import { useNavigate } from "react-router-dom";
+import UserFormRegister from "../components/UserFormRegister";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -33,7 +33,10 @@ export default function Register() {
             lastName: "",
         });
 
-    }
+//  const handleRegister = async (e, firstName, lastName, email, password) => {
+//    e.preventDefault();
+//    console.log(firstName, " ", lastName, " ", email, " ", password);
+
 
     return (
         <div>
@@ -41,4 +44,5 @@ export default function Register() {
             <UserForm handleSubmit={handleRegister} submitButtonLabel="Register"/>
         </div>
     );
+  };
 }

@@ -1,14 +1,18 @@
 import "./App.css";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import HomeOLD from "./pages/HomeOLD";
+import Home from "./pages/Home";
+import Survey from "./pages/Survey";
+import Navbar from "./components/Navbar";
+import Test from "./pages/Test";
+import Logout from "./pages/Logout";
 import { Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
 import { useEffect, useState } from "react";
+import Results from "./pages/Results";
 
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Logout from "./pages/Logout";
-import Profile from "./pages/Profile";
 
 export default function App() {
   /* Current user state */
@@ -39,15 +43,19 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      {/*<header className="App-header">*/}
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
+          {/*<Route path="/home" element={<Home />} />*/}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/profile" element={<Profile currentUser={currentUser} />} />
+          <Route path="/survey" element={<Survey />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/results" element={<Results infos={{ sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: false, infarctus: true, afInfarctus: true, afCancer: true, smoke: 1, alim: 3, alcohol: 2, physical: 3}}/>}/>
         </Routes>
-      </header>
+      {/*</header>*/}
     </div>
   );
 }
