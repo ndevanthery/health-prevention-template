@@ -42,9 +42,12 @@ export default function App() {
   }
 
   return (
-    <div className="App">
+    <>
+      <div className="App">
       {/*<header className="App-header">*/}
         <Navbar/>
+      </div>
+      <div>
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
           {/*<Route path="/home" element={<Home />} />*/}
@@ -57,5 +60,6 @@ export default function App() {
         </Routes>
       {/*</header>*/}
     </div>
+      </>
   );
 }

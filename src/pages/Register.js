@@ -1,7 +1,7 @@
 import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged} from "firebase/auth";
 import {doc, setDoc} from "firebase/firestore";
 import UserFormLogin from "../components/UserFormLogin";
-import { auth } from "../initFirebase";
+import { auth, db} from "../initFirebase";
 import { useNavigate } from "react-router-dom";
 import UserFormRegister from "../components/UserFormRegister";
 
@@ -41,7 +41,7 @@ export default function Register() {
     return (
         <div>
             <h1>Register</h1>
-            <UserForm handleSubmit={handleRegister} submitButtonLabel="Register"/>
+            <UserFormRegister handleSubmit={handleRegister} submitButtonLabel="Register"/>
         </div>
     );
   };
