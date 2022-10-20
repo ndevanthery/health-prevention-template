@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import image1 from '../images/questionnaire.jpg'
 
 import { Cancer } from "../components/Cancer";
@@ -24,9 +24,18 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
     );
 } */
 
-export default function Results({ infos }) {
+export default function Results() {
     //input from questionnary page
-    const navigate = useNavigate();
+
+    const location = useLocation()
+    const { infos } = location.state;
+  
+    console.log(infos);
+
+   // var infos = { sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: 0, infarctus: 1, afInfarctus: 1, afCancer: 1, smoke: 1, alim: 3, alcohol: 2, physical: 3};
+
+
+
 
 
 

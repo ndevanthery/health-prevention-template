@@ -1,47 +1,95 @@
-import {Link, useNavigate} from "react-router-dom";
+import {BrowserRouter, Link, Route, Routes, useNavigate, useParams} from "react-router-dom";
 import {auth, db} from "../initFirebase";
 import {doc, getDoc} from "firebase/firestore";
+import React, {useState, useEffect} from "react";
 
-export default function Login({currentUser}) {
+class User extends React.Component {
+    constructor() {
+        super();
+        this.state = {};
+    }
 
-    //Used for navigation
-    const navigate = useNavigate();
+    //handle events...
 
-    //Store idUser in constant for fetching infos of the user
-    const idUser = currentUser.uid;
+    render() {
 
-    //Retrieve document from firestore with connected user
-    const fetchUser = async (e, idUser) => {
-        console.log("Fetch user: " + currentUser.uid);
-        try {
-            const docRef = doc(db, "users", currentUser.uid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                // console.log("Document data:", docSnap.data());
-                console.log("UID:", currentUser.uid);
-                console.log("Firstname:", docSnap.get("firstName"));
-                console.log("LastName:", docSnap.get("lastName"));
-                console.log("Email:", docSnap.get("email"));
-                console.log("IdRole:", docSnap.get("idRole"));
-            } else {
-                console.log("No such document!");
-            }
-        } catch (error) {
-            console.error(error);
+        let formattedWelcome;
+        if(this.props.firstName != null) {
+            formattedWelcome = (
+                <h2 style={{color: "lightblue"}}>Welcome {' '}{this.props.firstName}!</h2>
+            );
+        } else {
+            formattedWelcome = <h2>Welcome dear guest!</h2>
         }
-    };
+
+        return (
+            <div className="User" style={{backgroundColor: "gray"}} >
+
+                <header className="User-header">
+                    {formattedWelcome}
+                    <p>First name : {' '}{this.props.firstName}</p>
+                    <p>Last name : {' '}{this.props.lastName}</p>
+                    <p>Email address : {' '}{this.props.email}</p>
+                    {/*<p>First name : {' '}{this.props.avatarURL}</p>*/}
+
+                </header>
+
+            </div>
+
+        )
+    }
+
+}
+
+function UserFormProfile({user}) {
+    let params = useParams();
+    return <User {...user}
+        />
+}
+
+
+export default function Profile() {
+
+    const idUser = auth.currentUser.uid;
+    let [user, setUser] = useState([]);
+
+
+
+    const fetchUser = async() => {
+        const docRef = doc(db, "users", idUser);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            setUser(await docSnap.data())
+            console.log("User DATA from docSnap.data(): " +user);
+
+        } else {
+            setUser(null);
+            console.log("No such document!");
+        }
+        console.log("My data: " +docSnap.get("firstName"));
+    }
+
+    //==== this part was before "const fetchUser = async() ..." =======
+    useEffect( () => {
+        fetchUser();
+    } , [])
+    //======================================
+
+    //let updateUser ?? (instead of addBook, l. 321)
+
 
     return (
-        <>
+
             <div>
-                <h1>Welcome {currentUser.email}</h1>
-                {/* Get data from user*/}
-                <button onClick={fetchUser}>See my infos</button>
+                <UserFormProfile user={user} />
                 <div><br/></div>
                 {/* Logout */}
                 <Link to="/logout" className="App-link">Logout</Link>
             </div>
-        </>
 
-    );
+
+    )
+
 }
+
