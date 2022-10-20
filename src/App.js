@@ -60,7 +60,6 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/account" element={<Profile currentUser={currentUser} />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/account" element={<Profile />} />
           <Route path="/test" element={<Test />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/results" element={<Results />} />
