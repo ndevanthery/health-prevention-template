@@ -12,6 +12,9 @@ import { Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
 import { useEffect, useState } from "react";
+import NormalValues from "./pages/Admin/NormalValues";
+import AddDoctor from "./pages/Admin/AddDoctor";
+import HomeAdmin from "./pages/Admin/HomeAdmin";
 
 
 export default function App() {
@@ -53,6 +56,11 @@ export default function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/test" element={<Test />} />
+
+          <Route path="homeAdmin" element={<HomeAdmin />}/>
+          <Route path="/normalVal" element={<NormalValues />}/>
+          <Route path="/addDoctor" element={<AddDoctor />}/>
+
         </Routes>
       {/*</header>*/}
     </div>

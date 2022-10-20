@@ -15,7 +15,7 @@ export default function Login() {
       console.log("Return: " + await getUserRole(email))
       switch (await getUserRole(email)) {
         case 5:
-          navigate("/normalVal");
+          navigate("/homeAdmin");
           return;
         default:
           navigate("/");
