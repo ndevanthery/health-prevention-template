@@ -13,16 +13,16 @@
     }
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
+/*.App-header {*/
+/*    background-color: #282c34;*/
+/*    min-height: 100vh;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    font-size: calc(10px + 2vmin);*/
+/*    color: white;*/
+/*}*/
 
 .App-link {
     color: #61dafb;
@@ -43,15 +43,16 @@
 
 .mainDivHomePage {
     margin-top: 3%;
+    margin-left: 2%;
     float: left;
     width: 50%;
     border-radius: 20%;
 }
 
 .imageDivHomePage {
-    margin-top: 100px;
+    margin-top: 5%;
     float: right;
-    width: 50%;
+    width: 46%;
 }
 
 .titleHomePage1 {
@@ -68,6 +69,7 @@
     padding: 10px;
     text-decoration: none;
     border-radius: 8px;
+    margin-left: 10%;
 }
 
 .linkSurvey:hover {
@@ -89,7 +91,6 @@
     margin-top: 5%;
     background-color: white;
     border-radius: 10px;
-
 }
 
 .emailInputLogin {
