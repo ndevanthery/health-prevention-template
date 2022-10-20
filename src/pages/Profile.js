@@ -2,6 +2,7 @@ import {BrowserRouter, Link, Route, Routes, useNavigate, useParams} from "react-
 import {auth, db} from "../initFirebase";
 import {doc, getDoc} from "firebase/firestore";
 import React, {useState, useEffect} from "react";
+import Avatar from "../components/Avatar";
 
 class User extends React.Component {
     constructor() {
@@ -23,18 +24,19 @@ class User extends React.Component {
         }
 
         return (
-            <div className="User" style={{backgroundColor: "gray"}} >
+            <>
+                <div className="userDiv" style={{backgroundColor: "gray"}} >
 
-                <header className="User-header">
-                    {formattedWelcome}
-                    <p>First name : {' '}{this.props.firstName}</p>
-                    <p>Last name : {' '}{this.props.lastName}</p>
-                    <p>Email address : {' '}{this.props.email}</p>
-                    {/*<p>First name : {' '}{this.props.avatarURL}</p>*/}
-
-                </header>
-
-            </div>
+                    <header className="User-header">
+                        {formattedWelcome}
+                        <p>First name: {' '}{this.props.firstName}</p>
+                        <p>Last name: {' '}{this.props.lastName}</p>
+                        <p>Email address: {' '}{this.props.email}</p>
+                        {/*<p>First name : {' '}{this.props.avatarURL}</p>*/}
+                    </header>
+                </div>
+                <div className="avatarDiv"><Avatar /></div>
+            </>
 
         )
     }
@@ -42,7 +44,7 @@ class User extends React.Component {
 }
 
 function UserFormProfile({user}) {
-    let params = useParams();
+    // let params = useParams();
     return <User {...user}
         />
 }
@@ -70,13 +72,9 @@ export default function Profile() {
         console.log("My data: " +docSnap.get("firstName"));
     }
 
-    //==== this part was before "const fetchUser = async() ..." =======
     useEffect( () => {
         fetchUser();
     } , [])
-    //======================================
-
-    //let updateUser ?? (instead of addBook, l. 321)
 
 
     return (

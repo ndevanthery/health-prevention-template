@@ -13,7 +13,6 @@ import { auth } from "./initFirebase";
 import { useEffect, useState } from "react";
 import Results from "./pages/Results";
 import Profile from "./pages/Profile";
-import { Survey } from "./pages/Survey";
 import NormalValues from "./pages/Admin/NormalValues";
 import AddDoctor from "./pages/Admin/AddDoctor";
 import HomeAdmin from "./pages/Admin/HomeAdmin";

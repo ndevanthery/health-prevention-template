@@ -18,7 +18,7 @@ const type = {
 
 
 
-export function Survey() {
+export default function Survey() {
 
     const [survey, setSurvey] = useState({ sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: 0, infarctus: 1, afInfarctus: 1, afCancer: 1, smoke: 1, alim: 3, alcohol: 2, physical: 3});
 

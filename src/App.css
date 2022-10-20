@@ -125,3 +125,19 @@ Alex Mae.App {
 .mainTitleLogin {
     color: white;
 }
+
+
+/*******************************************
+                Profile page
+/******************************************/
+.userDiv {
+    float: left;
+    background-color: lightblue;
+}
+
+
+.avatarDiv {
+    /*width: 200px;*/
+    float: right;
+    background-color: #8DC6FF;
+}
