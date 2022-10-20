@@ -13,6 +13,10 @@ import { auth } from "./initFirebase";
 import { useEffect, useState } from "react";
 import Results from "./pages/Results";
 import Profile from "./pages/Profile";
+import { Survey } from "./pages/Survey";
+import NormalValues from "./pages/Admin/NormalValues";
+import AddDoctor from "./pages/Admin/AddDoctor";
+import HomeAdmin from "./pages/Admin/HomeAdmin";
 
 
 export default function App() {
@@ -56,9 +60,14 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/account" element={<Profile />} />
-          <Route path="/survey" element={<Survey />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/results" element={<Results infos={{ sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: false, infarctus: true, afInfarctus: true, afCancer: true, smoke: 1, alim: 3, alcohol: 2, physical: 3}}/>}/>
+          <Route path="/survey" element={<Survey />} />
+          <Route path="/results" element={<Results />} />
+
+          <Route path="homeAdmin" element={<HomeAdmin />}/>
+          <Route path="/normalVal" element={<NormalValues />}/>
+          <Route path="/addDoctor" element={<AddDoctor />}/>
+
         </Routes>
       {/*</header>*/}
     </div>

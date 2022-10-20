@@ -1,0 +1,191 @@
+/*Style for all buttons
+Original: https://getcssscan.com/css-buttons-examples
+*/
+.buttonHome {
+    display: inline-block;
+    text-align: center;
+    margin: 50px;
+    height: 150px;
+    background: #fff;
+    backface-visibility: hidden;
+    border-radius: .375rem;
+    border-style: solid;
+    border-width: .125rem;
+    border-color: black;
+    box-sizing: border-box;
+    color: #8dc6ff;
+    cursor: pointer;
+    font-family: Circular,Helvetica,sans-serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    line-height: 1.3;
+    padding: .875rem 1.125rem;
+    position: relative;
+    text-decoration: none;
+    transform: translateZ(0) scale(1);
+    transition: transform .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.buttonHome:not(:disabled):hover {
+    transform: scale(1.05);
+}
+
+.buttonHome:not(:disabled):hover:active {
+    transform: scale(1.05) translateY(.125rem);
+}
+
+.buttonHome:focus {
+    outline: 0 solid transparent;
+}
+
+.buttonHome:focus:before {
+    content: "";
+    left: calc(-1*.375rem);
+    pointer-events: none;
+    position: absolute;
+    top: calc(-1*.375rem);
+    transition: border-radius;
+    user-select: none;
+}
+
+.buttonHome:focus:not(:focus-visible) {
+    outline: 0 solid transparent;
+}
+
+.buttonHome:focus:not(:focus-visible):before {
+    border-width: 0;
+}
+
+.buttonHome:not(:disabled):active {
+    transform: translateY(.125rem);
+}
+
+/*Order normal Values and Diseases*/
+
+.divDiseases {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 0px;
+}
+
+.divValues {
+    margin: 40px;
+    margin-bottom: 20px;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 10px;
+}
+
+/*Alerts
+Original: https://codepen.io/rlemon/pen/krxjpB
+*/
+.alert .inner {
+    display: block;
+    padding: 6px;
+    margin: 6px;
+    border-radius: 3px;
+    border: 1px solid rgb(180,180,180);
+    background-color: rgb(212,212,212);
+}
+
+.alert {
+    display: block;
+    margin: auto;
+}
+
+.alert .inner,.alert .close {
+    color: rgb(88,88,88);
+}
+
+
+
+.alert.success .inner {
+    border: 1px solid rgb(214,233,198);
+    background-color: rgb(223,240,216);
+}
+
+.alert.success .inner,.alert.success .close {
+    color: rgb(70,136,71);
+}
+
+/*
+Doctor Input
+Original: https://codepen.io/maheshambure21/embed/EozKKy?height=316&theme-id=0&default-tab=result
+*/
+
+:focus{outline: none;}
+
+.userSearch{
+    display: block;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    position: relative;
+    font: 15px/24px "Lato", Arial, sans-serif;
+    color: #333;
+    box-sizing: border-box;
+    letter-spacing: 1px;}
+
+.effect{
+    border: 0;
+    padding: 7px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.effect ~ .focus-border{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #8dc6ff;
+    transition: 0.4s;
+}
+
+.effect:focus ~ .focus-border{
+    width: 100%;
+    transition: 0.4s;
+}
+
+/*Doctor Table*/
+.user {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.user td, .user th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.user tr:nth-child(even){background-color: #f2f2f2;}
+
+.user tr:hover {background-color: #ddd;}
+
+.user th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #8dc6ff;
+    color: white;
+}
+
+.user input {
+    border: none;
+    display: inline;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    width: auto;
+}
+
+

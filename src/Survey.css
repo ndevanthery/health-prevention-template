@@ -1,0 +1,18 @@
+.survey{
+  margin-top: 150px ;
+  margin-bottom: 150px;
+  justify-content: center;
+
+  
+}
+
+
+.table{
+  align-self: center;
+  display: inline;
+}
+
+td{
+  text-align: left;
+}
+
