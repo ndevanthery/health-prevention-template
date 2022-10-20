@@ -8,7 +8,7 @@ export default function Navbar() {
         <Container>
             <div className="navbar">
                 <Link to="/home">
-                    <img className="logo_app" src={logo}/>
+                    <img className="logo_app" src={logo} style={{width:"60%"}}/>
                 </Link>
                 <ul>
                     <li>
@@ -42,13 +42,12 @@ const Container = styled.div`
   text-decoration: none;
   
   .logo_app {
-    width: 60%;
+    //width: 60%;
     float: left;
   }
 
   .navbar {
-    width: 100%;
-    height:60px;
+    //width: 100%;
     display: flex;
     align-items: center;
     padding: 0.5rem 0rem;
