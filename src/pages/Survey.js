@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ThemeConsumer } from "styled-components";
+import {doc, setDoc } from "firebase/firestore";
+
 import { auth, db } from "../initFirebase";
 import "../Survey.css"
-
+import { collection, addDoc } from "firebase/firestore"; 
 
 const type = {
     numeric: 0,
@@ -26,13 +28,21 @@ export default function Survey() {
     var onInputChange = (event) => {
         setSurvey({ ...survey, [event.target.name]: parseInt(event.target.value) });
 
-        console.log(survey);
     };
 
+    var onClickButton = async (event)=>{
 
-    var onButtonClick = (event) =>{
+        const docRef = await addDoc(collection(db, "questionnaires"), survey);
+        console.log("document added");
+          console.log("Document written with ID: ", docRef.id);
+        /* db.collection('questionnaires')
+        .add(survey)
+        .then(() => {
+            console.log('Survey added successfully!');
+        }); */
+    }
 
-    };
+
 
 
 
@@ -89,8 +99,8 @@ export default function Survey() {
             
 
 
-            <Link to="/results" state={{ infos: survey }}>
-                <button>calculate results</button>
+            <Link to="/results" state={{ infos: survey }} >
+                <button onClick={onClickButton}>calculate results</button>
             </Link>
 
 
@@ -99,6 +109,9 @@ export default function Survey() {
 
     );
 }
+
+
+
 
 function Question({question ,onInputChange})
 {

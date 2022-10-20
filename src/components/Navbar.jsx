@@ -7,15 +7,13 @@ export default function Navbar() {
     return (
         <Container>
             <div className="navbar">
-                <Link to="/home">
-                    <img className="logo_app" src={logo} style={{width:"60%"}}/>
-                </Link>
+
                 <ul>
+                    <Link to="/home">
+                        <img className="logo_app" src={logo}/>
+                    </Link>
                     <li>
                         <Link className="links" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
-                    </li>
-                    <li>
-                        <Link className="links" to="/account" style={{textDecoration: 'none'}}>My profile</Link>
                     </li>
                     <li>
                         <Link className="links" to="/register" style={{textDecoration: 'none'}}>Register</Link>
@@ -24,8 +22,13 @@ export default function Navbar() {
                         <Link className="links" to="/login" style={{textDecoration: 'none'}}>Login</Link>
                     </li>
                     <li>
+                        <Link className="links" to="/account" style={{textDecoration: 'none'}}>My profile</Link>
+                    </li>
+                    <li>
                         <Link className="links" to="/" style={{textDecoration: 'none'}}>Home</Link>
                     </li>
+
+
                 </ul>
             </div>
         </Container>
@@ -36,18 +39,14 @@ export default function Navbar() {
 const Container = styled.div`
   padding: 0;
   margin: 0;
-  //display: flex;
-  //align-items: center;
-  //justify-content: center;
   text-decoration: none;
   
   .logo_app {
-    //width: 60%;
     float: left;
+    width: 20%;
   }
 
   .navbar {
-    //width: 100%;
     display: flex;
     align-items: center;
     padding: 0.5rem 0rem;
@@ -55,13 +54,13 @@ const Container = styled.div`
   
   .navbar ul {
     list-style-type: none;
-    margin-left: 15%;
+    width: 100%;
   }
   
   .navbar ul li {
-    display: inline;
+    display: inline-flex;
     float:right;
-    padding-right: 30px;
+    padding-right: 1%;
   }
   
   .links {
