@@ -3,6 +3,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import HomeOLD from "./pages/HomeOLD";
 import Home from "./pages/Home";
+import Survey from "./pages/Survey";
 import Navbar from "./components/Navbar";
 import Test from "./pages/Test";
 import Logout from "./pages/Logout";
@@ -11,6 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
 import { useEffect, useState } from "react";
 import Results from "./pages/Results";
+import Profile from "./pages/Profile";
 import { Survey } from "./pages/Survey";
 import NormalValues from "./pages/Admin/NormalValues";
 import AddDoctor from "./pages/Admin/AddDoctor";
@@ -57,6 +59,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/account" element={<Profile />} />
           <Route path="/test" element={<Test />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/results" element={<Results />} />
