@@ -28,7 +28,7 @@ export default function Register() {
         await setDoc(doc(db, "users", auth.currentUser.uid), {
             email: email,
             idRole: 2,
-            firstname: firstName,
+            firstName: firstName,
             lastName: lastName,
         });
     };
