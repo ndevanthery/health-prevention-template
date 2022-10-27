@@ -31,8 +31,18 @@ export function Survey() {
     };
 
     var onClickButton = async (event)=>{
+        var idUser = null
+        try{
+            idUser = auth.currentUser.uid;
 
-        const docRef = await addDoc(collection(db, "questionnaires"), survey);
+        }
+        catch(error){
+            idUser = null;
+        }
+        let date  = new Date();
+        
+        var surveyUser = {userID: idUser  , date : date, ...survey};
+        const docRef = await addDoc(collection(db, "questionnaires"), surveyUser);
         console.log("document added");
           console.log("Document written with ID: ", docRef.id);
         /* db.collection('questionnaires')

@@ -25,6 +25,10 @@ export default function Navbar() {
                         <Link className="links" to="/account" style={{textDecoration: 'none'}}>My profile</Link>
                     </li>
                     <li>
+                        <Link className="links" to="/history" style={{textDecoration: 'none'}}>My history</Link>
+
+                    </li>
+                    <li>
                         <Link className="links" to="/" style={{textDecoration: 'none'}}>Home</Link>
                     </li>
 

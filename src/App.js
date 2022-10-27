@@ -15,6 +15,8 @@ import { Survey } from "./pages/Survey";
 import NormalValues from "./pages/Admin/NormalValues";
 import AddDoctor from "./pages/Admin/AddDoctor";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
+import History from "./pages/History";
+import HistoryDetails from "./pages/HistoryDetails";
 
 
 export default function App() {
@@ -47,8 +49,8 @@ export default function App() {
   return (
     <>
       <div className="App">
-      {/*<header className="App-header">*/}
-        <Navbar/>
+        {/*<header className="App-header">*/}
+        <Navbar />
       </div>
       <div>
         <Routes>
@@ -61,14 +63,18 @@ export default function App() {
           <Route path="/test" element={<Test />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/results" element={<Results />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/history/:id" element={<HistoryDetails/>} />
 
-          <Route path="homeAdmin" element={<HomeAdmin />}/>
-          <Route path="/normalVal" element={<NormalValues />}/>
-          <Route path="/addDoctor" element={<AddDoctor />}/>
+
+          <Route path="homeAdmin" element={<HomeAdmin />} />
+          <Route path="/normalVal" element={<NormalValues />} />
+          <Route path="/addDoctor" element={<AddDoctor />} />
 
         </Routes>
-      {/*</header>*/}
-    </div>
-      </>
+        {/*</header>*/}
+      </div>
+    </>
   );
 }
+
