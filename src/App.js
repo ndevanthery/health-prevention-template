@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
-import { useEffect, useState } from "react";
+import {createContext, useEffect, useMemo, useState} from "react";
 import "./App.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -17,9 +17,19 @@ import AddDoctor from "./pages/Admin/AddDoctor";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
 
 
+export const RoleContext = createContext({
+  idRole : -1,
+  setIdRole: () => {},
+});
+
 export default function App() {
   /* Current user state */
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [idRole, setIdRole] = useState('');
+  const value = useMemo(
+      () => ({ idRole, setIdRole }),
+      [idRole]
+  );
 
   /* Watch for authentication state changes */
   useEffect(() => {
@@ -46,11 +56,13 @@ export default function App() {
 
   return (
     <>
+
       <div className="App">
       {/*<header className="App-header">*/}
         <Navbar/>
       </div>
       <div>
+        <RoleContext.Provider value={value}>
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
           <Route path="/home" element={<Home />} />
@@ -68,6 +80,7 @@ export default function App() {
 
         </Routes>
       {/*</header>*/}
+        </RoleContext.Provider>
     </div>
       </>
   );

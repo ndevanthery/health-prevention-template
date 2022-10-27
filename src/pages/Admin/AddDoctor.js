@@ -1,14 +1,17 @@
 import {useNavigate} from "react-router-dom";
-import {db} from "../../initFirebase";
+import {auth, db} from "../../initFirebase";
 import './Admin.css';
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import doctor from '../../images/updateDoctor.png'
 import up from '../../images/CheckButton.png'
+import {RoleContext} from "../../App";
 
 
 export default function AddDoctor() {
-    const navbar = useNavigate();
+    const navigate = useNavigate();
+    const role = useContext(RoleContext);
+
 
     const [userInfo, setUserInfo] = useState({firstName: "",
         lastName: "",
@@ -16,10 +19,22 @@ export default function AddDoctor() {
     const [imgSrc, SetImgSrc] = useState({src: doctor, name: "doctor"})
 
 
+    useEffect(() => {
+        checkLogin();
+    },[])
+
     const handleChange= (e) => {
         const field = e.target.name;
         const value = e.target.value;
         e.target.setAttribute("value",e.target.value)
+    }
+
+    const checkLogin = () => {
+        if(auth.currentUser && role.idRole === 5) {
+
+        }else {
+            navigate("/")
+        }
     }
 
     const fetchUser = async (e) => {

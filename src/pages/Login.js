@@ -5,27 +5,35 @@ import styled from "styled-components";
 import loginBackground from "../images/Login.jpg";
 import {collection, getDocs, query, where} from "firebase/firestore";
 import {auth, db} from "../initFirebase";
+import {useContext} from "react";
+import {RoleContext} from "../App";
 
 export default function Login() {
     const navigate = useNavigate();
+    let { idRole, setIdRole} = useContext(RoleContext)
+
 
     const handleLogin = async (e, email, password) => {
         e.preventDefault();
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log("Return: " + await getUserRole(email))
-      switch (await getUserRole(email)) {
-        case 5:
-          navigate("/homeAdmin");
-          return;
-        default:
-          navigate("/");
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          console.log("Return: " + await getUserRole(email));
+
+          let userRole = await getUserRole(email);
+          setIdRole(userRole);
+
+          switch (userRole) {
+            case 5:
+              navigate("/homeAdmin");
+              return;
+            default:
+              navigate("/");
+          }
+        } catch (e) {
+          console.error(e);
+        }
+    };
 
   const getUserRole = async (email) => {
     let idRole = 0;
