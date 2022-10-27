@@ -1,7 +1,8 @@
-import {BrowserRouter, Link, Route, Routes, useNavigate, useParams} from "react-router-dom";
 import {auth, db} from "../initFirebase";
-import {doc, getDoc} from "firebase/firestore";
+import {doc, getDoc, updateDoc} from "firebase/firestore";
 import React, {useState, useEffect} from "react";
+import Avatar from "../components/Avatar";
+import {Link} from "react-router-dom";
 
 class User extends React.Component {
     constructor() {
@@ -23,18 +24,28 @@ class User extends React.Component {
         }
 
         return (
-            <div className="User" style={{backgroundColor: "gray"}} >
+            <>
+                <div className="userDiv" style={{backgroundColor: "gray"}} >
 
-                <header className="User-header">
-                    {formattedWelcome}
-                    <p>First name : {' '}{this.props.firstName}</p>
-                    <p>Last name : {' '}{this.props.lastName}</p>
-                    <p>Email address : {' '}{this.props.email}</p>
-                    {/*<p>First name : {' '}{this.props.avatarURL}</p>*/}
+                    <div className="User-header">
+                        {formattedWelcome}
+                        <p>First name: {' '}{this.props.firstName}</p>
+                        <p>Last name: {' '}{this.props.lastName}</p>
+                        <p>Email address: {' '}{this.props.email}</p>
 
-                </header>
+                        {/*<div>*/}
+                        {/*    <img src={Avatar.avatarUrl} height= "200px" alt="Sprite"/>*/}
+                        {/*</div>*/}
 
-            </div>
+                        <div>
+                            <Link to="/logout" className="App-link">Logout</Link>
+                        </div>
+
+                    </div>
+                </div>
+                <div className="avatarDiv"><Avatar /></div>
+
+            </>
 
         )
     }
@@ -42,9 +53,9 @@ class User extends React.Component {
 }
 
 function UserFormProfile({user}) {
-    let params = useParams();
+    // let params = useParams();
     return <User {...user}
-        />
+    />
 }
 
 
@@ -52,8 +63,19 @@ export default function Profile() {
 
     const idUser = auth.currentUser.uid;
     let [user, setUser] = useState([]);
+    console.log("idUser... : " +auth.currentUser.uid)
+    let avatar = new Avatar();
+    let avatURL = avatar.buildApiUrl();
+    console.log("Avatar : " +avatURL);
 
 
+    const updateAvatar = async() => {
+        const avatarUrl = doc(db, "users", idUser);
+        // Set the url of the user's avatar
+        await updateDoc(avatarUrl, {
+            avatarURL: avatar.buildApiUrl()
+        });
+    }
 
     const fetchUser = async() => {
         const docRef = doc(db, "users", idUser);
@@ -70,25 +92,20 @@ export default function Profile() {
         console.log("My data: " +docSnap.get("firstName"));
     }
 
-    //==== this part was before "const fetchUser = async() ..." =======
+    useEffect(() => {
+        updateAvatar();
+        console.log("Avatar url updated to: " + avatURL)
+    },[])
+
     useEffect( () => {
         fetchUser();
     } , [])
-    //======================================
-
-    //let updateUser ?? (instead of addBook, l. 321)
 
 
     return (
-
-            <div>
-                <UserFormProfile user={user} />
-                <div><br/></div>
-                {/* Logout */}
-                <Link to="/logout" className="App-link">Logout</Link>
-            </div>
-
-
+        <div>
+            <UserFormProfile user={user} />
+        </div>
     )
 
 }
