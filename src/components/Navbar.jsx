@@ -7,16 +7,13 @@ export default function Navbar() {
     return (
         <Container>
             <div className="navbar">
-
+                <div class="iconNav"></div>
                 <ul>
                     <Link to="/home">
                         <img className="logo_app" src={logo}/>
                     </Link>
                     <li>
                         <Link className="links" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
-                    </li>
-                    <li>
-                        <Link className="links" to="/register" style={{textDecoration: 'none'}}>Register</Link>
                     </li>
                     <li>
                         <Link className="links" to="/login" style={{textDecoration: 'none'}}>Login</Link>
@@ -27,8 +24,6 @@ export default function Navbar() {
                     <li>
                         <Link className="links" to="/" style={{textDecoration: 'none'}}>Home</Link>
                     </li>
-
-
                 </ul>
             </div>
         </Container>
