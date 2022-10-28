@@ -2,11 +2,26 @@ import {useNavigate} from "react-router-dom";
 import './Admin.css';
 import doctor from '../../images/doctor.png'
 import edit from '../../images/editVal.png'
+import {useContext, useEffect} from "react";
+import {auth} from "../../initFirebase";
+import {RoleContext} from "../../App";
 
 
 export default function HomeAdmin() {
     const navigate = useNavigate();
+    const role = useContext(RoleContext);
 
+    useEffect(() => {
+        checkLogin();
+    },[])
+
+    const checkLogin = () => {
+        if(auth.currentUser && role.idRole === 5) {
+
+        }else {
+            navigate("/")
+        }
+    }
 
 
     const handleClick = (e) => {
