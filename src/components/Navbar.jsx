@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import React from "react";
 import {Link} from "react-router-dom";
 import logo from "../images/Logo.png"
 import styled from "styled-components";
@@ -21,6 +20,9 @@ export default function Navbar() {
                 </li>
                 <li>
                     <Link className="links" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/history" style={{textDecoration: 'none'}}>My history</Link>
                 </li>
                 <li>
                     <Link className="links" to="/account" style={{textDecoration: 'none'}}>My profile</Link>
