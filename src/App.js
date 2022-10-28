@@ -59,7 +59,9 @@ export default function App() {
 
       <div className="App">
       {/*<header className="App-header">*/}
-        <Navbar/>
+        <RoleContext.Provider value={value}>
+          <Navbar/>
+        </RoleContext.Provider>
       </div>
       <div>
         <RoleContext.Provider value={value}>
@@ -74,7 +76,7 @@ export default function App() {
           <Route path="/survey" element={<Survey />} />
           <Route path="/results" element={<Results />} />
 
-          <Route path="homeAdmin" element={<HomeAdmin />}/>
+          <Route path="/homeAdmin" element={<HomeAdmin />}/>
           <Route path="/normalVal" element={<NormalValues />}/>
           <Route path="/addDoctor" element={<AddDoctor />}/>
 
