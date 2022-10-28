@@ -1,7 +1,6 @@
 import { collection, doc, Firestore, getDoc, getDocs, limit, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../initFirebase";
-import { useFirestoreQuery } from "@react-query-firebase/firestore";
 import { Link, resolvePath } from "react-router-dom";
 
 export default  function History() {
