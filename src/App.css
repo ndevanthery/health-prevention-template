@@ -38,6 +38,22 @@ Alex Mae.App {
 }
 
 /*******************************************
+                 Navbar
+/******************************************/
+
+.iconNav {
+    -webkit-transition: all 0.25s;
+    position: absolute;
+    width: 30px;
+    height: 1px;
+    left: 15px;
+    top: 30px;
+    background-color: white;
+}
+
+
+
+/*******************************************
                  Home page
 /******************************************/
 
@@ -55,11 +71,24 @@ Alex Mae.App {
     width: 46%;
 }
 
+@media screen and (max-width: 700px) {
+    .mainDivHomePage {
+        width: 100%;
+    }
+    .imageDivHomePage {
+        width: 100%;
+    }
+}
+
 .titleHomePage1 {
     color: #1167b1;
+    font-size: 50px;
+    font-weight: bold;
 }
 
 .titleHomePage3 {
+    font-size: 30px;
+    margin-top: 5%;
     color: #8DC6FF;
 }
 
@@ -69,7 +98,7 @@ Alex Mae.App {
     padding: 10px;
     text-decoration: none;
     border-radius: 8px;
-    margin-left: 10%;
+    margin-left: 25%;
 }
 
 .linkSurvey:hover {
@@ -85,46 +114,78 @@ Alex Mae.App {
 /*******************************************
     User form for login and register pages
 /******************************************/
-.divUserFormLogin {
+.divUserForm {
     margin-left: 20%;
-    margin-right: 20%;
+    margin-right: 10%;
     margin-top: 5%;
     background-color: white;
     border-radius: 10px;
 }
 
-.emailInputLogin {
-    padding: 2%;
-    margin: 2%;
+.emailFormInput,
+.passwordFormInput,
+.firstNameFormInput,
+.lastNameFormInput {
+    padding: 1%;
     border: transparent;
+    border-bottom: 1px solid black;
+    font-size: 17px;
 }
 
-.passwordInputLogin {
-    padding: 2%;
-    margin: 2%;
-    border: transparent;
-}
-
-.buttonSubmitLogin {
-    margin-top: 15%;
+.buttonSubmitForm {
+    margin-top: 5%;
+    margin-left: 30%;
     color: white;
     background-color: #1167b1;
     border-radius: 10px;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 2%;
-    padding-bottom: 2%;
+    border-color: transparent;
+    box-shadow: 5px 0 0 0 grey; /* Border right */
+    box-shadow: 0 2px 0 0 grey; /* Border bottom */
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.buttonSubmitForm:hover {
+    background: transparent;
+    border: 2px solid #1167b1;
+    color: #1167b1;
+    text-decoration: none;
+    border-radius: 8px;
 }
 
 /*******************************************
-                Login page
+            Login & Register pages
 /******************************************/
 .mainDivLogin {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.divImageLogin {
     float: right;
+    display: inline-block;
+    width: 60%;
+}
+
+.divInfoLogin {
+    float: left;
+    display: inline-block;
+    width: 40%;
 }
 
 .mainTitleLogin {
-    color: white;
+    color: #8DC6FF;
+    font-weight: bold;
+    margin-left: 8%;
+}
+
+@media screen and (max-width: 1000px) {
+    .divImageLogin,
+    .divInfoLogin {
+        width: 100%;
+    }
 }
 
 

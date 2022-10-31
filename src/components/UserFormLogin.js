@@ -1,8 +1,4 @@
 import {useState} from "react";
-import styled from "styled-components";
-import iconLogin from '../images/iconLogin.png'
-import iconPassword from '../images/iconPassword.png'
-import loginBackground from '../images/Login.jpg'
 import '../App.css'
 
 export default function UserFormLogin({handleSubmit, submitButtonLabel}) {
@@ -18,29 +14,29 @@ export default function UserFormLogin({handleSubmit, submitButtonLabel}) {
                 handleSubmit(e, email, password);
             }}
         >
-            <div className="divUserFormLogin">
-                <img src={iconLogin} style={{width: "10%"}}/>
+            <div className="divUserForm">
+                <h5>Email</h5>
                 <input
                     type="text"
-                    placeholder="Email"
+                    placeholder="email@hes.ch"
                     value={email}
-                    className="emailInputLogin"
+                    className="emailFormInput"
                     onChange={handleEmailChange}
                     required
                 />
             </div>
-            <div className="divUserFormLogin">
-                <img src={iconPassword} style={{width: "10%"}}/>
+            <div className="divUserForm">
+                <h5>Password</h5>
                 <input
                     type="password"
-                    placeholder="Password"
+                    placeholder="********"
                     value={password}
-                    className="passwordInputLogin"
+                    className="passwordFormInput"
                     onChange={handlePasswordChange}
                     required
                 />
             </div>
-            <button className="buttonSubmitLogin" type="submit">{submitButtonLabel}</button>
+            <button className="buttonSubmitForm" type="submit">{submitButtonLabel}</button>
         </form>
     );
 }

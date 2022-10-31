@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { ThemeConsumer } from "styled-components";
-import {doc, setDoc } from "firebase/firestore";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
+import {ThemeConsumer} from "styled-components";
+import {doc, setDoc} from "firebase/firestore";
 
-import { auth, db } from "../initFirebase";
+import {auth, db} from "../initFirebase";
 import "../Survey.css"
-import { collection, addDoc } from "firebase/firestore"; 
+import {collection, addDoc} from "firebase/firestore";
+import swal from "sweetalert";
 
 const type = {
     numeric: 0,
     boolean: 1,
     sex: 2,
     sport: 3,
-    alcohol : 4,
-    alim : 5,
+    alcohol: 4,
+    alim: 5,
 
 }
 
@@ -31,11 +32,26 @@ export default function Survey() {
     };
 
     var onClickButton = async (event)=>{
+        var idUser = null
+        try{
+            idUser = auth.currentUser.uid;
 
-        const docRef = await addDoc(collection(db, "questionnaires"), survey);
+        }
+        catch(error){
+            idUser = null;
+        }
+        let date  = new Date();
+
+        var surveyUser = {userID: idUser  , date : date, ...survey};
+        const docRef = await addDoc(collection(db, "questionnaires"), surveyUser);
         console.log("document added");
           console.log("Document written with ID: ", docRef.id);
-        /* db.collection('questionnaires')
+
+         // Add success pop up
+        swal("We receive your infos!", "Thanks for completing the survey, please have a look at your result"
+            , "success");
+
+          /* db.collection('questionnaires')
         .add(survey)
         .then(() => {
             console.log('Survey added successfully!');

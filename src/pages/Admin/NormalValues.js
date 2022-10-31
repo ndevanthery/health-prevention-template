@@ -1,20 +1,32 @@
 import {useNavigate} from "react-router-dom";
 import {doc, getDoc, setDoc } from "firebase/firestore";
 import {auth, db} from "../../initFirebase";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import './Admin.css';
+import {RoleContext} from "../../App";
 
 
 export default function NormalValues() {
     const navigate = useNavigate();
+    const role = useContext(RoleContext);
 
     const [nValues, setNValues] = useState({})
     const [opacityAlert, setAlertOpacity] = useState(0)
 
 
     useEffect(() => {
+        checkLogin()
         fetchValues();
     },[])
+
+
+    const checkLogin = () => {
+        if(auth.currentUser && role.idRole === 5) {
+
+        }else {
+            navigate("/")
+        }
+    }
 
     const fetchValues = async () => {
         try {

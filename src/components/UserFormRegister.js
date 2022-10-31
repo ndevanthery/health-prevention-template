@@ -1,8 +1,4 @@
 import {useState} from "react";
-import styled from "styled-components";
-import iconLogin from '../images/iconLogin.png'
-import iconPassword from '../images/iconPassword.png'
-import loginBackground from '../images/Login.jpg'
 import '../App.css'
 
 export default function UserFormRegister({handleSubmit, submitButtonLabel}) {
@@ -22,47 +18,47 @@ export default function UserFormRegister({handleSubmit, submitButtonLabel}) {
                 handleSubmit(e, firstName, lastName, email, password);
             }}
         >
-            <div className="divUserFormRegister">
+            <div className="divUserForm">
                 <input
                     type="text"
                     placeholder="Firstname"
                     value={firstName}
-                    className="firstNameInputRegister"
+                    className="firstNameFormInput"
                     onChange={handleFirstNameChange}
                     required
                 />
             </div>
-            <div className="divUserFormRegister">
+            <div className="divUserForm">
                 <input
                     type="text"
                     placeholder="Lastname"
                     value={lastName}
-                    className="lastNameInputRegister"
+                    className="lastNameFormInput"
                     onChange={handleLastNameChange}
                     required
                 />
             </div>
-            <div className="divUserFormRegister">
+            <div className="divUserForm">
                 <input
                     type="text"
                     placeholder="Email"
                     value={email}
-                    className="emailInputRegister"
+                    className="emailFormInput"
                     onChange={handleEmailChange}
                     required
                 />
             </div>
-            <div className="divUserFormRegister">
+            <div className="divUserForm">
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
-                    className="passwordInputRegister"
+                    className="passwordFormInput"
                     onChange={handlePasswordChange}
                     required
                 />
             </div>
-            <button className="buttonSubmit" type="submit">{submitButtonLabel}</button>
+            <button className="buttonSubmitForm" type="submit">{submitButtonLabel}</button>
         </form>
     );
 }

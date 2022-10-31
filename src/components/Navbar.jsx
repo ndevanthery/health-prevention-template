@@ -1,35 +1,78 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 import logo from "../images/Logo.png"
 import styled from "styled-components";
+import {RoleContext} from "../App";
+import {auth} from "../initFirebase";
 
 export default function Navbar() {
+    const role = useContext(RoleContext);
+
+    const listElements = () => {
+        console.log(role.idRole)
+        if(auth.currentUser && role.idRole === 2) {
+            return <ul>
+                <Link to="/home">
+                    <img className="logo_app" src={logo} alt="Logo"/>
+                </Link>
+                <li>
+                    <Link className="links" to="/logout" style={{textDecoration: 'none'}}>Logout</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/history" style={{textDecoration: 'none'}}>My history</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/account" style={{textDecoration: 'none'}}>My profile</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/" style={{textDecoration: 'none'}}>Home</Link>
+                </li>
+            </ul>
+        }else if(auth.currentUser && role.idRole === 5) {
+            return <ul>
+                <Link to="/home">
+                    <img className="logo_app" src={logo} alt="Logo"/>
+                </Link>
+                <li>
+                    <Link className="links" to="/logout" style={{textDecoration: 'none'}}>Logout</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/normalVal" style={{textDecoration: 'none'}}>Edit Normal Values</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/addDoctor" style={{textDecoration: 'none'}}>Add new Doctor</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/homeAdmin" style={{textDecoration: 'none'}}>Home</Link>
+                </li>
+            </ul>
+        }
+        return <ul>
+            <Link to="/home">
+                <img className="logo_app" src={logo} alt="Logo"/>
+            </Link>
+            <li>
+                <Link className="links" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
+            </li>
+            <li>
+                <Link className="links" to="/register" style={{textDecoration: 'none'}}>Register</Link>
+            </li>
+            <li>
+                <Link className="links" to="/login" style={{textDecoration: 'none'}}>Login</Link>
+            </li>
+            <li>
+                <Link className="links" to="/" style={{textDecoration: 'none'}}>Home</Link>
+            </li>
+        </ul>
+    }
     return (
         <Container>
             <div className="navbar">
+                {listElements()}
 
-                <ul>
-                    <Link to="/home">
-                        <img className="logo_app" src={logo}/>
-                    </Link>
-                    <li>
-                        <Link className="links" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
-                    </li>
-                    <li>
-                        <Link className="links" to="/register" style={{textDecoration: 'none'}}>Register</Link>
-                    </li>
-                    <li>
-                        <Link className="links" to="/login" style={{textDecoration: 'none'}}>Login</Link>
-                    </li>
-                    <li>
-                        <Link className="links" to="/account" style={{textDecoration: 'none'}}>My profile</Link>
-                    </li>
-                    <li>
-                        <Link className="links" to="/" style={{textDecoration: 'none'}}>Home</Link>
-                    </li>
-
-
-                </ul>
             </div>
         </Container>
     );

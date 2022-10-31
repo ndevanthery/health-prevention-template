@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
-import { useEffect, useState } from "react";
+import {createContext, useEffect, useMemo, useState} from "react";
 import "./App.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -12,14 +12,28 @@ import Test from "./pages/Test";
 import Profile from "./pages/Profile";
 import Logout from "./pages/Logout";
 import Results from "./pages/Results";
+import Profile from "./pages/Profile";
+import { Survey } from "./pages/Survey";
 import NormalValues from "./pages/Admin/NormalValues";
 import AddDoctor from "./pages/Admin/AddDoctor";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
+import History from "./pages/History";
+import HistoryDetails from "./pages/HistoryDetails";
 
+
+export const RoleContext = createContext({
+  idRole : -1,
+  setIdRole: () => {},
+});
 
 export default function App() {
   /* Current user state */
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [idRole, setIdRole] = useState('');
+  const value = useMemo(
+      () => ({ idRole, setIdRole }),
+      [idRole]
+  );
 
   /* Watch for authentication state changes */
   useEffect(() => {
@@ -46,11 +60,15 @@ export default function App() {
 
   return (
     <>
+
       <div className="App">
       {/*<header className="App-header">*/}
-        <Navbar/>
+        <RoleContext.Provider value={value}>
+          <Navbar/>
+        </RoleContext.Provider>
       </div>
       <div>
+        <RoleContext.Provider value={value}>
         <Routes>
           <Route path="/" element={<Home currentUser={currentUser} />} />
           <Route path="/home" element={<Home />} />
@@ -61,6 +79,8 @@ export default function App() {
           <Route path="/test" element={<Test />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/results" element={<Results />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/history/:id" element={<HistoryDetails/>} />
 
           <Route path="homeAdmin" element={<HomeAdmin />}/>
           <Route path="/normalVal" element={<NormalValues />}/>
@@ -68,6 +88,7 @@ export default function App() {
 
         </Routes>
       {/*</header>*/}
+        </RoleContext.Provider>
     </div>
       </>
   );
