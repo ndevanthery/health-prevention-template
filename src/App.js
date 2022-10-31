@@ -12,8 +12,6 @@ import Test from "./pages/Test";
 import Profile from "./pages/Profile";
 import Logout from "./pages/Logout";
 import Results from "./pages/Results";
-import Profile from "./pages/Profile";
-import { Survey } from "./pages/Survey";
 import NormalValues from "./pages/Admin/NormalValues";
 import AddDoctor from "./pages/Admin/AddDoctor";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
