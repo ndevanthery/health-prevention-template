@@ -1,8 +1,9 @@
 import {auth, db} from "../initFirebase";
-import {doc, getDoc, updateDoc} from "firebase/firestore";
+import {doc, getDoc} from "firebase/firestore";
 import React, {useState, useEffect} from "react";
-import Avatar from "../components/Avatar";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
+import profileEdit from '../images/profileEdit.png'
+import ModalEditAvatar from "../components/ModalEditAvatar";
 
 class User extends React.Component {
     constructor() {
@@ -26,24 +27,32 @@ class User extends React.Component {
         return (
             <>
                 <div className="userDiv" style={{backgroundColor: "gray"}} >
-
                     <div className="User-header">
                         {formattedWelcome}
                         <p>First name: {' '}{this.props.firstName}</p>
                         <p>Last name: {' '}{this.props.lastName}</p>
                         <p>Email address: {' '}{this.props.email}</p>
-
-                        {/*<div>*/}
-                        {/*    <img src={Avatar.avatarUrl} height= "200px" alt="Sprite"/>*/}
-                        {/*</div>*/}
+                        {/*<p>Avatar: {' '}{this.props.avatarURL}</p>*/}
 
                         <div>
                             <Link to="/logout" className="App-link">Logout</Link>
+                            <button
+                                type={"button"}
+                                style={{background:"none", border:"none"}}
+                                onClick={(e) => {console.log("button edit clicked")}}
+                            >
+                                <img src={profileEdit}
+                                     alt="Edit profile"
+                                     style={{width: "30px"}}
+                                     />
+                                {/*<label>Edit your profile</label>*/}
+                            </button>
                         </div>
-
                     </div>
+
                 </div>
-                <div className="avatarDiv"><Avatar /></div>
+
+                {/*<div className="avatarDiv"><Avatar /></div>*/}
 
             </>
 
@@ -52,30 +61,51 @@ class User extends React.Component {
 
 }
 
+
 function UserFormProfile({user}) {
     // let params = useParams();
-    return <User {...user}
-    />
+    const [openModalAvatarEdit, setOpenModalAvatarEdit] = useState(false);
+
+    return (
+        <>
+            <div className='profileInfos'>
+                <User {...user}></User>
+
+                <img
+                    src={user.avatarURL}
+                    height= "200px"
+                    alt="Sprite"
+                    onClick={() => setOpenModalAvatarEdit(true)}
+                />
+            </div>
+            <ModalEditAvatar
+                open={openModalAvatarEdit}
+                onClose={() => setOpenModalAvatarEdit(false)}
+                user={user}
+            />
+        </>
+    )
 }
 
 
 export default function Profile() {
+    if(auth.currentUser != null) {
+        return (
+            CatchUserProfile()
+        )
+    } else {
+        return (
+            <Navigate to="/Login" />
+        )
+    }
+}
+
+function CatchUserProfile() {
 
     const idUser = auth.currentUser.uid;
     let [user, setUser] = useState([]);
     console.log("idUser... : " +auth.currentUser.uid)
-    let avatar = new Avatar();
-    let avatURL = avatar.buildApiUrl();
-    console.log("Avatar : " +avatURL);
 
-
-    const updateAvatar = async() => {
-        const avatarUrl = doc(db, "users", idUser);
-        // Set the url of the user's avatar
-        await updateDoc(avatarUrl, {
-            avatarURL: avatar.buildApiUrl()
-        });
-    }
 
     const fetchUser = async() => {
         const docRef = doc(db, "users", idUser);
@@ -83,19 +113,12 @@ export default function Profile() {
 
         if (docSnap.exists()) {
             setUser(await docSnap.data())
-            console.log("User DATA from docSnap.data(): " +user);
 
         } else {
             setUser(null);
-            console.log("No such document!");
+            console.log("No such user!");
         }
-        console.log("My data: " +docSnap.get("firstName"));
     }
-
-    useEffect(() => {
-        updateAvatar();
-        console.log("Avatar url updated to: " + avatURL)
-    },[])
 
     useEffect( () => {
         fetchUser();
@@ -103,9 +126,9 @@ export default function Profile() {
 
 
     return (
-        <div>
-            <UserFormProfile user={user} />
-        </div>
+            <div>
+                <UserFormProfile user={user} />
+            </div>
     )
 
 }

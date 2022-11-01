@@ -15,6 +15,7 @@ export default class Avatar extends React.Component {
             mouth: "default",
             skin: "pale",
             sick: props.sick,
+            avatarUrl: ""
         }
     }
 
@@ -150,6 +151,8 @@ export default class Avatar extends React.Component {
         let choice = event.target.value;
         let name = event.target.name;
         this.setState({[name]: choice});
+        // console.log("Avatar url ??? " +this.buildApiUrl());
+        // this.setState({url: this.buildApiUrl()});
         // //============ test ===============
         // let avatarURL = this.buildApiUrl();
         // this.setState({
@@ -160,18 +163,24 @@ export default class Avatar extends React.Component {
         return;
     }
 
-    handleUpdateURL = async (url) => {
-        this.setState({
-            avatarUrl: url
-        },[url]);
+    updateURL = (newURL) => {this.setState({avatarUrl: newURL})};
+
+    handleUpdateURL = async (event) => {
+            event.preventDefault();
+
+            let newURL = this.buildApiUrl();
+
+            await this.updateURL(newURL);
+
+            console.log("Encore un test d'url... " +this.state.avatarUrl);
     }
 
-    updateURL = (newURL) => {
-        // let newURL = this.buildApiUrl();
-        // let oldURL = this.state.avatarUrl;
-        this.setState({avatarURL: newURL});
-        console.log("My new avatar URL: " +this.state.avatarUrl);
-    }
+    // updateURL = (newURL) => {
+    //     // let newURL = this.buildApiUrl();
+    //     // let oldURL = this.state.avatarUrl;
+    //     this.setState({avatarURL: newURL});
+    //     console.log("My new avatar URL: " +this.state.avatarUrl);
+    // }
 
     buildApiUrl()
     {
@@ -207,18 +216,18 @@ export default class Avatar extends React.Component {
     }
 
     render() {
-       // console.log("THIS URL : " + this.state.avatarUrl);
-        return (
-            <div style={{display:'flex', alignItems:'center', WebkitJustifyContent:'center'}}>
+        return ( //WebkitJustifyContent:'center'  avatarEditDisplayer
+            // <form onSubmit={this.handleUpdateURL}>
+            <div className="avatarEditor">
+
                 <div>
                     <img src={this.buildApiUrl()} height= "200px" alt="Sprite" />
                 </div>
-                {/*<form onSubmit={this.updateURL}>*/}
-                {/*    <button className="btn_ValidAvatar" type={"Submit"}>Save Avatar</button>*/}
-                {/*</form>*/}
-                    <div style={{display:'flex', alignItems:'center', WebkitJustifyContent:'center', padding: 0}}>
+                    <button className="" onClick={this.handleUpdateURL}>Save Avatar</button>
+
+                    <div className="avatarEditorOptions">
                     <div>
-                        <h2>Hair</h2>
+                        <div className='avatarEditorLabel'>Hair</div>
                         <select onChange={this.changeSelection} name="top" id="top">
                             {this.top.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -226,7 +235,7 @@ export default class Avatar extends React.Component {
                                 </option>
                             ))}
                         </select>
-                        <h2>Hair Color</h2>
+                        <div className='avatarEditorLabel'>Hair Color</div>
                         <select onChange={this.changeSelection} name="topColor" id="topColor">
                             {this.topColor.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -234,7 +243,7 @@ export default class Avatar extends React.Component {
                                 </option>
                             ))}
                         </select>
-                        <h2>Eyes</h2>
+                        <div className='avatarEditorLabel'>Eyes</div>
                         <select onChange={this.changeSelection} name="eyes" id="eyes">
                             {this.eyes.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -242,7 +251,7 @@ export default class Avatar extends React.Component {
                                 </option>
                             ))}
                         </select>
-                        <h2>Eyebrow</h2>
+                        <div className='avatarEditorLabel'>Eyebrow</div>
                         <select onChange={this.changeSelection} name="eyebrow" id="eyebrow">
                             {this.eyebrow.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -250,7 +259,7 @@ export default class Avatar extends React.Component {
                                 </option>
                             ))}
                         </select>
-                        <h2>Mouth</h2>
+                        <div className='avatarEditorLabel'>Mouth</div>
                         <select onChange={this.changeSelection} name="mouth" id="mouth">
                             {this.mouth.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -260,7 +269,7 @@ export default class Avatar extends React.Component {
                         </select>
                     </div>
                     <div>
-                        <h2>Skin Color</h2>
+                        <div className='avatarEditorLabel'>Skin Color</div>
                         <select onChange={this.changeSelection} name="skin" id="skin">
                             {this.skin.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -268,7 +277,7 @@ export default class Avatar extends React.Component {
                                 </option>
                             ))}
                         </select>
-                        <h2>Clothes</h2>
+                        <div className='avatarEditorLabel'>Clothes</div>
                         <select onChange={this.changeSelection} name="clothes" id="clothes">
                             {this.clothes.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -276,7 +285,7 @@ export default class Avatar extends React.Component {
                                 </option>
                             ))}
                         </select>
-                        <h2>Clothes Color</h2>
+                        <div className='avatarEditorLabel'>Clothes Color</div>
                         <select onChange={this.changeSelection} name="clothesColor" id="clothesColor">
                             {this.clothesColor.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -284,8 +293,8 @@ export default class Avatar extends React.Component {
                                 </option>
                             ))}
                         </select>
-                        <h2>Sick</h2>
-                        <p>(how it would look on the result page)</p>
+                        <div className='avatarEditorLabel'>Sick</div>
+                        <div>(how it would look on the result page)</div>
                         <select onChange={this.changeSelection} name="sick" id="sick">
                             {this.sick.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -301,9 +310,9 @@ export default class Avatar extends React.Component {
                 />
 
             </div>
+            // </form>
         )
     }
 }//End of class Avatar
-
 
 

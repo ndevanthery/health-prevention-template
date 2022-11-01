@@ -8,9 +8,11 @@ export default function Home({currentUser}) {
 
     return (
         <div>
+            {/* Test if the user is connected */}
             {!currentUser ? (
                 <></>
             ) : (
+                // If yes, welcome title with logout option
                 <>
                     <h3>Welcome back {currentUser.email}</h3>
                     <Link to="/logout" className="App-link">
@@ -23,7 +25,7 @@ export default function Home({currentUser}) {
                 <div className="mainDivHomePage">
                     <h1 className="titleHomePage1">Welcome to the health prevention system</h1>
                     <h3 className="titleHomePage3">Your online personal assistant</h3>
-                    <p style={{float: "left", paddingLeft: "50px", paddingBottom: "50px"}}>Lorem ipsum dolor sit amet
+                    <p style={{float: "left", paddingBottom: "50px"}}>Lorem ipsum dolor sit amet
                         consectetur adipisicing elit. Maxime mollitia,
                         molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
                         numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
@@ -31,12 +33,12 @@ export default function Home({currentUser}) {
                         obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
                         nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
                         tenetur error.</p>
-
                 </div>
 
                 <div className="imageDivHomePage">
                     <img src={home1} className="img1" style={{width: "90%"}}/>
                 </div>
+
                 <Link to="/survey" className="linkSurvey">Take a survey</Link>
             </>
         </div>
