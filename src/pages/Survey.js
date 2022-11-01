@@ -1,24 +1,13 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ThemeConsumer } from "styled-components";
 import {doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
-=======
-import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {ThemeConsumer} from "styled-components";
-import {doc, setDoc} from "firebase/firestore";
->>>>>>> fa8b7aabcf4044ca8e7c93611d6772fa431681fc
 
 import {auth, db} from "../initFirebase";
 import "../Survey.css"
-<<<<<<< HEAD
 import { collection, addDoc } from "firebase/firestore"; 
 import Avatar from "../components/Avatar";
-=======
-import {collection, addDoc} from "firebase/firestore";
 import swal from "sweetalert";
->>>>>>> fa8b7aabcf4044ca8e7c93611d6772fa431681fc
 
 const type = {
     numeric: 0,
@@ -33,13 +22,7 @@ const type = {
 
 
 
-<<<<<<< HEAD
-
-
-export function Survey() {
-=======
 export default function Survey() {
->>>>>>> fa8b7aabcf4044ca8e7c93611d6772fa431681fc
 
     const idUser = auth.currentUser.uid;
 
@@ -70,13 +53,9 @@ export default function Survey() {
             idUser = null;
         }
         let date  = new Date();
-<<<<<<< HEAD
         
         console.log("survey:");
         console.log(survey);
-=======
-
->>>>>>> fa8b7aabcf4044ca8e7c93611d6772fa431681fc
         var surveyUser = {userID: idUser  , date : date, ...survey};
         const docRef = await addDoc(collection(db, "questionnaires"), surveyUser);
         console.log("surveyUser:");
@@ -84,9 +63,6 @@ export default function Survey() {
         console.log(surveyUser);
         console.log("document added");
           console.log("Document written with ID: ", docRef.id);
-<<<<<<< HEAD
-        
-=======
 
          // Add success pop up
         swal("We receive your infos!", "Thanks for completing the survey, please have a look at your result"
@@ -97,7 +73,6 @@ export default function Survey() {
         .then(() => {
             console.log('Survey added successfully!');
         }); */
->>>>>>> fa8b7aabcf4044ca8e7c93611d6772fa431681fc
     }
 
 
