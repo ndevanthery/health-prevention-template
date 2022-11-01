@@ -14,7 +14,7 @@ export default class Avatar extends React.Component {
             eyebrow: "default",
             mouth: "default",
             skin: "pale",
-            sick: "no",
+            sick: props.sick,
         }
     }
 
@@ -295,6 +295,10 @@ export default class Avatar extends React.Component {
                         </select>
                     </div>
                 </div>
+                <input
+                    type="checkbox"
+                    onChange={this.toggleSick}
+                />
 
             </div>
         )

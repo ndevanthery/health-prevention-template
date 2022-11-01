@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ThemeConsumer } from "styled-components";
-import {doc, setDoc } from "firebase/firestore";
+import {doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 
 import { auth, db } from "../initFirebase";
 import "../Survey.css"
 import { collection, addDoc } from "firebase/firestore"; 
+import Avatar from "../components/Avatar";
 
 const type = {
     numeric: 0,
@@ -20,13 +21,26 @@ const type = {
 
 
 
+
+
 export function Survey() {
 
-    const [survey, setSurvey] = useState({ sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: 0, infarctus: 1, afInfarctus: 1, afCancer: 1, smoke: 1, alim: 3, alcohol: 2, physical: 3});
+    const idUser = auth.currentUser.uid;
 
 
+
+    const [survey, setSurvey] = useState({ sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: 0, infarctus: 1, afInfarctus: 1, afCancer: 1, smoke: 1, alim: 3, alcohol: 2, physical: 3},[]);
+
+    useEffect(() => {
+        
+        getMyDoc(idUser).then(response => setSurvey({...response}) );
+        
+
+    }, []);
+    
     var onInputChange = (event) => {
         setSurvey({ ...survey, [event.target.name]: parseInt(event.target.value) });
+        console.log(survey);
 
     };
 
@@ -41,16 +55,19 @@ export function Survey() {
         }
         let date  = new Date();
         
+        console.log("survey:");
+        console.log(survey);
         var surveyUser = {userID: idUser  , date : date, ...survey};
         const docRef = await addDoc(collection(db, "questionnaires"), surveyUser);
+        console.log("surveyUser:");
+
+        console.log(surveyUser);
         console.log("document added");
           console.log("Document written with ID: ", docRef.id);
-        /* db.collection('questionnaires')
-        .add(survey)
-        .then(() => {
-            console.log('Survey added successfully!');
-        }); */
+        
     }
+
+
 
 
 
@@ -89,19 +106,19 @@ export function Survey() {
             <table className="table">
                 <tr><td colspan="2"><h2>Questions about you</h2></td></tr>
                 <tr><td><br></br></td></tr>
-                {questYouList.map(question => <Question question={question} onInputChange={onInputChange} />)}
+                {questYouList.map(question => <Question question={question} onInputChange={onInputChange} survey={survey}/>)}
                 <tr><td><br></br></td></tr>
 
                 <tr><td colspan="2"><h2>Questions about your family</h2></td></tr>
                 <tr><td><br></br></td></tr>
 
-                {questFamilyList.map(question => <Question question={question} onInputChange={onInputChange} />)}
+                {questFamilyList.map(question => <Question question={question} onInputChange={onInputChange} survey={survey} />)}
                 <tr><td><br></br></td></tr>
 
                 <tr><td colspan="2"><h2>Questions about your habits</h2></td></tr>
                 <tr><td><br></br></td></tr>
 
-                {questHabitsList.map(question => <Question question={question} onInputChange={onInputChange}/>)}
+                {questHabitsList.map(question => <Question question={question} onInputChange={onInputChange} survey={survey}/>)}
             </table>
 
             
@@ -120,11 +137,40 @@ export function Survey() {
     );
 }
 
+async function getMyDoc(idUser) {
+    const myQuery = query(collection(db, "questionnaires"), where("userID", "==", idUser));
+
+    let latestseconds = 0;
+    let resultData  = null;
+    const querySnapshot = await getDocs(myQuery);
+
+    querySnapshot.forEach((doc) => {
+        let data =  doc.data();
+        console.log(data.date.seconds);
+        if(data.date.seconds>latestseconds)
+        {
+            latestseconds = data.date.seconds;
+            resultData = data;
+        }
+        
+
+    });
+    if(resultData === null)
+    {
+        resultData ={ sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: 0, infarctus: 1, afInfarctus: 1, afCancer: 1, smoke: 1, alim: 3, alcohol: 2, physical: 3};
+
+    }
+    console.log("my latest Element");
+    console.log(resultData);
+    return resultData;
+}
 
 
 
-function Question({question ,onInputChange})
+
+function Question({question ,onInputChange,survey})
 {
+    let value = survey[question.var];
     return (
 
         <tr className="row-question">
@@ -132,7 +178,7 @@ function Question({question ,onInputChange})
                 {question.text}
             </td>
             <td>
-                <Answer id={question.var} typeAnswer={question.type} inputChange={onInputChange} />
+                <Answer id={question.var} typeAnswer={question.type} inputChange={onInputChange} value={value} />
             </td>
         </tr>
 
@@ -140,40 +186,16 @@ function Question({question ,onInputChange})
     );
 }
 
-/* class Question extends React.Component {
-    constructor({ question ,onInputChange}) {
-        super();
-        this.onInputChange = onInputChange;
-        this.question = question;
-    }
 
 
-    render() {
-        return (
-
-            <tr className="row-question">
-                <td className="column-table">
-                    {this.question.text}
-                </td>
-                <td>
-                    <Answer id={this.question.var} typeAnswer={this.question.type} inputChange={this.onInputChange} />
-                </td>
-            </tr>
-
-
-        );
-    }
-} */
-
-
-function Answer({ id, typeAnswer, inputChange }) {
+function Answer({ id, typeAnswer, inputChange ,value}) {
     switch (typeAnswer) {
         case type.numeric:
-            return (<input onChange={inputChange} id={id} name={id} type="number"></input>);
+            return (<input onChange={inputChange} id={id} name={id} type="number" value={value}></input>);
             break;
         case type.boolean:
             return (
-                <select name={id} id={id} onChange={inputChange}>
+                <select name={id} id={id} onChange={inputChange} value={value}>
                     <option value="none" selected disabled hidden>Select an Option</option>
                     <option value="0">No</option>
                     <option value="1">Yes</option>
@@ -182,7 +204,7 @@ function Answer({ id, typeAnswer, inputChange }) {
             break;
         case type.sex:
             return (
-                <select name={id} id={id} onChange={inputChange}>
+                <select name={id} id={id} onChange={inputChange} value={value}>
                     <option value="none" selected disabled hidden>Select an Option</option>
                     <option value="0">Female</option>
                     <option value="1">Male</option>
@@ -191,7 +213,7 @@ function Answer({ id, typeAnswer, inputChange }) {
             break;
         case type.sport:
             return (
-                <select name={id} id={id} onChange={inputChange}>
+                <select name={id} id={id} onChange={inputChange} value={value}>
                     <option value="none" selected disabled hidden>Select an Option</option>
                     <option value="0">i don't move a lot</option>
                     <option value="1">half an hour 2-3 days a week</option>
@@ -202,7 +224,7 @@ function Answer({ id, typeAnswer, inputChange }) {
             break;
         case type.alcohol:
             return (
-                <select name={id} id={id} onChange={inputChange}>
+                <select name={id} id={id} onChange={inputChange} value={value}>
                     <option value="none" selected disabled hidden>Select an Option</option>
                     <option value="0">every day</option>
                     <option value="1">3 to 6 days a week</option>
@@ -215,7 +237,7 @@ function Answer({ id, typeAnswer, inputChange }) {
 
             case type.alim:
                 return (
-                    <select name={id} id={id} onChange={inputChange}>
+                    <select name={id} id={id} onChange={inputChange} value={value}>
                         <option value="none" selected disabled hidden>Select an Option</option>
                         <option value="0">never</option>
                         <option value="1">some times</option>

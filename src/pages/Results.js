@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import image1 from '../images/questionnaire.jpg'
 
@@ -12,6 +12,10 @@ import "../Results.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import Avatar from "../components/Avatar";
+import { CheckBox } from "react-native-web";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../initFirebase";
 
 /* export default function Survey() {
     const navigate = useNavigate();
@@ -29,15 +33,30 @@ export default function Results() {
 
     const location = useLocation()
     const { infos } = location.state;
-  
-    console.log(infos);
+    let [user, setUser] = useState([]);
+
+    const idUser = auth.currentUser.uid;
+
+
+    const fetchUser = async() => {
+        const docRef = doc(db, "users", idUser);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            setUser(await docSnap.data())
+
+        } 
+    }
+
+    useEffect( () => {
+        fetchUser();
+        
+    } , [])
 
    // var infos = { sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: 0, infarctus: 1, afInfarctus: 1, afCancer: 1, smoke: 1, alim: 3, alcohol: 2, physical: 3};
 
 
-
-
-
+    
 
     const [myInfos_modified, setInfos] = useState(infos);
 
@@ -54,15 +73,23 @@ export default function Results() {
     let setHabitsFunc = ({ smoke, alim, physical, alcohol }) => {
         setInfos({ ...myInfos_modified, smoke: smoke, alim: alim, physical: physical, alcohol: alcohol });
     };
+    const myAvatarSick = new Avatar({sick:"yes"});
+    const myAvatar = new Avatar({sick:"no"});
+    
+
+
+    
+    
+
 
 
     return (
         <div className="App">
 
             <div className="result-line">
-                <ResultContainer title="your result" infarctus={myInfarctus.resultCalc()} cancer={myCancer.resultCalc()} diabete={myDiabete.resultCalc()} />
+                <ResultContainer title="your result" infarctus={myInfarctus.resultCalc()} cancer={myCancer.resultCalc()} diabete={myDiabete.resultCalc()} urlHealthy={myAvatar.buildApiUrl()} urlSick={myAvatarSick.buildApiUrl()} />
                 <ChangeHabits habits={myInfos_modified} setHabits={setHabitsFunc} />
-                <ResultContainer title="your future results" infarctus={myInfarctus_2.resultCalc()} cancer={myCancer_2.resultCalc()} diabete={myDiabete_2.resultCalc()} />
+                <ResultContainer title="your future results" infarctus={myInfarctus_2.resultCalc()} cancer={myCancer_2.resultCalc()} diabete={myDiabete_2.resultCalc()} urlHealthy={myAvatar.buildApiUrl()} urlSick={myAvatarSick.buildApiUrl()} />
 
             </div>
         </div>
@@ -71,11 +98,20 @@ export default function Results() {
 }
 
 
-function ResultContainer({ title, infarctus, cancer, diabete }) {
+function ResultContainer({ title, infarctus, cancer, diabete ,urlHealthy , urlSick}) {
+    let url = urlHealthy
+    if(infarctus + cancer + diabete >= 120)
+    {
+        url = urlSick;
+    }
+    else{
+        url = urlHealthy;
+    }
+
     return (
         <div className="results-div">
             <div className="results-title">{title}</div>
-            <img src="https://avatars.dicebear.com/api/adventurer/your-cuabcstom-seed.svg" width={100} alt="W3Schools.com" />
+            <img src={url} width={100} alt="my avatar" />
             <div>
                 infarctus risk : {infarctus.toFixed(1)} %
 
@@ -151,6 +187,10 @@ function ChangeHabits({ habits, setHabits }) {
                     <option value="4">i don't drink</option>
                 </select>
             </div>
+
+            <div>
+            
+    </div>
 
 
 
