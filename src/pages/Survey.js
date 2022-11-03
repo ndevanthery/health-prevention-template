@@ -64,15 +64,12 @@ export default function Survey() {
         console.log("document added");
           console.log("Document written with ID: ", docRef.id);
 
+
          // Add success pop up
         swal("We receive your infos!", "Thanks for completing the survey, please have a look at your result"
             , "success");
 
-          /* db.collection('questionnaires')
-        .add(survey)
-        .then(() => {
-            console.log('Survey added successfully!');
-        }); */
+
     }
 
 
