@@ -4,6 +4,7 @@ import React, {useState, useEffect} from "react";
 import {Link, Navigate} from "react-router-dom";
 import profileEdit from '../images/profileEdit.png'
 import ModalEditAvatar from "../components/ModalEditAvatar";
+import {Tooltip} from "react-bootstrap";
 
 class User extends React.Component {
     constructor() {
@@ -71,7 +72,7 @@ function UserFormProfile({user}) {
             <div className='profileInfos'>
                 <User {...user}></User>
 
-                <img
+                <img className='imgProfile'
                     src={user.avatarURL}
                     height= "200px"
                     alt="Sprite"
@@ -83,6 +84,11 @@ function UserFormProfile({user}) {
                 onClose={() => setOpenModalAvatarEdit(false)}
                 user={user}
             />
+            {/*<ModalEditProfil*/}
+            {/*    open={openModalEditProfil}*/}
+            {/*    onClose={() => setOpenModalProfilEdit(false)}*/}
+            {/*    user={user}*/}
+            {/*/>*/}
         </>
     )
 }
