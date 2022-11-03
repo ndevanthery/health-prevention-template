@@ -5,7 +5,6 @@ import {useParams} from "react-router-dom";
 const ModalEditAvatar = ({open, onClose, user}) => {
     if(!open) return null;
 
-    let avatar = new Avatar();
 
     return (
         <div className='overlayAvatarEdit' onClick={onClose}>

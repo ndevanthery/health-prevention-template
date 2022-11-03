@@ -204,6 +204,10 @@ Alex Mae.App {
     z-index: -1;
 }
 
+.imgProfile {
+    cursor: pointer;
+}
+
 .avatarEditorOptions{
     display:flex;
     alignItems:center;
@@ -246,6 +250,7 @@ Alex Mae.App {
 .modalEditorContainer{
     width: 100%;
     display: flex;
+    cursor: default;
 }
 
 .modalRight {
@@ -256,6 +261,7 @@ Alex Mae.App {
     position: fixed;
     top: 8px;
     right: 8px;
+    cursor: pointer;
 }
 
 .btnContainer {
