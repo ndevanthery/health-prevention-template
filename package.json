@@ -16,8 +16,10 @@
     "react-moralis": "^1.4.2",
     "react-native": "^0.70.3",
     "react-native-web": "^0.18.9",
+    "react-refresh-webpack-plugin": "^0.1.0",
     "react-router-dom": "^6.4.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
+    "source-map-loader": "^4.0.1",
     "styled-components": "^5.3.6",
     "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
