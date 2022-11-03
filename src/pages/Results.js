@@ -95,7 +95,7 @@ export default function Results() {
         console.log("doctor added");
         console.log(doctorInfo.id);
         console.log(mySurveyId);
-        const docRef = await addDoc(collection(db, "doctorAccess"), {"doctorId":doctorInfo.id , "surveyId":mySurveyId , "doctorAccept" : 0});
+        const docRef = await addDoc(collection(db, "doctorAccess"), {"doctorId":doctorInfo.id , "surveyId":mySurveyId , "doctorAccept" : 0, date : new Date()});
     }
 
     return (
