@@ -83,7 +83,7 @@ const Container = styled.div`
   padding: 0;
   margin: 0;
   text-decoration: none;
-  
+
   .logo_app {
     float: left;
     width: 20%;
@@ -94,18 +94,18 @@ const Container = styled.div`
     align-items: center;
     padding: 0.5rem 0rem;
   }
-  
+
   .navbar ul {
     list-style-type: none;
     width: 100%;
   }
-  
+
   .navbar ul li {
     display: inline-flex;
-    float:right;
+    float: right;
     padding-right: 1%;
   }
-  
+
   .links {
     float: right;
     color: #8DC6FF;
@@ -113,13 +113,11 @@ const Container = styled.div`
     border: 2px solid transparent;
     font-weight: bold;
   }
-  
+
   .links:hover {
-    background: transparent;
-    border: 2px solid #1167b1;
+    border-bottom: 2px solid #8DC6FF;
     color: #1167b1;
     text-decoration: none;
-    border-radius: 8px;
   }
 
   @media screen and (max-width: 1400px) {
@@ -134,5 +132,5 @@ const Container = styled.div`
       width: 95%;
     }
   }
-  
+
 `;

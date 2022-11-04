@@ -27,12 +27,30 @@ Alex Mae.App {
 }
 
 /*******************************************
+                 Footer
+/******************************************/
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #8DC6FF;
+    color: white;
+    text-align: center;
+}
+
+.footerText {
+    font-size: 13px;
+}
+
+/*******************************************
                  Navbar
 /******************************************/
 
 .iconNav {
     -webkit-transition: all 0.25s;
-    position: absolute;
+    position: relative;
     width: 30px;
     height: 1px;
     left: 15px;
@@ -50,7 +68,7 @@ Alex Mae.App {
     margin-left: 2%;
     float: left;
     width: 50%;
-    border-radius: 20%;
+    border-radius: 10%;
 }
 
 .imageDivHomePage {
@@ -67,8 +85,24 @@ Alex Mae.App {
     }
     .imageDivHomePage {
         width: 90%;
+        margin-bottom: 10%;
     }
 }
+
+@media screen and (max-width: 400px) {
+    .mainDivHomePage {
+        width: 90%;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+    .linkSurvey {
+        /*width: 50%;*/
+        margin-left: 25%;
+        margin-right: 25%;
+        margin-bottom: 10%;
+    }
+}
+
 
 .titleHomePage1 {
     color: #1167b1;
@@ -122,6 +156,13 @@ Alex Mae.App {
     font-size: 17px;
 }
 
+.emailFormInput:focus,
+.passwordFormInput:focus,
+.firstNameFormInput:focus,
+.lastNameFormInput:focus {
+    border-bottom: 2px solid #8DC6FF;
+}
+
 .buttonSubmitForm {
     margin-top: 5%;
     margin-left: 30%;
@@ -143,6 +184,12 @@ Alex Mae.App {
     color: #1167b1;
     text-decoration: none;
     border-radius: 8px;
+}
+
+@media screen and (max-width: 1000px) {
+    .buttonSubmitForm {
+        margin-bottom: 15%;
+    }
 }
 
 /*******************************************
@@ -171,10 +218,18 @@ Alex Mae.App {
     margin-left: 8%;
 }
 
+.noAccountText {
+    margin-bottom: 20%;
+}
+
 @media screen and (max-width: 1000px) {
     .divImageLogin,
     .divInfoLogin {
         width: 100%;
+    }
+
+    .noAccountText {
+
     }
 }
 

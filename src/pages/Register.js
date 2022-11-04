@@ -1,6 +1,6 @@
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {doc, setDoc} from "firebase/firestore";
-import { auth, db} from "../initFirebase";
+import {auth, db} from "../initFirebase";
 import {Link, useNavigate} from "react-router-dom";
 import UserFormRegister from "../components/UserFormRegister";
 import swal from "sweetalert";
@@ -37,20 +37,19 @@ export default function Register() {
     };
 
     return (
+            <div className="mainDivLogin">
+                <h1 className="mainTitleLogin">Create your patient account</h1>
 
-        <div className="mainDivLogin">
-            <h1 className="mainTitleLogin">Create your patient account</h1>
+                {/* Div containing the image on the right */}
+                <div className="divImageLogin">
+                    <img className="imageLogin" src={loginBackground}
+                         style={{width: "100%", borderRadius: "10px", padding: "5%"}}/>
+                </div>
 
-            {/* Div containing the image on the right */}
-            <div className="divImageLogin">
-                <img className="imageLogin" src={loginBackground}
-                     style={{width: "100%", borderRadius: "10px", padding: "5%"}}/>
+                {/* Div containing the Login form on the left*/}
+                <div className="divInfoLogin">
+                    <UserFormRegister handleSubmit={handleRegister} submitButtonLabel="Register"/>
+                </div>
             </div>
-
-            {/* Div containing the Login form on the left*/}
-            <div className="divInfoLogin">
-                <UserFormRegister handleSubmit={handleRegister} submitButtonLabel="Register"/>
-            </div>
-        </div>
     );
 }

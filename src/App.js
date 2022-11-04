@@ -17,6 +17,8 @@ import AddDoctor from "./pages/Admin/AddDoctor";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
 import History from "./pages/History";
 import HistoryDetails from "./pages/HistoryDetails";
+import Page404 from "./pages/Page404";
+import Footer from './pages/Footer'
 
 
 export const RoleContext = createContext({
@@ -84,9 +86,13 @@ export default function App() {
           <Route path="/normalVal" element={<NormalValues />}/>
           <Route path="/addDoctor" element={<AddDoctor />}/>
 
+          {/* Page 404 */}
+          <Route path="*" element={<Page404 />}/>
+
         </Routes>
       {/*</header>*/}
         </RoleContext.Provider>
+        <Footer/>
     </div>
       </>
   );

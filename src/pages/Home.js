@@ -19,6 +19,7 @@ export default function Home() {
             </div>
 
             <Link to="/survey" className="linkSurvey">Take a survey</Link>
+            <br/><br/><br/><br/>
         </>
     );
 }

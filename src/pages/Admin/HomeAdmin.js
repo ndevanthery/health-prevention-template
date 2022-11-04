@@ -13,12 +13,12 @@ export default function HomeAdmin() {
 
     useEffect(() => {
         checkLogin();
-    },[])
+    }, [])
 
     const checkLogin = () => {
-        if(auth.currentUser && role.idRole === 5) {
+        if (auth.currentUser && role.idRole === 5) {
 
-        }else {
+        } else {
             navigate("/")
         }
     }
@@ -26,7 +26,7 @@ export default function HomeAdmin() {
 
     const handleClick = (e) => {
         console.log(e.target.name)
-        if(e.target.name === "editBtn") {
+        if (e.target.name === "editBtn") {
             navigate("/normalVal")
 
             return
@@ -39,8 +39,13 @@ export default function HomeAdmin() {
             <h1>Welcome back Admin</h1>
             <h2>What do you want to do?</h2>
 
-            <button name="editBtn" className="buttonHome" role="button" onClick={handleClick}><img className="imgButton" src={edit}/><br/>Edit normal Values</button>
-            <button name="doctorBtn" className="buttonHome" role="button" onClick={handleClick}><img className="imgButton" src={doctor}/><br/>Create a new Doctor</button>
+            <button name="editBtn" className="buttonHome" role="button" onClick={handleClick}><img className="imgButton"
+                                                                                                   src={edit}/><br/>Edit
+                normal Values
+            </button>
+            <button name="doctorBtn" className="buttonHome" role="button" onClick={handleClick}><img
+                className="imgButton" src={doctor}/><br/>Create a new Doctor
+            </button>
         </div>
     )
 }

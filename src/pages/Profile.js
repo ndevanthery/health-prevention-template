@@ -3,7 +3,6 @@ import {doc, getDoc} from "firebase/firestore";
 import React, {useState, useEffect} from "react";
 import {Link, Navigate} from "react-router-dom";
 import profileEdit from '../images/profileEdit.png'
-import ModalEditAvatar from "../components/ModalEditAvatar";
 import ModalEditProfile from "../components/ModalEditProfile";
 
 class User extends React.Component {
@@ -117,7 +116,7 @@ function UserFormProfileAvatar({user}) {
                     onClick={() => setOpenModalAvatarEdit(true)}
                 />
             </div>
-            <ModalEditAvatar
+            <ModalEditProfile
                 open={openModalAvatarEdit}
                 onClose={() => setOpenModalAvatarEdit(false)}
                 user={user}

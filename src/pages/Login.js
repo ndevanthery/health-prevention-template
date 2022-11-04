@@ -67,9 +67,8 @@ export default function Login() {
             {/* Div containing the Login form on the left*/}
             <div className="divInfoLogin">
                 <UserFormLogin handleSubmit={handleLogin} submitButtonLabel="Sign In"/>
-                <br></br>
-                <br></br>
-                <span style={{marginLeft: "20%"}}>Don't have an account? </span>
+                <br/><br/>
+                <span className="noAccountText" style={{marginLeft: "20%"}}>Don't have an account? </span>
                 <Link to="/register" className="App-link">Sign Up</Link>
             </div>
         </div>
