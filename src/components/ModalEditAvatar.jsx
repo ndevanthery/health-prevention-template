@@ -1,10 +1,11 @@
 import React from 'react';
 import Avatar from "./Avatar";
-import {useParams} from "react-router-dom";
+import {auth} from "../initFirebase";
 
 const ModalEditAvatar = ({open, onClose, user}) => {
     if(!open) return null;
 
+    const idUser = auth.currentUser.uid;
 
     return (
         <div className='overlayAvatarEdit' onClick={onClose}>
@@ -12,17 +13,16 @@ const ModalEditAvatar = ({open, onClose, user}) => {
                 e.stopPropagation()
             }}>
                 <div className='modalEditorContainer'>
-                    <Avatar/>
-                    {/*{avatar}*/}
+                    <Avatar idUser={idUser} />
                 </div>
                 <div className='modalRight'>
                     <p className="btnCloseEditAvatar" onClick={onClose}>X</p>
-                    <div className="btnContainer">
-                        <button className='btnSubmitAvatar' onClick={() => UpdateAvatarUrl({user})}>
-                            <span className='text'>Save</span>
-                            <span>Validate your Avatar</span>
-                        </button>
-                    </div>
+                    {/*<div className="btnContainer">*/}
+                    {/*    <button className='btnSubmitAvatar' onClick={() => UpdateAvatarUrl({user})}>*/}
+                    {/*        <span className='text'>Save</span>*/}
+                    {/*        <span>Validate your Avatar</span>*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>

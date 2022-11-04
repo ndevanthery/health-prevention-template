@@ -4,13 +4,15 @@ import React, {useState, useEffect} from "react";
 import {Link, Navigate} from "react-router-dom";
 import profileEdit from '../images/profileEdit.png'
 import ModalEditAvatar from "../components/ModalEditAvatar";
-import {Tooltip} from "react-bootstrap";
+import ModalEditProfile from "../components/ModalEditProfile";
 
 class User extends React.Component {
-    constructor() {
-        super();
-        this.state = {};
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
     }
+
 
     //handle events...
 
@@ -33,7 +35,7 @@ class User extends React.Component {
                         <p>First name: {' '}{this.props.firstName}</p>
                         <p>Last name: {' '}{this.props.lastName}</p>
                         <p>Email address: {' '}{this.props.email}</p>
-                        {/*<p>Avatar: {' '}{this.props.avatarURL}</p>*/}
+                        <p>ID: {' '}{this.props.uid}</p>
 
                         <div>
                             <Link to="/logout" className="App-link">Logout</Link>
@@ -50,30 +52,66 @@ class User extends React.Component {
                             </button>
                         </div>
                     </div>
-
                 </div>
 
-                {/*<div className="avatarDiv"><Avatar /></div>*/}
 
             </>
-
         )
     }
 
 }
 
 
-function UserFormProfile({user}) {
-    // let params = useParams();
+// function UserProfileEdit({user}){
+//     const [openModalProfileEdit, setOpenModalProfileEdit] = useState(false);
+//
+//     return (
+//         <>
+//             <div className="userDiv" style={{backgroundColor: "gray"}} >
+//                 <div className="User-header">
+//                     {/*{formattedWelcome}*/}
+//                     <p>First name: {' '}{user.firstName}</p>
+//                     <p>Last name: {' '}{user.lastName}</p>
+//                     <p>Email address: {' '}{user.email}</p>
+//                     {/*<p>ID: {' '}{this.props.uid}</p>*/}
+//
+//                     <div>
+//                         <Link to="/logout" className="App-link">Logout</Link>
+//                         <button
+//                             type={"button"}
+//                             style={{background:"none", border:"none"}}
+//                             onClick={() => setOpenModalProfileEdit(true)}
+//                         >
+//                             <img src={profileEdit}
+//                                  alt="Edit profile"
+//                                  style={{width: "30px"}}
+//                             />
+//                             {/*<label>Edit your profile</label>*/}
+//                         </button>
+//                     </div>
+//                 </div>
+//             </div>
+//
+//             <ModalEditProfile
+//                 open={openModalProfileEdit}
+//                 onClose={() => setOpenModalProfileEdit(false)}
+//                 user={user}
+//             />
+//         </>
+//     )
+// }
+
+
+function UserFormProfileAvatar({user}) {
     const [openModalAvatarEdit, setOpenModalAvatarEdit] = useState(false);
 
     return (
         <>
             <div className='profileInfos'>
-                <User {...user}></User>
+                {/*<User {...user}></User>*/}
 
                 <img className='imgProfile'
-                    src={user.avatarURL}
+                    src={user.avatarUrl}
                     height= "200px"
                     alt="Sprite"
                     onClick={() => setOpenModalAvatarEdit(true)}
@@ -84,33 +122,30 @@ function UserFormProfile({user}) {
                 onClose={() => setOpenModalAvatarEdit(false)}
                 user={user}
             />
-            {/*<ModalEditProfil*/}
-            {/*    open={openModalEditProfil}*/}
-            {/*    onClose={() => setOpenModalProfilEdit(false)}*/}
-            {/*    user={user}*/}
-            {/*/>*/}
         </>
     )
 }
 
 
 export default function Profile() {
-    if(auth.currentUser != null) {
-        return (
-            CatchUserProfile()
-        )
-    } else {
-        return (
-            <Navigate to="/Login" />
-        )
+
+    useEffect( () => {
+            catchUser();
+            CatchUserProfile();
+        },[])
+
+
+    const catchUser = () => {
+        if(auth.currentUser == null)
+            return (<Navigate to="/Login" />)
     }
+
 }
 
 function CatchUserProfile() {
 
     const idUser = auth.currentUser.uid;
     let [user, setUser] = useState([]);
-    console.log("idUser... : " +auth.currentUser.uid)
 
 
     const fetchUser = async() => {
@@ -132,9 +167,17 @@ function CatchUserProfile() {
 
 
     return (
+        <>
             <div>
-                <UserFormProfile user={user} />
+                <User {...user}></User>
+                {/*<UserProfileEdit user={user}/>*/}
             </div>
+
+            <div>
+                <UserFormProfileAvatar user={user} />
+            </div>
+
+        </>
     )
 
 }

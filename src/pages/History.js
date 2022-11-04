@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../initFirebase";
 import { Link, resolvePath } from "react-router-dom";
 
-export default  function History() {
+export default function History() {
 
 
     const idUser = auth.currentUser.uid;

@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import {doc, updateDoc} from "firebase/firestore";
+import {auth, db} from "../initFirebase";
 
 
 export default class Avatar extends React.Component {
@@ -15,9 +17,13 @@ export default class Avatar extends React.Component {
             mouth: "default",
             skin: "pale",
             sick: props.sick,
-            avatarUrl: ""
+            // avatarUrl: "",
         }
     }
+
+    // componentDidMount() {
+    //     let cUser = auth.currentUser;
+    // }
 
     //Testing for the results
     sick = [
@@ -151,15 +157,7 @@ export default class Avatar extends React.Component {
         let choice = event.target.value;
         let name = event.target.name;
         this.setState({[name]: choice});
-        // console.log("Avatar url ??? " +this.buildApiUrl());
-        // this.setState({url: this.buildApiUrl()});
-        // //============ test ===============
-        // let avatarURL = this.buildApiUrl();
-        // this.setState({
-        //     avatarUrl: avatarURL
-        // });
-        // console.log("url for avatar : " +this.buildApiUrl() +" // avatarUrl: " +this.state.avatarUrl);
-        // //================================
+
         return;
     }
 
@@ -168,23 +166,25 @@ export default class Avatar extends React.Component {
     handleUpdateURL = async (event) => {
             event.preventDefault();
 
+            console.log("User id from props: " +auth.currentUser.uid);
             let newURL = this.buildApiUrl();
 
             await this.updateURL(newURL);
 
             console.log("Encore un test d'url... " +this.state.avatarUrl);
-    }
 
-    // updateURL = (newURL) => {
-    //     // let newURL = this.buildApiUrl();
-    //     // let oldURL = this.state.avatarUrl;
-    //     this.setState({avatarURL: newURL});
-    //     console.log("My new avatar URL: " +this.state.avatarUrl);
-    // }
+            //handle update of db
+            const userRef = doc(db, "users", this.props.idUser);
+            //Set the avatarURL's champ with the new url
+            await updateDoc(userRef, {
+                avatarUrl: this.state.avatarUrl
+            });
+
+    }
 
     buildApiUrl()
     {
-
+        console.log("Url from modal: ")
         let url;
         //Testing for resultpage
         if(this.state.sick === "yes") {
@@ -216,8 +216,8 @@ export default class Avatar extends React.Component {
     }
 
     render() {
-        return ( //WebkitJustifyContent:'center'  avatarEditDisplayer
-            // <form onSubmit={this.handleUpdateURL}>
+        return (
+            // btnSubmitAvatar
             <div className="avatarEditor">
 
                 <div>
