@@ -6,6 +6,7 @@ import icon from "../images/iconHistory.png";
 
 export default function History() {
 
+
     const idUser = auth.currentUser.uid;
     /*  let [user, setUser] = useState([]);
  */
@@ -53,6 +54,8 @@ function HistLine({infos}) {
                 </Link>
             </div>
         </>
+        
+    
     );
 }
 

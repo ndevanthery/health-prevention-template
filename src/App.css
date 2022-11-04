@@ -188,8 +188,14 @@ Alex Mae.App {
     z-index: -1;
 }
 
+.profileFirstname{
+
+}
+
 .profileInfos {
     position: fixed;
+    right: 60%;
+    top: 40%;
     background-color: lightblue;
     z-index: -1;
 }
