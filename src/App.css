@@ -13,17 +13,6 @@ Alex Mae.App {
     }
 }
 
-/*.App-header {*/
-/*    background-color: #282c34;*/
-/*    min-height: 100vh;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    font-size: calc(10px + 2vmin);*/
-/*    color: white;*/
-/*}*/
-
 .App-link {
     color: #61dafb;
 }
@@ -52,7 +41,6 @@ Alex Mae.App {
 }
 
 
-
 /*******************************************
                  Home page
 /******************************************/
@@ -73,10 +61,12 @@ Alex Mae.App {
 
 @media screen and (max-width: 700px) {
     .mainDivHomePage {
-        width: 100%;
+        width: 90%;
+        margin-left: 3%;
+        margin-right: 3%;
     }
     .imageDivHomePage {
-        width: 100%;
+        width: 90%;
     }
 }
 
@@ -337,4 +327,33 @@ Alex Mae.App {
     transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
 }
 
-/*===========================*/
+/*******************************************
+                History page
+/******************************************/
+
+.mainTitleHistory {
+    color: #1167b1;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+
+.historyList {
+    background: #8DC6FF;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    margin-right: 10%;
+    border-radius: 20px;
+}
+
+.linksHistory {
+    font-weight: bold;
+    padding-left: 1%;
+}
+
+.iconsHistory {
+    margin-left: 1%;
+    width: 4%;
+    border-radius: 50px;
+}

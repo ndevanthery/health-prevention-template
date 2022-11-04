@@ -68,7 +68,7 @@ export default function App() {
       <div>
         <RoleContext.Provider value={value}>
         <Routes>
-          <Route path="/" element={<Home currentUser={currentUser} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

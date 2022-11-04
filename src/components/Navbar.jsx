@@ -121,6 +121,18 @@ const Container = styled.div`
     text-decoration: none;
     border-radius: 8px;
   }
-  
+
+  @media screen and (max-width: 1400px) {
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0rem;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      width: 95%;
+    }
+  }
   
 `;

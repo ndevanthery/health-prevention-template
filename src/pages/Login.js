@@ -1,7 +1,6 @@
 import {signInWithEmailAndPassword} from "firebase/auth";
 import UserFormLogin from "../components/UserFormLogin";
 import {Link, useNavigate} from "react-router-dom";
-import styled from "styled-components";
 import loginBackground from "../images/Login.jpg";
 import {collection, getDocs, query, where} from "firebase/firestore";
 import {auth, db} from "../initFirebase";
@@ -12,7 +11,6 @@ import swal from 'sweetalert';
 export default function Login() {
     const navigate = useNavigate();
     let { idRole, setIdRole} = useContext(RoleContext)
-
 
     const handleLogin = async (e, email, password) => {
         e.preventDefault();
