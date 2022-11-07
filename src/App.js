@@ -17,6 +17,9 @@ import AddDoctor from "./pages/Admin/AddDoctor";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
 import History from "./pages/History";
 import HistoryDetails from "./pages/HistoryDetails";
+import HomeDoctor from "./pages/Doctor/HomeDoctor";
+import Questionnaires from "./pages/Doctor/Questionnaires";
+import NewRequests from "./pages/Doctor/NewRequests";
 
 
 export const RoleContext = createContext({
@@ -83,6 +86,10 @@ export default function App() {
           <Route path="homeAdmin" element={<HomeAdmin />}/>
           <Route path="/normalVal" element={<NormalValues />}/>
           <Route path="/addDoctor" element={<AddDoctor />}/>
+
+          <Route path="/homeDoctor" element={<HomeDoctor />}/>
+          <Route path="/questionnaires" element={<Questionnaires />}/>
+          <Route path="/newRequest" element={<NewRequests />}/>
 
         </Routes>
       {/*</header>*/}

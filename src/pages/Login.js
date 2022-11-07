@@ -28,6 +28,9 @@ export default function Login() {
             case 5:
               navigate("/homeAdmin");
               return;
+            case 4:
+              navigate("/homeDoctor")
+              return;
             default:
               navigate("/");
           }
