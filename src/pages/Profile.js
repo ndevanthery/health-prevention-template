@@ -3,7 +3,7 @@ import {doc, getDoc} from "firebase/firestore";
 import React, {useState, useEffect} from "react";
 import {Link, Navigate} from "react-router-dom";
 import profileEdit from '../images/profileEdit.png'
-//import ModalEditProfile from "../components/ModalEditProfile";
+import ModalEditProfile from "../components/ModalEditProfile";
 
 class User extends React.Component {
     constructor(props) {

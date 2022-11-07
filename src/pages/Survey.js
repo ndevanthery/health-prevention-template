@@ -7,7 +7,6 @@ import imgSurvey from '../images/Survey.jpg'
 import { auth, db } from "../initFirebase";
 import "../Survey.css"
 import {collection, addDoc} from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
 import Avatar from "../components/Avatar";
 import swal from "sweetalert";
 import { surveySchema } from '../Validation/SurveyValidation';
