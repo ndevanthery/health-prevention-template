@@ -25,8 +25,14 @@ export default function Results() {
 
     let [user, setUser] = useState([]);
 
-    const idUser = auth.currentUser.uid;
+    var idUser = null
+    try {
+        idUser = auth.currentUser.uid;
 
+    }
+    catch (error) {
+        idUser = null;
+    }
 
     const fetchUser = async () => {
         const docRef = doc(db, "users", idUser);

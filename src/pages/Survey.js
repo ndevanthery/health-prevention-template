@@ -24,8 +24,14 @@ const type = {
 export default function Survey() {
 
     const navigate = useNavigate();
-    const idUser = auth.currentUser.uid;
+    var idUser = null
+    try {
+        idUser = auth.currentUser.uid;
 
+    }
+    catch (error) {
+        idUser = null;
+    }
 
 
 

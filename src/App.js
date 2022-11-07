@@ -22,6 +22,7 @@ import Questionnaires from "./pages/Doctor/Questionnaires";
 import NewRequests from "./pages/Doctor/NewRequests";
 import Page404 from "./pages/Page404";
 import Footer from './pages/Footer'
+import { BeatLoader } from "react-spinners";
 
 
 export const RoleContext = createContext({
@@ -55,7 +56,9 @@ export default function App() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Loading...</h1>
+          <div className="center">
+          <BeatLoader color="#8DC6FF" />
+          </div>
         </header>
       </div>
     );

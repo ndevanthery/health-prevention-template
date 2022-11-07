@@ -2,6 +2,12 @@ Alex Mae.App {
     text-align: center;
 }
 
+.center{
+    position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 .App-logo {
     height: 40vmin;
     pointer-events: none;
