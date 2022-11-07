@@ -76,7 +76,7 @@ export default function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/test" element={<Test />} />
           <Route path="/survey" element={<Survey />} />
-          <Route path="/results" element={<Results />} />
+          <Route path="/results/:id" element={<Results/>} />
           <Route path="/history" element={<History />} />
           <Route path="/history/:id" element={<HistoryDetails/>} />
 

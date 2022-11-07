@@ -16,3 +16,12 @@ td{
   text-align: left;
 }
 
+input.input-error,
+select.input-error{
+  border-color: #fc8181;
+}
+
+.error{
+  color: #fc8181;
+  font-size: 10px;
+}

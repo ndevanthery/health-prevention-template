@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import image1 from '../images/questionnaire.jpg'
 
 import { Cancer } from "../components/Cancer";
 import { Infarctus } from "../components/Infarctus";
-import {Diabete} from "../components/Diabete";
-import {NonInfarctus} from "../components/NonInfarctus";
+import { Diabete } from "../components/Diabete";
+import { NonInfarctus } from "../components/NonInfarctus";
 import "../Results.css";
 
 // Bootstrap CSS
@@ -14,88 +14,108 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Avatar from "../components/Avatar";
 import { CheckBox } from "react-native-web";
-import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, DocumentSnapshot, getDoc, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../initFirebase";
 import add from '../images/add.png'
 
 
 export default function Results() {
     //input from questionnary page
+    let params = useParams();
 
-    const location = useLocation()
-    const { infos } = location.state;
     let [user, setUser] = useState([]);
 
     const idUser = auth.currentUser.uid;
 
 
-    const fetchUser = async() => {
+    const fetchUser = async () => {
         const docRef = doc(db, "users", idUser);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-            setUser(await docSnap.data())
+            setUser(docSnap.data())
 
-        } 
+        }
     }
 
-    useEffect( () => {
+
+    const [survey, setSurvey] = useState({ sex: "0", age: 40, weight: 80, height: 180, systolic: "1", chol: "1", glyc: 3.5, hdl: 1.9, diabete: "0", infarctus: "1", afInfarctus: "1", afCancer: "1", smoke: "1", alim: "3", alcohol: "2", physical: "3" }, []);
+
+
+    useEffect(() => {
         fetchUser();
-        
-    } , [])    
+        fetchSurvey(params.id);
 
-    const [myInfos_modified, setInfos] = useState(infos);
+    }, [])
 
-    let myInfarctus = new Infarctus({ ...infos });
+    const [myInfos_modified, setInfosModified] = useState(survey);
+
+    let myInfarctus = new Infarctus({ ...survey });
     let myInfarctus_2 = new Infarctus({ ...myInfos_modified });
 
-    let myCancer = new Cancer({ ...infos });
+    let myCancer = new Cancer({ ...survey });
     let myCancer_2 = new Cancer({ ...myInfos_modified });
 
-    let myDiabete = new Diabete({ ...infos });
+    let myDiabete = new Diabete({ ...survey });
     let myDiabete_2 = new Diabete({ ...myInfos_modified });
 
 
     let setHabitsFunc = ({ smoke, alim, physical, alcohol }) => {
-        setInfos({ ...myInfos_modified, smoke: smoke, alim: alim, physical: physical, alcohol: alcohol });
+        setInfosModified({ ...myInfos_modified, smoke: smoke, alim: alim, physical: physical, alcohol: alcohol });
     };
-    const myAvatarSick = new Avatar({sick:"yes"});
-    const myAvatar = new Avatar({sick:"no"});
-    
+    const myAvatarSick = new Avatar({ sick: "yes" });
+    const myAvatar = new Avatar({ sick: "no" });
 
-    const [doctorInfo, setDoctorInfo] = useState({firstName: "",
+
+    const [doctorInfo, setDoctorInfo] = useState({
+        firstName: "",
         lastName: "",
-        email: ""})
+        email: ""
+    })
+
+    const fetchSurvey = async (idQuestionnary) => {
+        console.log(idQuestionnary);
+        const docRef = doc(db, "questionnaires", idQuestionnary);
+        const docSnap = await getDoc(docRef);
+    
+        if (docSnap.exists()) {
+            setSurvey( docSnap.data())
+            setInfosModified(docSnap.data());    
+        }
+
+    
+    } 
 
     const fetchDoctor = async (e) => {
         e.preventDefault();
         const email = e.target[0].value;
         try {
-            let q = query(collection(db, "users"), where("email", "==", email)  , where("idRole","==",4) );
+            let q = query(collection(db, "users"), where("email", "==", email), where("idRole", "==", 4));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
-                setDoctorInfo({ ...doc.data(), id: doc.id});
+                setDoctorInfo({ ...doc.data(), id: doc.id });
             });
-            
-            if(querySnapshot.empty) {
+
+            if (querySnapshot.empty) {
                 console.log("Empty")
-                setDoctorInfo({firstName: "",
-                lastName: "",
-                email: ""}) 
+                setDoctorInfo({
+                    firstName: "",
+                    lastName: "",
+                    email: ""
+                })
             }
 
-        }catch (error) {
+        } catch (error) {
             console.error(error);
         }
     }
 
-    const addDoctor = async (e) =>{
-        let mySurveyId = await getMyDoc(idUser);
+    const addDoctor = async (e) => {
         console.log("doctor added");
         console.log(doctorInfo.id);
-        console.log(mySurveyId);
-        const docRef = await addDoc(collection(db, "doctorAccess"), {"doctorId":doctorInfo.id , "surveyId":mySurveyId , "userID": idUser, "doctorAccept" : 0, date : new Date()});
+        console.log(params.id);
+        const docRef = await addDoc(collection(db, "doctorAccess"), { "doctorId": doctorInfo.id, "surveyId": params.id, "userID": idUser, "doctorAccept": 0, date: new Date() });
     }
 
     return (
@@ -109,29 +129,29 @@ export default function Results() {
             </div>
             <form onSubmit={fetchDoctor}>
                 <div className="userSearch">
-                <h2>send your results to a doctor</h2>
+                    <h2>send your results to a doctor</h2>
 
-                    <input className="effect" type="text" placeholder="Enter E-Mail Address"/>
-                        <input className="buttonHome" style={{height: "50px"}} type="submit" value="Search User"/>
+                    <input className="effect" type="text" placeholder="Enter E-Mail Address" />
+                    <input className="buttonHome" style={{ height: "50px" }} type="submit" value="Search User" />
                 </div>
-            <table className="user">
-                <thead>
-                    <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{doctorInfo.firstName}</td>
-                        <td>{doctorInfo.lastName}</td>
-                        <td>{doctorInfo.email}</td>
-                        {doctorInfo.email !== "" ? <td><button><img alt="test" height="30" src={add}  onClick={addDoctor}  /></button></td> : <td></td>}
-                    </tr>
-                </tbody>
-            </table>
+                <table className="user">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{doctorInfo.firstName}</td>
+                            <td>{doctorInfo.lastName}</td>
+                            <td>{doctorInfo.email}</td>
+                            {doctorInfo.email !== "" ? <td><button><img alt="test" height="30" src={add} onClick={addDoctor} /></button></td> : <td></td>}
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
 
@@ -139,13 +159,12 @@ export default function Results() {
 }
 
 
-function ResultContainer({ title, infarctus, cancer, diabete ,urlHealthy , urlSick}) {
+function ResultContainer({ title, infarctus, cancer, diabete, urlHealthy, urlSick }) {
     let url = urlHealthy
-    if(infarctus + cancer + diabete >= 120)
-    {
+    if (infarctus + cancer + diabete >= 120) {
         url = urlSick;
     }
-    else{
+    else {
         url = urlHealthy;
     }
 
@@ -230,8 +249,8 @@ function ChangeHabits({ habits, setHabits }) {
             </div>
 
             <div>
-            
-    </div>
+
+            </div>
 
 
 
@@ -240,7 +259,7 @@ function ChangeHabits({ habits, setHabits }) {
     );
 }
 
-async function getMyDoc(idUser) {
+/* async function getMyDoc(idUser) {
     const myQuery = query(collection(db, "questionnaires"), where("userID", "==", idUser));
 
     let latestseconds = 0;
@@ -265,4 +284,6 @@ async function getMyDoc(idUser) {
     }
 
     return resultData;
-}
+} */
+
+
