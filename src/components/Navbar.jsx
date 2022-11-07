@@ -49,6 +49,27 @@ export default function Navbar() {
                     <Link className="links" to="/homeAdmin" style={{textDecoration: 'none'}}>Home</Link>
                 </li>
             </ul>
+        }else if(auth.currentUser && role.idRole === 4) {
+            return <ul>
+                <Link to="/home">
+                    <img className="logo_app" src={logo} alt="Logo"/>
+                </Link>
+                <li>
+                    <Link className="links" to="/logout" style={{textDecoration: 'none'}}>Logout</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/questionnaires" style={{textDecoration: 'none'}}>See Patient Questionnaires</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/newRequest" style={{textDecoration: 'none'}}>Check new Requests</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/account" style={{textDecoration: 'none'}}>My profile</Link>
+                </li>
+                <li>
+                    <Link className="links" to="/homeDoctor" style={{textDecoration: 'none'}}>Home</Link>
+                </li>
+            </ul>
         }
         return <ul>
             <Link to="/home">

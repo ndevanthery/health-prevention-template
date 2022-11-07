@@ -17,6 +17,9 @@ import AddDoctor from "./pages/Admin/AddDoctor";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
 import History from "./pages/History";
 import HistoryDetails from "./pages/HistoryDetails";
+import HomeDoctor from "./pages/Doctor/HomeDoctor";
+import Questionnaires from "./pages/Doctor/Questionnaires";
+import NewRequests from "./pages/Doctor/NewRequests";
 import Page404 from "./pages/Page404";
 import Footer from './pages/Footer'
 
@@ -86,6 +89,9 @@ export default function App() {
           <Route path="/normalVal" element={<NormalValues />}/>
           <Route path="/addDoctor" element={<AddDoctor />}/>
 
+          <Route path="/homeDoctor" element={<HomeDoctor />}/>
+          <Route path="/questionnaires" element={<Questionnaires />}/>
+          <Route path="/newRequest" element={<NewRequests />}/>
           {/* Page 404 */}
           <Route path="*" element={<Page404 />}/>
 

@@ -35,7 +35,7 @@ export default function HomeAdmin() {
     }
 
     return (
-        <div>
+        <div className="mainDiv">
             <h1>Welcome back Admin</h1>
             <h2>What do you want to do?</h2>
 

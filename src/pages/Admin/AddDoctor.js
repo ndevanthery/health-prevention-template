@@ -77,7 +77,7 @@ export default function AddDoctor() {
     }
 
     return (
-        <div>
+        <div className="mainDiv">
             <h1>Create a new Doctor</h1>
             <form onSubmit={fetchUser}>
                 <div className="userSearch">

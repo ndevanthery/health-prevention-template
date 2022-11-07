@@ -109,7 +109,7 @@ export default function NormalValues() {
     };
 
     return (
-        <div>
+        <div className="mainDiv">
             <h1>Edit Normal Values</h1>
             <div className="alert success" style={{opacity: opacityAlert}}>
                 <p className="inner">
@@ -124,38 +124,38 @@ export default function NormalValues() {
                                 <h2>Diabetes Values Men</h2>
                                 <div className="divValues">
                                     <label>Age under 45 </label>
-                                    <input type="number" value={nValues.diabeteMAge45} name="diabeteMAge45" onChange={handleChange}/>
+                                    <input type="number" value={nValues.diabeteMAge45} name="diabeteMAge45" onChange={handleChange} required/>
 
                                     <label>Age 45-55 </label>
-                                    <input type="number"  value={nValues.diabeteMAge4555} name="diabeteMAge4555" onChange={handleChange}/>
+                                    <input type="number"  value={nValues.diabeteMAge4555} name="diabeteMAge4555" onChange={handleChange} required/>
 
                                     <label>Age over 55 </label>
-                                    <input type="number" value={nValues.diabeteMAge55} name="diabeteMAge55" onChange={handleChange}/>
+                                    <input type="number" value={nValues.diabeteMAge55} name="diabeteMAge55" onChange={handleChange} required/>
 
                                     <label>BMI 20-27 </label>
-                                    <input type="number" value={nValues.diabeteMBmi2027} name="diabeteMBmi2027" onChange={handleChange}/>
+                                    <input type="number" value={nValues.diabeteMBmi2027} name="diabeteMBmi2027" onChange={handleChange} required/>
 
                                     <label>BMI 27-30 </label>
-                                    <input type="number" value={nValues.diabeteMBmi2730} name="diabeteMBmi2730" onChange={handleChange}/>
+                                    <input type="number" value={nValues.diabeteMBmi2730} name="diabeteMBmi2730" onChange={handleChange} required/>
 
                                     <label>BMI over 30 </label>
-                                    <input type="number" value={nValues.diabeteMBmi30} name="diabeteMBmi30" onChange={handleChange}/>
+                                    <input type="number" value={nValues.diabeteMBmi30} name="diabeteMBmi30" onChange={handleChange} required/>
 
                                     <label>Additional Waist Coefficient  </label>
                                     <input type="number" value={nValues.diabeteMAdditionalWaistCoefficient} name="diabeteMAdditionalWaistCoefficient"
-                                           onChange={handleChange}/>
+                                           onChange={handleChange} required/>
 
                                     <label>Hypertension </label>
-                                    <input type="number" value={nValues.diabeteMHypertension} name="diabeteMHypertension" onChange={handleChange}/>
+                                    <input type="number" value={nValues.diabeteMHypertension} name="diabeteMHypertension" onChange={handleChange} required/>
 
                                     <label>High Blood Sugar </label>
-                                    <input type="number" value={nValues.diabeteMHighBloodSugar} name="diabeteMHighBloodSugar" onChange={handleChange}/>
+                                    <input type="number" value={nValues.diabeteMHighBloodSugar} name="diabeteMHighBloodSugar" onChange={handleChange} required/>
 
                                     <label>Sport </label>
-                                    <input type="number" value={nValues.diabeteMSport} name="diabeteMSport" onChange={handleChange}/>
+                                    <input type="number" value={nValues.diabeteMSport} name="diabeteMSport" onChange={handleChange} required/>
 
                                     <label>Alimentation </label>
-                                    <input type="number" step="0.1" value={nValues.diabeteMAlim} name="diabeteMAlim" onChange={handleChange}/>
+                                    <input type="number" step="0.1" value={nValues.diabeteMAlim} name="diabeteMAlim" onChange={handleChange} required/>
                                 </div>
                             </div>
                         </div>
@@ -163,38 +163,38 @@ export default function NormalValues() {
                             <h2>Diabetes Values Woman</h2>
                             <div className="divValues">
                                 <label>Age under 45 </label>
-                                <input type="number" value={nValues.diabeteWAge45} name="diabeteWAge45" onChange={handleChange}/>
+                                <input type="number" value={nValues.diabeteWAge45} name="diabeteWAge45" onChange={handleChange} required/>
 
                                 <label>Age 45-55 </label>
-                                <input type="number"  value={nValues.diabeteWAge4555} name="diabeteWAge4555" onChange={handleChange}/>
+                                <input type="number"  value={nValues.diabeteWAge4555} name="diabeteWAge4555" onChange={handleChange} required/>
 
                                 <label>Age over 55 </label>
-                                <input type="number" value={nValues.diabeteWAge55} name="diabeteWAge55" onChange={handleChange}/>
+                                <input type="number" value={nValues.diabeteWAge55} name="diabeteWAge55" onChange={handleChange} required/>
 
                                 <label>BMI 20-27 </label>
-                                <input type="number" value={nValues.diabeteWBmi2027} name="diabeteWBmi2027" onChange={handleChange}/>
+                                <input type="number" value={nValues.diabeteWBmi2027} name="diabeteWBmi2027" onChange={handleChange} required/>
 
                                 <label>BMI 27-30 </label>
-                                <input type="number" value={nValues.diabeteWBmi2730} name="diabeteWBmi2730" onChange={handleChange}/>
+                                <input type="number" value={nValues.diabeteWBmi2730} name="diabeteWBmi2730" onChange={handleChange} required/>
 
                                 <label>BMI over 30 </label>
-                                <input type="number" value={nValues.diabeteWBmi30} name="diabeteWBmi30" onChange={handleChange}/>
+                                <input type="number" value={nValues.diabeteWBmi30} name="diabeteWBmi30" onChange={handleChange} required/>
 
                                 <label>Additional Waist Coefficient  </label>
                                 <input type="number" value={nValues.diabeteWAdditionalWaistCoefficient} name="diabeteWAdditionalWaistCoefficient"
-                                       onChange={handleChange}/>
+                                       onChange={handleChange} required/>
 
                                 <label>Hypertension </label>
-                                <input type="number" value={nValues.diabeteWHypertension} name="diabeteWHypertension" onChange={handleChange}/>
+                                <input type="number" value={nValues.diabeteWHypertension} name="diabeteWHypertension" onChange={handleChange} required/>
 
                                 <label>High Blood Sugar </label>
-                                <input type="number" value={nValues.diabeteWHighBloodSugar} name="diabeteWHighBloodSugar" onChange={handleChange}/>
+                                <input type="number" value={nValues.diabeteWHighBloodSugar} name="diabeteWHighBloodSugar" onChange={handleChange} required/>
 
                                 <label>Sport </label>
-                                <input type="number" value={nValues.diabeteWSport} name="diabeteWSport" onChange={handleChange}/>
+                                <input type="number" value={nValues.diabeteWSport} name="diabeteWSport" onChange={handleChange} required/>
 
                                 <label>Alimentation </label>
-                                <input type="number" step="0.1" value={nValues.diabeteWAlim} name="diabeteWAlim" onChange={handleChange}/>
+                                <input type="number" step="0.1" value={nValues.diabeteWAlim} name="diabeteWAlim" onChange={handleChange} required/>
                             </div>
                         </div>
                         <div>
@@ -202,69 +202,69 @@ export default function NormalValues() {
                             <div className="divValues">
                                 <label htmlFor="infarctusAge">Age </label>
                                 <input type="number" min="30" max="90" value={nValues.infarctusAge} name="infarctusAge"
-                                       onChange={handleChange}/>
+                                       onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusGender">Gender </label>
                                 <input type="number" min="0" max="1" value={nValues.infarctusGender}
-                                       name="infarctusGender" onChange={handleChange}/>
+                                       name="infarctusGender" onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusSmoking">Smoking </label>
                                 <input type="number" min="0" max="1" value={nValues.infarctusSmoking}
-                                       name="infarctusSmoking" onChange={handleChange}/>
+                                       name="infarctusSmoking" onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusSyst">Systolic mmHg </label>
                                 <input type="number" min="90" max="200" value={nValues.infarctusSyst}
-                                       name="infarctusSyst" onChange={handleChange}/>
+                                       name="infarctusSyst" onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusDM">Diabetes </label>
                                 <input type="number" min="0" max="1" value={nValues.infarctusDM} name="infarctusDM"
-                                       onChange={handleChange}/>
+                                       onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusINF">Infarct </label>
                                 <input type="number" min="0" max="1" value={nValues.infarctusINF} name="infarctusINF"
-                                       onChange={handleChange}/>
+                                       onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusCHOL">Cholesterol mmol/l </label>
                                 <input type="number" min="2.5" max="8" step="0.1" value={nValues.infarctusCHOL}
-                                       name="infarctusCHOL" onChange={handleChange}/>
+                                       name="infarctusCHOL" onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusHDL">HDL mmol/l </label>
                                 <input type="number" min="0.1" max="2.5" step="0.1" value={nValues.infarctusHDL}
-                                       name="infarctusHDL" onChange={handleChange}/>
+                                       name="infarctusHDL" onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusCHOL0">Cholesterol mmol/l 2 </label>
                                 <input type="number" step="0.1" value={nValues.infarctusCHOL0} name="infarctusCHOL0"
-                                       onChange={handleChange}/>
+                                       onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusEGRF">eGRF ml/min </label>
                                 <input type="number" step="0.1" value={nValues.infarctusEGRF} name="infarctusEGRF"
-                                       onChange={handleChange}/>
+                                       onChange={handleChange} required/>
 
                                 <label htmlFor="infarctusCRP">CRP mg/l </label>
                                 <input type="number" step="0.1" value={nValues.infarctusCRP} name="infarctusCRP"
-                                       onChange={handleChange}/>
+                                       onChange={handleChange} required/>
                             </div>
                         </div>
                         <div>
                             <h2>Non Infarct Values</h2>
                             <div className="divValues">
                                 <label>Age </label>
-                                <input type="number" value={nValues.nInfarctusAge} name="nInfarctusAge" onChange={handleChange}/>
+                                <input type="number" value={nValues.nInfarctusAge} name="nInfarctusAge" onChange={handleChange} required/>
 
                                 <label>Smoking </label>
-                                <input type="number" min="0" max="1" value={nValues.nInfarctusSmoking} name="nInfarctusMSmoking" onChange={handleChange}/>
+                                <input type="number" min="0" max="1" value={nValues.nInfarctusSmoking} name="nInfarctusMSmoking" onChange={handleChange} required/>
 
                                 <label>Systolic mmHg </label>
-                                <input type="number" min="90" max="200" value={nValues.nInfarctusSyst} name="nInfarctusMSyst" onChange={handleChange}/>
+                                <input type="number" min="90" max="200" value={nValues.nInfarctusSyst} name="nInfarctusMSyst" onChange={handleChange} required/>
 
                                 <label>Cholesterol mmol/l </label>
-                                <input type="number" min="2.5" max="8" step="0.1" value={nValues.nInfarctusCHOL} name="nInfarctusMCHOL" onChange={handleChange}/>
+                                <input type="number" min="2.5" max="8" step="0.1" value={nValues.nInfarctusCHOL} name="nInfarctusMCHOL" onChange={handleChange} required/>
 
                                 <label>HDL mmol/l </label>
-                                <input type="number" min="0.1" max="2.5" step="0.1" value={nValues.nInfarctusHDL} name="nInfarctusMHDL" onChange={handleChange}/>
+                                <input type="number" min="0.1" max="2.5" step="0.1" value={nValues.nInfarctusHDL} name="nInfarctusMHDL" onChange={handleChange} required/>
 
                                 <label>Parents Infarct </label>
-                                <input type="number" min="0" max="1" value={nValues.nInfarctusAfinf} name="nInfarctusMAfinf" onChange={handleChange}/>
+                                <input type="number" min="0" max="1" value={nValues.nInfarctusAfinf} name="nInfarctusMAfinf" onChange={handleChange} required/>
                             </div>
                         </div>
                     </div>
