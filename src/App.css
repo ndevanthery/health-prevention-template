@@ -13,17 +13,6 @@ Alex Mae.App {
     }
 }
 
-/*.App-header {*/
-/*    background-color: #282c34;*/
-/*    min-height: 100vh;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    font-size: calc(10px + 2vmin);*/
-/*    color: white;*/
-/*}*/
-
 .App-link {
     color: #61dafb;
 }
@@ -38,19 +27,36 @@ Alex Mae.App {
 }
 
 /*******************************************
+                 Footer
+/******************************************/
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #8DC6FF;
+    color: white;
+    text-align: center;
+}
+
+.footerText {
+    font-size: 13px;
+}
+
+/*******************************************
                  Navbar
 /******************************************/
 
 .iconNav {
     -webkit-transition: all 0.25s;
-    position: absolute;
+    position: relative;
     width: 30px;
     height: 1px;
     left: 15px;
     top: 30px;
     background-color: white;
 }
-
 
 
 /*******************************************
@@ -62,7 +68,7 @@ Alex Mae.App {
     margin-left: 2%;
     float: left;
     width: 50%;
-    border-radius: 20%;
+    border-radius: 10%;
 }
 
 .imageDivHomePage {
@@ -73,12 +79,30 @@ Alex Mae.App {
 
 @media screen and (max-width: 700px) {
     .mainDivHomePage {
-        width: 100%;
+        width: 90%;
+        margin-left: 3%;
+        margin-right: 3%;
     }
     .imageDivHomePage {
-        width: 100%;
+        width: 90%;
+        margin-bottom: 10%;
     }
 }
+
+@media screen and (max-width: 400px) {
+    .mainDivHomePage {
+        width: 90%;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+    .linkSurvey {
+        /*width: 50%;*/
+        margin-left: 25%;
+        margin-right: 25%;
+        margin-bottom: 10%;
+    }
+}
+
 
 .titleHomePage1 {
     color: #1167b1;
@@ -132,6 +156,13 @@ Alex Mae.App {
     font-size: 17px;
 }
 
+.emailFormInput:focus,
+.passwordFormInput:focus,
+.firstNameFormInput:focus,
+.lastNameFormInput:focus {
+    border-bottom: 2px solid #8DC6FF;
+}
+
 .buttonSubmitForm {
     margin-top: 5%;
     margin-left: 30%;
@@ -153,6 +184,12 @@ Alex Mae.App {
     color: #1167b1;
     text-decoration: none;
     border-radius: 8px;
+}
+
+@media screen and (max-width: 1000px) {
+    .buttonSubmitForm {
+        margin-bottom: 15%;
+    }
 }
 
 /*******************************************
@@ -181,10 +218,18 @@ Alex Mae.App {
     margin-left: 8%;
 }
 
+.noAccountText {
+    margin-bottom: 20%;
+}
+
 @media screen and (max-width: 1000px) {
     .divImageLogin,
     .divInfoLogin {
         width: 100%;
+    }
+
+    .noAccountText {
+
     }
 }
 
@@ -343,4 +388,33 @@ Alex Mae.App {
     transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
 }
 
-/*===========================*/
+/*******************************************
+                History page
+/******************************************/
+
+.mainTitleHistory {
+    color: #1167b1;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+
+.historyList {
+    background: #8DC6FF;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    margin-right: 10%;
+    border-radius: 20px;
+}
+
+.linksHistory {
+    font-weight: bold;
+    padding-left: 1%;
+}
+
+.iconsHistory {
+    margin-left: 1%;
+    width: 4%;
+    border-radius: 50px;
+}

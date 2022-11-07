@@ -1,7 +1,6 @@
 import {signInWithEmailAndPassword} from "firebase/auth";
 import UserFormLogin from "../components/UserFormLogin";
 import {Link, useNavigate} from "react-router-dom";
-import styled from "styled-components";
 import loginBackground from "../images/Login.jpg";
 import {collection, getDocs, query, where} from "firebase/firestore";
 import {auth, db} from "../initFirebase";
@@ -12,7 +11,6 @@ import swal from 'sweetalert';
 export default function Login() {
     const navigate = useNavigate();
     let { idRole, setIdRole} = useContext(RoleContext)
-
 
     const handleLogin = async (e, email, password) => {
         e.preventDefault();
@@ -27,6 +25,9 @@ export default function Login() {
           switch (userRole) {
             case 5:
               navigate("/homeAdmin");
+              return;
+            case 4:
+              navigate("/homeDoctor")
               return;
             default:
               navigate("/");
@@ -69,9 +70,8 @@ export default function Login() {
             {/* Div containing the Login form on the left*/}
             <div className="divInfoLogin">
                 <UserFormLogin handleSubmit={handleLogin} submitButtonLabel="Sign In"/>
-                <br></br>
-                <br></br>
-                <span style={{marginLeft: "20%"}}>Don't have an account? </span>
+                <br/><br/>
+                <span className="noAccountText" style={{marginLeft: "20%"}}>Don't have an account? </span>
                 <Link to="/register" className="App-link">Sign Up</Link>
             </div>
         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from "./Avatar";
 import {auth} from "../initFirebase";
 
-const ModalEditAvatar = ({open, onClose, user}) => {
+const ModalEditProfile = ({open, onClose, user}) => {
     if(!open) return null;
 
     const idUser = auth.currentUser.uid;
@@ -39,4 +39,4 @@ function UpdateAvatarUrl({user}) {
 
 }
 
-export default ModalEditAvatar
+export default ModalEditProfile

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Form, Link, useNavigate } from "react-router-dom";
-import { ThemeConsumer } from "styled-components";
-import { doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
+import React, {useEffect, useState} from "react";
+import { Form,Link, useNavigate} from "react-router-dom";
+import { doc, getDoc, getDocs, query, setDoc, where} from "firebase/firestore";
 import { Textbox } from "react-inputs-validation";
+import imgSurvey from '../images/Survey.jpg'
 
 import { auth, db } from "../initFirebase";
 import "../Survey.css"
+import {collection, addDoc} from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 import Avatar from "../components/Avatar";
 import swal from "sweetalert";
@@ -19,11 +20,7 @@ const type = {
     sport: 3,
     alcohol: 4,
     alim: 5,
-
 }
-
-
-
 
 export default function Survey() {
 
@@ -32,9 +29,11 @@ export default function Survey() {
 
 
 
+
     const [survey, setSurvey] = useState({ sex: "0", age: 40, weight: 80, height: 180, systolic: "1", chol: "1", glyc: 3.5, hdl: 1.9, diabete: "0", infarctus: "1", afInfarctus: "1", afCancer: "1", smoke: "1", alim: "3", alcohol: "2", physical: "3" }, []);
 
     useEffect(() => {
+        getMyDoc(idUser).then(response => setSurvey({...response}));
 
         getMyDoc(idUser).then(response => setSurvey({ ...response }));
 
@@ -78,31 +77,38 @@ export default function Survey() {
 
 
     const questYouList = [
-        { text: "what is your sex?", var: "sex", type: type.sex },
-        { text: "how old are you?", var: "age", type: type.numeric },
-        { text: "how much do you weight?", var: "weight", type: type.numeric },
-        { text: "how tall are you?", var: "height", type: type.numeric },
-        { text: "are you known for high blood pressure ?", var: "systolic", type: type.boolean },
-        { text: "are you known for high cholesterol ?", var: "chol", type: type.boolean },
+        {text: "what is your sex?", var: "sex", type: type.sex},
+        {text: "how old are you?", var: "age", type: type.numeric},
+        {text: "how much do you weight? (in kg)", var: "weight", type: type.numeric},
+        {text: "how tall are you? (in cm)", var: "height", type: type.numeric},
+        {text: "are you known for high blood pressure ?", var: "systolic", type: type.boolean},
+        {text: "are you known for high cholesterol ?", var: "chol", type: type.boolean},
         { text: "what is your glyc level ?", var: "glyc", type: type.numeric },
         { text: "what is your hdl level ?", var: "hdl", type: type.numeric },
 
-        { text: "are you diabetic ?", var: "diabete", type: type.boolean },
-        { text: "have you ever had an infarctus ?", var: "infarctus", type: type.boolean },
+        {text: "are you diabetic ?", var: "diabete", type: type.boolean},
+        {text: "have you ever had an infarctus ?", var: "infarctus", type: type.boolean},
         //{ text: "have you ever had a cerebral attack ?", var: "AVC", type: type.boolean },
     ];
 
     const questFamilyList = [
-
-        { text: "has one of your parent ever had an infarctus (dad before 55 and mom before 65?)", var: "afInfarctus", type: type.boolean },
-        { text: "do you have a close relative who had cancer", var: "afCancer", type: type.boolean },
+        {
+            text: "has one of your parent ever had an infarctus (dad before 55 and mom before 65?)",
+            var: "afInfarctus",
+            type: type.boolean
+        },
+        {text: "do you have a close relative who had cancer", var: "afCancer", type: type.boolean},
     ];
 
     const questHabitsList = [
-        { text: "have you ever smoked regularly? ", var: "smoke", type: type.boolean },
-        { text: "how often do you eat fruits, olive oil, nuts, fat fishes, less meat, less cream, less charcute  ", var: "alim", type: type.alim },
-        { text: "my physical activ is :", var: "physical", type: type.sport },
-        { text: "my alcohol consumption is :", var: "alcohol", type: type.alcohol },
+        {text: "have you ever smoked regularly? ", var: "smoke", type: type.boolean},
+        {
+            text: "how often do you eat fruits, olive oil, nuts, fat fishes, less meat, less cream, less charcute  ",
+            var: "alim",
+            type: type.alim
+        },
+        {text: "my physical activ is :", var: "physical", type: type.sport},
+        {text: "my alcohol consumption is :", var: "alcohol", type: type.alcohol},
 
     ];
 
@@ -155,10 +161,8 @@ export default function Survey() {
                 <button onClick={onClickButton}>calculate results</button>
             </Link> */}
 
-
-        </div>
-
-
+            </div>
+        
     );
 }
 
@@ -199,7 +203,6 @@ function Question({ question, onInputChange, survey, errors }) {
                 <Answer id={question.var} typeAnswer={question.type} inputChange={onInputChange} value={value} error={error} />
             </td>
         </tr>
-
 
     );
 }

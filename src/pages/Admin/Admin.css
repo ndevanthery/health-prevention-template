@@ -1,6 +1,12 @@
 /*Style for all buttons
 Original: https://getcssscan.com/css-buttons-examples
 */
+.mainDiv {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
 .buttonHome {
     display: inline-block;
     text-align: center;
