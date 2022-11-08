@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from "react";
-import { Form,Link, useNavigate} from "react-router-dom";
-import { doc, getDoc, getDocs, query, setDoc, where} from "firebase/firestore";
-import { Textbox } from "react-inputs-validation";
+import {Form, Link, useNavigate} from "react-router-dom";
+import {doc, getDoc, getDocs, query, setDoc, where} from "firebase/firestore";
+import {Textbox} from "react-inputs-validation";
 import imgSurvey from '../images/Survey.jpg'
 
-import { auth, db } from "../initFirebase";
-import "../Survey.css"
+import {auth, db} from "../initFirebase";
+import "../Stylesheets/Survey.css"
 import {collection, addDoc} from "firebase/firestore";
 import Avatar from "../components/Avatar";
 import swal from "sweetalert";
-import { surveySchema } from '../Validation/SurveyValidation';
-import { isEmptyArray, useFormik } from "formik";
-import { isEmpty } from "@firebase/util";
+import {surveySchema} from '../Validation/SurveyValidation';
+import {isEmptyArray, useFormik} from "formik";
+import {isEmpty} from "@firebase/util";
+
 const type = {
     numeric: 0,
     boolean: 1,
@@ -28,57 +29,64 @@ export default function Survey() {
     try {
         idUser = auth.currentUser.uid;
 
-    }
-    catch (error) {
+    } catch (error) {
         idUser = null;
     }
 
 
-
-    const [survey, setSurvey] = useState({ sex: "0", age: 40, weight: 80, height: 180, systolic: "1", chol: "1", glyc: 3.5, hdl: 1.9, diabete: "0", infarctus: "1", afInfarctus: "1", afCancer: "1", smoke: "1", alim: "3", alcohol: "2", physical: "3" }, []);
+    const [survey, setSurvey] = useState({
+        sex: "0",
+        age: 40,
+        weight: 80,
+        height: 180,
+        systolic: "1",
+        chol: "1",
+        glyc: 3.5,
+        hdl: 1.9,
+        diabete: "0",
+        infarctus: "1",
+        afInfarctus: "1",
+        afCancer: "1",
+        smoke: "1",
+        alim: "3",
+        alcohol: "2",
+        physical: "3"
+    }, []);
 
     useEffect(() => {
         getMyDoc(idUser).then(response => setSurvey({...response}));
 
-        getMyDoc(idUser).then(response => setSurvey({ ...response }));
+        getMyDoc(idUser).then(response => setSurvey({...response}));
 
 
     }, []);
 
 
-    const onSubmit = async (values,{ validate }) => {
+    const onSubmit = async (values, {validate}) => {
         //validate(values);
         //alert(JSON.stringify(values, null, 2));
-
 
         var idUser = null
         try {
             idUser = auth.currentUser.uid;
 
-        }
-        catch (error) {
+        } catch (error) {
             idUser = null;
         }
         let date = new Date();
         console.log(values);
-        var surveyUser = { userID: idUser, date: date, ...values };
+        var surveyUser = {userID: idUser, date: date, ...values};
         const docRef = await addDoc(collection(db, "questionnaires"), surveyUser);
 
-    
-        console.log("Document written with ID: ", docRef.id);
 
+        console.log("Document written with ID: ", docRef.id);
 
         // Add success pop up
         swal("We receive your infos!", "Thanks for completing the survey, please have a look at your result"
             , "success");
         navigate(`/results/${docRef.id}`);
 
-
     }
-
-
-
-
 
 
     const questYouList = [
@@ -88,8 +96,8 @@ export default function Survey() {
         {text: "how tall are you? (in cm)", var: "height", type: type.numeric},
         {text: "are you known for high blood pressure ?", var: "systolic", type: type.boolean},
         {text: "are you known for high cholesterol ?", var: "chol", type: type.boolean},
-        { text: "what is your glyc level ?", var: "glyc", type: type.numeric },
-        { text: "what is your hdl level ?", var: "hdl", type: type.numeric },
+        {text: "what is your glyc level ?", var: "glyc", type: type.numeric},
+        {text: "what is your hdl level ?", var: "hdl", type: type.numeric},
 
         {text: "are you diabetic ?", var: "diabete", type: type.boolean},
         {text: "have you ever had an infarctus ?", var: "infarctus", type: type.boolean},
@@ -117,11 +125,10 @@ export default function Survey() {
 
     ];
 
-
     const formik = useFormik({
         initialValues: survey,
         validationSchema: surveySchema,
-        
+
         /*  onSubmit: values => {
              
              alert(JSON.stringify(values, null, 2));
@@ -129,45 +136,71 @@ export default function Survey() {
            }, */
         onSubmit: onSubmit,
 
-
     });
-    
+
 
     return (
+        <>
+            <h1 className="mainTitleSurvey">Fill this survey to get your healt result! </h1>
+            <hr></hr>
+            <div className="survey">
+                <form onSubmit={formik.handleSubmit}>
+                    <table className="table">
+                        <tr>
+                            <td colspan="2"><h2 className="titleSurvey">Questions about you</h2></td>
+                        </tr>
+                        <tr>
+                            <td><br></br></td>
+                        </tr>
+                        {questYouList.map(question => <Question question={question} onInputChange={formik.handleChange}
+                                                                survey={formik.values} errors={formik.errors}/>)}
+                        <tr>
+                            <td><br></br></td>
+                        </tr>
 
-        <div className="survey">
-            <form onSubmit={formik.handleSubmit}>
-                <table className="table">
-                    <tr><td colspan="2"><h2>Questions about you</h2></td></tr>
-                    <tr><td><br></br></td></tr>
-                    {questYouList.map(question => <Question question={question} onInputChange={formik.handleChange} survey={formik.values} errors={formik.errors} />)}
-                    <tr><td><br></br></td></tr>
+                        <tr>
+                            <td colspan="2"><h2 className="titleSurvey">Questions about your family</h2></td>
+                        </tr>
+                        <tr>
+                            <td><br></br></td>
+                        </tr>
 
-                    <tr><td colspan="2"><h2>Questions about your family</h2></td></tr>
-                    <tr><td><br></br></td></tr>
+                        {questFamilyList.map(question => <Question question={question}
+                                                                   onInputChange={formik.handleChange}
+                                                                   survey={formik.values} errors={formik.errors}/>)}
+                        <tr>
+                            <td><br></br></td>
+                        </tr>
 
-                    {questFamilyList.map(question => <Question question={question} onInputChange={formik.handleChange} survey={formik.values} errors={formik.errors} />)}
-                    <tr><td><br></br></td></tr>
+                        <tr>
+                            <td colspan="2"><h2 className="titleSurvey">Questions about your habits</h2></td>
+                        </tr>
+                        <tr>
+                            <td><br></br></td>
+                        </tr>
 
-                    <tr><td colspan="2"><h2>Questions about your habits</h2></td></tr>
-                    <tr><td><br></br></td></tr>
+                        {questHabitsList.map(question => <Question question={question}
+                                                                   onInputChange={formik.handleChange}
+                                                                   survey={formik.values} errors={formik.errors}/>)}
+                    </table>
 
-                    {questHabitsList.map(question => <Question question={question} onInputChange={formik.handleChange} survey={formik.values} errors={formik.errors} />)}
-                </table>
-                <br />
-                <button type="submit" disabled={formik.isSubmitting || !isEmpty(formik.errors) || !formik.dirty}>calculate results</button>
+                    <img src={imgSurvey} className="imageSurvey" style={{width: "30%"}}/>
 
-            </form>
-            <br />
+                    <br></br><br/>
 
+                    <button type="submit" className="buttonSurvey"
+                            disabled={formik.isSubmitting || !isEmpty(formik.errors) || !formik.dirty}>calculate results
+                    </button>
 
+                </form>
+                <br/>
 
-            {/*             <Link to="/results" state={{ infos: survey }} >
+                {/*             <Link to="/results" state={{ infos: survey }} >
                 <button onClick={onClickButton}>calculate results</button>
             </Link> */}
 
             </div>
-        
+        </>
     );
 }
 
@@ -184,50 +217,68 @@ async function getMyDoc(idUser) {
             latestseconds = data.date.seconds;
             resultData = data;
         }
-
-
     });
-    if (resultData === null) {
-        resultData = { sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: 0, infarctus: 1, afInfarctus: 1, afCancer: 1, smoke: 1, alim: 3, alcohol: 2, physical: 3 };
 
+    if (resultData === null) {
+        resultData = {
+            sex: 0,
+            age: 40,
+            weight: 80,
+            height: 180,
+            systolic: true,
+            chol: 3.5,
+            glyc: 3.5,
+            hdl: 1.9,
+            diabete: 0,
+            infarctus: 1,
+            afInfarctus: 1,
+            afCancer: 1,
+            smoke: 1,
+            alim: 3,
+            alcohol: 2,
+            physical: 3
+        };
     }
 
     return resultData;
 }
 
-function Question({ question, onInputChange, survey, errors }) {
+function Question({question, onInputChange, survey, errors}) {
     let value = survey[question.var];
     let error = errors[question.var];
     return (
-
         <tr className="row-question">
             <td className="column-table">
                 {question.text}
             </td>
             <td>
-                <Answer id={question.var} typeAnswer={question.type} inputChange={onInputChange} value={value} error={error} />
+                <Answer id={question.var} typeAnswer={question.type} inputChange={onInputChange} value={value}
+                        error={error}/>
             </td>
         </tr>
 
     );
 }
 
-function Answer({ id, typeAnswer, inputChange, value, error }) {
+function Answer({id, typeAnswer, inputChange, value, error}) {
     switch (typeAnswer) {
         case type.numeric:
             return (
                 <>
-                    <input className={error ? "input-error" : ""} onChange={inputChange} id={id} name={id} type="number" value={value}></input>
+                    <input className={error ? "input-error" : "selectionSurvey"} onChange={inputChange} id={id}
+                           name={id} type="number"
+                           value={value}></input>
                     {error && <p className="error">{error}</p>}
                 </>
-
             );
 
             break;
         case type.boolean:
             return (
                 <>
-                    <select className={error ? "input-error" : ""} name={id} id={id} onChange={inputChange} value={value}>
+                    <select className={error ? "input-error" : "selectionSurvey"} name={id} id={id}
+                            onChange={inputChange}
+                            value={value}>
                         <option value="none" selected disabled hidden>Select an Option</option>
                         <option value="0">No</option>
                         <option value="1">Yes</option>
@@ -241,7 +292,9 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
         case type.sex:
             return (
                 <>
-                    <select className={error ? "input-error" : ""} name={id} id={id} onChange={inputChange} value={value}>
+                    <select className={error ? "input-error" : "selectionSurvey"} name={id} id={id}
+                            onChange={inputChange}
+                            value={value}>
                         <option value="none" selected disabled hidden>Select an Option</option>
                         <option value="0">Female</option>
                         <option value="1">Male</option>
@@ -252,7 +305,9 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
         case type.sport:
             return (
                 <>
-                    <select className={error ? "input-error" : ""} name={id} id={id} onChange={inputChange} value={value}>
+                    <select className={error ? "input-error" : "selectionSurvey"} name={id} id={id}
+                            onChange={inputChange}
+                            value={value}>
                         <option value="none" selected disabled hidden>Select an Option</option>
                         <option value="0">i don't move a lot</option>
                         <option value="1">half an hour 2-3 days a week</option>
@@ -267,7 +322,9 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
         case type.alcohol:
             return (
                 <>
-                    <select className={error ? "input-error" : ""} name={id} id={id} onChange={inputChange} value={value}>
+                    <select className={error ? "input-error" : "selectionSurvey"} name={id} id={id}
+                            onChange={inputChange}
+                            value={value}>
                         <option value="none" selected disabled hidden>Select an Option</option>
                         <option value="0">every day</option>
                         <option value="1">3 to 6 days a week</option>
@@ -283,7 +340,9 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
         case type.alim:
             return (
                 <>
-                    <select className={error ? "input-error" : ""} name={id} id={id} onChange={inputChange} value={value}>
+                    <select className={error ? "input-error" : "selectionSurvey"} name={id} id={id}
+                            onChange={inputChange}
+                            value={value}>
                         <option value="none" selected disabled hidden>Select an Option</option>
                         <option value="0">never</option>
                         <option value="1">some times</option>

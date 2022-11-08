@@ -1,5 +1,6 @@
 import {Link } from "react-router-dom";
 import home1 from '../images/home1.jpg'
+import "../Stylesheets/App.css"
 
 export default function Home() {
 

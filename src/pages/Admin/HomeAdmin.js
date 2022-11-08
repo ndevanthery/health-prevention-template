@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import './Admin.css';
+import '../../Stylesheets/Admin.css';
 import doctor from '../../images/doctor.png'
 import edit from '../../images/editVal.png'
 import {useContext, useEffect} from "react";

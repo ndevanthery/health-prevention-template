@@ -2,13 +2,12 @@ import { Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./initFirebase";
 import {createContext, useEffect, useMemo, useState} from "react";
-import "./App.css";
+import "./Stylesheets/App.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Survey from "./pages/Survey";
 import Navbar from "./components/Navbar";
-import Test from "./pages/Test";
 import Profile from "./pages/Profile";
 import Logout from "./pages/Logout";
 import Results from "./pages/Results";
@@ -82,7 +81,6 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/account" element={<Profile currentUser={currentUser} />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/test" element={<Test />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/results/:id" element={<Results/>} />
           <Route path="/history" element={<History />} />

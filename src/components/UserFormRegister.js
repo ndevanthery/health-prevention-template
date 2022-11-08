@@ -1,5 +1,5 @@
 import {useState} from "react";
-import '../App.css'
+import '../Stylesheets/App.css'
 
 export default function UserFormRegister({handleSubmit, submitButtonLabel}) {
     const [email, setEmail] = useState("");

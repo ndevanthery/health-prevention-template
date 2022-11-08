@@ -14,7 +14,7 @@
   font-weight: bold;
 }
 
-.hr {
+hr {
   margin-right: 10%;
   margin-left: 10%;
   border-top: 8px solid #8DC6FF;
@@ -31,6 +31,7 @@
   display: inline
 }
 
+
 td {
   text-align: left;
   padding-bottom: 10px;
@@ -39,20 +40,23 @@ td {
 input.input-error,
 select.input-error{
   border-color: #fc8181;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .error{
   color: #fc8181;
   font-size: 10px;
 }
+
 .selectionSurvey {
   border-radius: 10px;
   width: 100%;
 }
 
 .buttonSurvey {
-  background: #1167b1;
-  color: white;
+  /*background: #1167b1;*/
+  /*color: white;*/
   padding: 10px;
   text-decoration: none;
   margin-left: 45%;
@@ -74,6 +78,7 @@ select.input-error{
   margin-top: 4%;
   float: right;
 }
+
 
 @media screen and (max-width: 1400px) {
   .imageSurvey {

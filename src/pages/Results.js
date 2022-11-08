@@ -6,7 +6,7 @@ import { Cancer } from "../components/Cancer";
 import { Infarctus } from "../components/Infarctus";
 import { Diabete } from "../components/Diabete";
 import { NonInfarctus } from "../components/NonInfarctus";
-import "../Results.css";
+import "../Stylesheets/Results.css";
 
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";

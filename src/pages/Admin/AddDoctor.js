@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {auth, db} from "../../initFirebase";
-import './Admin.css';
+import '../../Stylesheets/Admin.css';
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import {useContext, useEffect, useState} from "react";
 import doctor from '../../images/updateDoctor.png'

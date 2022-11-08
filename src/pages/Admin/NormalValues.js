@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {doc, getDoc, setDoc } from "firebase/firestore";
 import {auth, db} from "../../initFirebase";
 import {useContext, useEffect, useState} from "react";
-import './Admin.css';
+import '../../Stylesheets/Admin.css';
 import {RoleContext} from "../../App";
 
 
