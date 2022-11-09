@@ -53,10 +53,16 @@ select.input-error{
   border-radius: 10px;
   width: 100%;
 }
+.buttonline{
+  width:100%;
+  text-align: center;
+  display:inline;
+}
 
 .buttonSurvey {
   /*background: #1167b1;*/
   /*color: white;*/
+  display: inline-block;
   padding: 10px;
   text-decoration: none;
   margin-left: 45%;
