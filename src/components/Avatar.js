@@ -31,7 +31,6 @@ export default class Avatar extends React.Component {
             {
                 let propertySplit = properties[i].split("=");
                 this.state[propertySplit[0]] =  propertySplit[1];
-                //this.setState({[propertySplit[0]]: propertySplit[1]});
 
             }
         }

@@ -128,6 +128,7 @@ export default function Results() {
         return ( <div>waiting</div> );
     }
     else{
+        
         const myAvatarSick = new Avatar({ sick: "yes" , avatarURL : user.avatarUrl });
         const myAvatar = new Avatar({ sick: "no" , avatarURL : user.avatarUrl  });
     return (

@@ -13,7 +13,7 @@ import { surveySchema } from "../Validation/SurveyValidation";
 import { isEmptyArray, useFormik } from "formik";
 import { isEmpty } from "@firebase/util";
 
-const type = {
+export const type = {
   numeric: 0,
   boolean: 1,
   sex: 2,
