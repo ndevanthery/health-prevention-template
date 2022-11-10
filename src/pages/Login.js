@@ -10,14 +10,13 @@ import swal from 'sweetalert';
 
 export default function Login() {
     const navigate = useNavigate();
-    let { idRole, setIdRole} = useContext(RoleContext)
+    let { setIdRole} = useContext(RoleContext)
 
     const handleLogin = async (e, email, password) => {
         e.preventDefault();
 
         try {
           await signInWithEmailAndPassword(auth, email, password);
-          console.log("Return: " + await getUserRole(email));
 
           let userRole = await getUserRole(email);
           setIdRole(userRole);
@@ -45,11 +44,9 @@ export default function Login() {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
-                console.log(doc.get("idRole"));
                 idRole = doc.get("idRole");
             });
             if (querySnapshot.empty) {
-                console.log("Empty")
             }
 
         } catch (error) {
@@ -63,7 +60,7 @@ export default function Login() {
 
             {/* Div containing the image on the right */}
             <div className="divImageLogin">
-                <img className="imageLogin" src={loginBackground}
+                <img alt="background" className="imageLogin" src={loginBackground}
                      style={{width: "100%", borderRadius: "10px", padding: "5%"}}/>
             </div>
 

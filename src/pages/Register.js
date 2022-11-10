@@ -1,11 +1,10 @@
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {doc, setDoc} from "firebase/firestore";
 import {auth, db} from "../initFirebase";
-import {Link, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import UserFormRegister from "../components/UserFormRegister";
 import swal from "sweetalert";
 import loginBackground from "../images/Login.jpg";
-import UserFormLogin from "../components/UserFormLogin";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -15,7 +14,6 @@ export default function Register() {
 
         try {
             await createUserWithEmailAndPassword(auth, email, password);
-            console.log("new userid : " + auth.currentUser.uid);
             await handleCreateNewUser(firstName, lastName, email);
             swal("Welcome to our App!", "Thanks for your registration", "success");
             navigate("/");
@@ -26,7 +24,6 @@ export default function Register() {
 
     const handleCreateNewUser = async (firstName, lastName, email) => {
 
-        console.log("auth.currentUser.uid : " + auth.currentUser.uid + " My email is : " + email);
 
         await setDoc(doc(db, "users", auth.currentUser.uid), {
             email: email,
@@ -42,7 +39,7 @@ export default function Register() {
 
                 {/* Div containing the image on the right */}
                 <div className="divImageLogin">
-                    <img className="imageLogin" src={loginBackground}
+                    <img alt="background" className="imageLogin" src={loginBackground}
                          style={{width: "100%", borderRadius: "10px", padding: "5%"}}/>
                 </div>
 

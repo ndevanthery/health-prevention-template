@@ -1,4 +1,3 @@
-import React from "react";
 
 export class Cancer {
     constructor({ afcancer, smoke, height, weight, physical,alim, alcohol }) {
@@ -14,7 +13,7 @@ export class Cancer {
     
 
     #getAfCancerPercent(afcancer) {
-        if(afcancer == 1)
+        if(afcancer === 1)
         {
             return 25
         }
@@ -22,7 +21,7 @@ export class Cancer {
     }
 
     #getSmokePercent(smoke) {
-        if(smoke == 1)
+        if(smoke === 1)
         {
             return 25
         }

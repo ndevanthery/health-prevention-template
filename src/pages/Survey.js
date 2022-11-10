@@ -31,7 +31,7 @@ export default function Survey() {
 
     const [survey, setSurvey] = useState(
         {
-            sex: "0",
+             sex: "0",
             age: 40,
             weight: 80,
             height: 180,
@@ -46,15 +46,14 @@ export default function Survey() {
             smoke: "1",
             alim: "3",
             alcohol: "2",
-            physical: "3",
+            physical: "3", 
         },
         []
     );
 
     useEffect(() => {
         getMyDoc(idUser).then((response) => setSurvey({...response}));
-
-        getMyDoc(idUser).then((response) => setSurvey({...response}));
+   // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onSubmit = async (values, {validate}) => {
@@ -68,11 +67,9 @@ export default function Survey() {
             idUser = null;
         }
         let date = new Date();
-        console.log(values);
         var surveyUser = {userID: idUser, date: date, ...values};
         const docRef = await addDoc(collection(db, "questionnaires"), surveyUser);
 
-        console.log("Document written with ID: ", docRef.id);
 
         // Add success pop up
         swal(
@@ -343,7 +340,7 @@ async function getMyDoc(idUser) {
 
     if (resultData === null) {
         resultData = {
-            sex: 0,
+             sex: 0,
             age: 40,
             weight: 80,
             height: 180,
@@ -358,7 +355,7 @@ async function getMyDoc(idUser) {
             smoke: 1,
             alim: 3,
             alcohol: 2,
-            physical: 3,
+            physical: 3, 
         };
     }
 

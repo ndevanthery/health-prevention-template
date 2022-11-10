@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import image1 from '../images/questionnaire.jpg'
+import {  useParams } from "react-router-dom";
 
 import { Cancer } from "../components/Cancer";
 import { Infarctus } from "../components/Infarctus";
 import { Diabete } from "../components/Diabete";
-import { NonInfarctus } from "../components/NonInfarctus";
 import "../Stylesheets/Results.css";
 
 // Bootstrap CSS
@@ -13,8 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Avatar from "../components/Avatar";
-import { CheckBox } from "react-native-web";
-import { addDoc, collection, doc, DocumentSnapshot, getDoc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../initFirebase";
 import add from '../images/add.png'
 
@@ -51,7 +48,7 @@ export default function Results() {
     useEffect(() => {
         fetchUser();
         fetchSurvey(params.id);
-
+   // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [myInfos_modified, setInfosModified] = useState(survey);
@@ -79,7 +76,6 @@ export default function Results() {
     })
 
     const fetchSurvey = async (idQuestionnary) => {
-        console.log(idQuestionnary);
         const docRef = doc(db, "questionnaires", idQuestionnary);
         const docSnap = await getDoc(docRef);
     
@@ -103,7 +99,6 @@ export default function Results() {
             });
 
             if (querySnapshot.empty) {
-                console.log("Empty")
                 setDoctorInfo({
                     firstName: "",
                     lastName: "",
@@ -117,10 +112,7 @@ export default function Results() {
     }
 
     const addDoctor = async (e) => {
-        console.log("doctor added");
-        console.log(doctorInfo.id);
-        console.log(params.id);
-        const docRef = await addDoc(collection(db, "doctorAccess"), { "doctorId": doctorInfo.id, "surveyId": params.id, "userID": idUser, "doctorAccept": 0, date: new Date() });
+         await addDoc(collection(db, "doctorAccess"), { "doctorId": doctorInfo.id, "surveyId": params.id, "userID": idUser, "doctorAccept": 0, date: new Date() });
     }
 
     if(user === undefined)

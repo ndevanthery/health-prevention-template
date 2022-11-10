@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {doc, updateDoc} from "firebase/firestore";
-import {auth, db} from "../initFirebase";
+import {db} from "../initFirebase";
 
 
 export default class Avatar extends React.Component {
@@ -26,7 +26,6 @@ export default class Avatar extends React.Component {
         if(!(this.props.avatarURL === undefined))
         {
             let properties = this.props.avatarURL.split("?")[1].split("&");
-            console.log(properties.length);
             for(let i=0;i< properties.length ; i++)
             {
                 let propertySplit = properties[i].split("=");
@@ -178,12 +177,10 @@ export default class Avatar extends React.Component {
     handleUpdateURL = async (event) => {
             event.preventDefault();
 
-            console.log("User id from props: " +auth.currentUser.uid);
             let newURL = this.buildApiUrl();
 
             await this.updateURL(newURL);
 
-            console.log("Encore un test d'url... " +this.state.avatarUrl);
 
             //handle update of db
             const userRef = doc(db, "users", this.props.idUser);
@@ -202,8 +199,7 @@ export default class Avatar extends React.Component {
         if(this.state.sick === "yes") {
             url = "https://avatars.dicebear.com/api/avataaars/2.svg?top="+this.state.top
                 + "&hairColor="+this.state.topColor+ "&clothes=" + this.state.clothes
-                + "&clothesColor="+ this.state.clothesColor + "&eyes=cry"
-                + "&eyebrow=sad" + "&mouth=sad" + "&skin=" + this.state.skin
+                + "&clothesColor="+ this.state.clothesColor + "&eyes=cry&eyebrow=sad&mouth=sad&skin=" + this.state.skin
                 + "&background=red";
 
             return url;

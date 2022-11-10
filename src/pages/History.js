@@ -13,6 +13,7 @@ export default function History() {
     useEffect(() => {
         checkLogin();
         getMyDocs().then(response => setMyDocs(response));
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const checkLogin = () => {
@@ -40,7 +41,7 @@ export default function History() {
         <>
             <h1 className="mainTitleHistory">Your surveys history</h1>
             <div>
-                {myDocs.map((doc, index) => <HistLine infos={doc} id={index}/>)
+                {myDocs.map((doc, index) => <HistLine key={index} infos={doc} id={index}/>)
                 }
             </div>
         </>
@@ -59,7 +60,7 @@ function HistLine({infos, id}) {
     return (
         <>
             <div className="historyList" id={id}>
-                <img className="iconsHistory" src={icon}/>
+                <img className="iconsHistory" src={icon} alt="icon"/>
                 <Link className="linksHistory" to={`/history/${infos.id}`} style={{textDecoration: 'none'}}>
                     {"Survey of " + day + "." + month + "." + year + " - " + hour + ":" + minutes}
                 </Link>

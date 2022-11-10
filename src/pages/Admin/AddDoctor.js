@@ -21,11 +21,11 @@ export default function AddDoctor() {
 
     useEffect(() => {
         checkLogin();
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const handleChange= (e) => {
-        const field = e.target.name;
-        const value = e.target.value;
+
         e.target.setAttribute("value",e.target.value)
     }
 
@@ -49,7 +49,6 @@ export default function AddDoctor() {
             });
             SetImgSrc({src: doctor, name: "doctor"});
             if(querySnapshot.empty) {
-                console.log("Empty")
                 setUserInfo({firstName: "",
                 lastName: "",
                 email: ""})
@@ -99,7 +98,7 @@ export default function AddDoctor() {
                         <td>{userInfo.firstName}</td>
                         <td>{userInfo.lastName}</td>
                         <td>{userInfo.email}</td>
-                        {userInfo.email !== "" ? <td><button><img src={imgSrc.src} height="30" onClick={updateRole} /></button></td> : <td></td>}
+                        {userInfo.email !== "" ? <td><button><img alt="update" src={imgSrc.src} height="30" onClick={updateRole} /></button></td> : <td></td>}
                     </tr>
                 </tbody>
             </table>

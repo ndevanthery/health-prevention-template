@@ -12,7 +12,6 @@ export default function Navbar() {
 
 
     const getButtons = (e) => {
-        console.log(role.idRole);
         if (auth.currentUser && role.idRole === 4) // user is a doctor
             {
                 return <ul className="nav-menu">

@@ -1,6 +1,6 @@
 import { auth, db } from "../initFirebase";
 import React, { useState, useEffect } from "react";
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import {Link,  useNavigate} from "react-router-dom";
 import ModalEditProfile from "../components/ModalEditProfile";
 import { BeatLoader } from "react-spinners";
 import History from "./History";
@@ -33,7 +33,6 @@ class User extends React.Component {
                 type={"button"}
                 style={{ background: "none", border: "none" }}
                 onClick={(e) => {
-                  console.log("button edit clicked");
                 }}
               >
               </button>
@@ -133,13 +132,13 @@ export default function Profile() {
             setUser(docSnap.data());
         } else {
             setUser(null);
-            console.log("No such user!");
         }
     };
 
     useEffect(() => {
         catchUser();
         fetchUser();
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 

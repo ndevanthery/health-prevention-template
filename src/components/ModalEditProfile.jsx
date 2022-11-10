@@ -27,10 +27,6 @@ const ModalEditProfile = ({ open, onClose, user }) => {
   );
 };
 
-function UpdateAvatarUrl({ user }) {
-  console.log("Avatar url from CatchAvatarURL: " + user.avatarURL);
-  console.log("Avatar url from Editor: ");
-  //getNewUrl
-}
+
 
 export default ModalEditProfile;
