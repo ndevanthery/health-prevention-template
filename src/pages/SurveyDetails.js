@@ -13,9 +13,10 @@ export default function SurveyDetails() {
     let [data, setData] = useState([]);
 
     useEffect(() => {
-        checkLogin()
-        fetchQuestionnaire()
-    }, [])
+        checkLogin();
+        fetchQuestionnaire();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
 
     const fetchQuestionnaire = async () => {
         const docRef = doc(db, "questionnaires", params.id);
@@ -73,13 +74,14 @@ export default function SurveyDetails() {
     return (
         <div className="history">
             <table className="table">
+                <tbody>
                 <tr>
                     <td colSpan="2"><h2 className="titleSurveyDetails">Questions about you</h2></td>
                 </tr>
                 <tr>
                     <td><br></br></td>
                 </tr>
-                {questYouList.map(question => <Line question={question} answer={0}/>)}
+                {questYouList.map((question , index) => <Line key={index} question={question} />)}
                 <tr>
                     <td><br></br></td>
                 </tr>
@@ -91,7 +93,7 @@ export default function SurveyDetails() {
                     <td><br></br></td>
                 </tr>
 
-                {questFamilyList.map(question => <Line question={question} answer={0}/>)}
+                {questFamilyList.map((question,index) => <Line key={index} question={question} answer={0}/>)}
                 <tr>
                     <td><br></br></td>
                 </tr>
@@ -103,7 +105,8 @@ export default function SurveyDetails() {
                     <td><br></br></td>
                 </tr>
 
-                {questHabitsList.map(question => <Line question={question} answer={0}/>)}
+                {questHabitsList.map((question,index) => <Line key={index} question={question} answer={0}/>)}
+                </tbody>
             </table>
             <br/>  <br/> <br/> <br/>
         </div>
@@ -187,5 +190,6 @@ function AnswerDisplay({typeAnswer, value}) {
                 default:
                     return (<p></p>)
             }
+            default : break;
     }
 }
