@@ -2,109 +2,88 @@ import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 import logo from "../images/Logo.png"
 import {RoleContext} from "../App";
-import {auth, db} from "../initFirebase";
-import {doc, getDoc} from "firebase/firestore";
-import {useState} from "react";
-import {useEffect} from "react";
 import {Container} from "react-bootstrap";
 import "../Stylesheets/Navbar.css"
+import {auth} from "../initFirebase";
 
 export default function Navbar() {
-    let [user, setUser] = useState();
+    const role = useContext(RoleContext);
 
-    useEffect(() => {
-            fetchUser();
-        }, []
-    );
 
-    const fetchUser = async () => {
-        const idUser = auth.currentUser.uid;
 
-        const docRef = doc(db, "users", idUser);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            setUser(await docSnap.data());
-        }
-        return null;
-    };
-
-    const getButtons = () => {
-        console.log(user);
-        if (user) {
-            if (user.idRole === 4) // user is a doctor
+    const getButtons = (e) => {
+        console.log(role.idRole);
+        if (auth.currentUser && role.idRole === 4) // user is a doctor
             {
                 return <ul className="nav-menu">
                     <li className="nav-item">
-                        <a href="/homeDoctor" className="nav-link">Home</a>
+                        <Link className="nav-link" to="/homeDoctor" style={{textDecoration: 'none'}}>Home</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/account" className="nav-link">My Profile</a>
+                        <Link className="nav-link" to="/account" style={{textDecoration: 'none'}}>My Profile</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/newRequest" className="nav-link">Check new requests</a>
+                        <Link className="nav-link" to="/newRequest" style={{textDecoration: 'none'}}>Check New Requests</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/questionnaires" className="nav-link">See Patient Survey</a>
+                        <Link className="nav-link" to="/questionnaires" style={{textDecoration: 'none'}}>See Patient Survey</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/logout" className="nav-link">Log out</a>
+                        <Link className="nav-link" to="/logout" style={{textDecoration: 'none'}}>Logout</Link>
                     </li>
                 </ul>
             }
 
-            if (user.idRole === 5) /// admin
+            if (auth.currentUser && role.idRole === 5) /// admin
             {
                 return <ul className="nav-menu">
                     <li className="nav-item">
-                        <a href="/homeAdmin" className="nav-link">Home</a>
+                        <Link className="nav-link" to="/homeAdmin" style={{textDecoration: 'none'}}>Home</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/addDoctor" className="nav-link">Add new Doctor</a>
+                        <Link className="nav-link" to="/addDoctor" style={{textDecoration: 'none'}}>Add New Doctor</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/normalVal" className="nav-link">Edit Normal Values</a>
+                        <Link className="nav-link" to="/normalVal" style={{textDecoration: 'none'}}>Edit Normal Values</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/logout" className="nav-link">Log out</a>
+                        <Link className="nav-link" to="/logout" style={{textDecoration: 'none'}}>Logout</Link>
                     </li>
                 </ul>
             }
 
-            if (user.idRole === 2) {
+            if (auth.currentUser && role.idRole === 2) {
                 return <ul className="nav-menu">
                     <li className="nav-item">
-                        <a href="/home" className="nav-link">Home</a>
+                        <Link className="nav-link" to="/home" style={{textDecoration: 'none'}}>Home</Link>
                     </li>
                     <li className="nav-item">
-                    <a href="/account" className="nav-link">My profile</a>
+                        <Link className="nav-link" to="/account" style={{textDecoration: 'none'}}>My Profile</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/history" className="nav-link">My history</a>
+                        <Link className="nav-link" to="/history" style={{textDecoration: 'none'}}>My History</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/survey" className="nav-link">Take a Survey</a>
+                        <Link className="nav-link" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/logout" className="nav-link">Log out</a>
+                        <Link className="nav-link" to="/logout" style={{textDecoration: 'none'}}>Logout</Link>
                     </li>
                 </ul>
 
             }
-        } else // no user logged in
-        {
+
             return <ul className="nav-menu">
                 <li className="nav-item">
-                    <a href="/" className="nav-link">Home</a>
+                    <Link className="nav-link" to="/" style={{textDecoration: 'none'}}>Home</Link>
                 </li>
                 <li className="nav-item">
-                    <a href="/login" className="nav-link">Login</a>
+                    <Link className="nav-link" to="/login" style={{textDecoration: 'none'}}>Login</Link>
                 </li>
                 <li className="nav-item">
-                    <a href="/survey" className="nav-link">Take a Survey</a>
+                    <Link className="nav-link" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
                 </li>
             </ul>
-        }
     };
 
     return (
