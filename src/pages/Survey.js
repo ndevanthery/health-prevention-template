@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Form, Link, useNavigate } from "react-router-dom";
-import { doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
-import { Textbox } from "react-inputs-validation";
+import {  useNavigate } from "react-router-dom";
+import { getDocs, query, where } from "firebase/firestore";
 import imgSurvey from "../images/Survey.jpg";
 
 import { auth, db } from "../initFirebase";
 import "../Stylesheets/Survey.css";
 import { collection, addDoc } from "firebase/firestore";
-import Avatar from "../components/Avatar";
 import swal from "sweetalert";
 import { surveySchema } from "../Validation/SurveyValidation";
-import { isEmptyArray, useFormik } from "formik";
+import { useFormik } from "formik";
 import { isEmpty } from "@firebase/util";
 
 export const type = {
@@ -169,11 +167,11 @@ export default function Survey() {
   }
 
   const displayQuest =() => {
-    if (position == 0) { // questions about you
+    if (position === 0) { // questions about you
       return (
         <>
           <tr>
-            <td colspan="2">
+            <td colSpan="2">
               <h2 className="titleSurvey">Questions about you</h2>
             </td>
           </tr>
@@ -184,6 +182,7 @@ export default function Survey() {
           </tr>
           {questYouList.map((question) => (
             <Question
+              key={question.var}
               question={question}
               onInputChange={formik.handleChange}
               survey={formik.values}
@@ -198,12 +197,12 @@ export default function Survey() {
         </>
       );
     }
-    if(position == 1)
+    if(position === 1)
     {
         return (
             <>
             <tr>
-              <td colspan="2">
+              <td colSpan="2">
                 <h2 className="titleSurvey">Questions about your family</h2>
               </td>
             </tr>
@@ -215,6 +214,7 @@ export default function Survey() {
 
             {questFamilyList.map((question) => (
               <Question
+              key={question.var}
                 question={question}
                 onInputChange={formik.handleChange}
                 survey={formik.values}
@@ -229,12 +229,12 @@ export default function Survey() {
             </>
         );
     }
-    if(position == 2)
+    if(position === 2)
     {
         return(
             <>
             <tr>
-              <td colspan="2">
+              <td colSpan="2">
                 <h2 className="titleSurvey">Questions about your habits</h2>
               </td>
             </tr>
@@ -246,6 +246,8 @@ export default function Survey() {
 
             {questHabitsList.map((question) => (
               <Question
+              key={question.var}
+
                 question={question}
                 onInputChange={formik.handleChange}
                 survey={formik.values}
@@ -266,7 +268,10 @@ export default function Survey() {
       <div className="survey">
         <form onSubmit={formik.handleSubmit}>
           <table className="table">
+            <tbody>
             {displayQuest(position)}
+
+            </tbody>
 
             
 
@@ -276,6 +281,7 @@ export default function Survey() {
           <img
             src={imgSurvey}
             className="imageSurvey"
+            alt="imageSurvey"
             style={{ width: "30%" }}
           />
 
@@ -285,14 +291,14 @@ export default function Survey() {
         <div className="btn-group">
             <button
             className="buttonSurvey"
-            disabled={position == 0}
+            disabled={position === 0}
             onClick={backPage}
           
           >back</button>
           <span> </span>
             <button
             className="buttonSurvey"
-            disabled={position == 2}
+            hidden={position === 2}
             onClick={nextPage}
           
           >Next page</button>
@@ -304,6 +310,7 @@ export default function Survey() {
             disabled={
               formik.isSubmitting || !isEmpty(formik.errors) || !formik.dirty
             }
+            hidden={position !== 2}
           >
             calculate results
           </button>
@@ -314,9 +321,6 @@ export default function Survey() {
         </form>
         <br />
 
-        {/*             <Link to="/results" state={{ infos: survey }} >
-                <button onClick={onClickButton}>calculate results</button>
-            </Link> */}
       </div>
     </>
   );
@@ -402,7 +406,6 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
         </>
       );
 
-      break;
     case type.boolean:
       return (
         <>
@@ -422,7 +425,6 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
           {error && <p className="error">{error}</p>}
         </>
       );
-      break;
     case type.sex:
       return (
         <>
@@ -442,7 +444,6 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
           {error && <p className="error">{error}</p>}
         </>
       );
-      break;
     case type.sport:
       return (
         <>
@@ -464,7 +465,6 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
           {error && <p className="error">{error}</p>}
         </>
       );
-      break;
     case type.alcohol:
       return (
         <>
@@ -487,7 +487,6 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
           {error && <p className="error">{error}</p>}
         </>
       );
-      break;
 
     case type.alim:
       return (
@@ -510,6 +509,20 @@ function Answer({ id, typeAnswer, inputChange, value, error }) {
           {error && <p className="error">{error}</p>}
         </>
       );
-      break;
+
+      default :
+        return (
+          <>
+            <input
+              className={error ? "input-error" : "selectionSurvey"}
+              onChange={inputChange}
+              id={id}
+              name={id}
+              type="number"
+              value={value}
+            ></input>
+            {error && <p className="error">{error}</p>}
+          </>
+        );
   }
 }
