@@ -69,8 +69,7 @@ export default function Results() {
     let setHabitsFunc = ({ smoke, alim, physical, alcohol }) => {
         setInfosModified({ ...myInfos_modified, smoke: smoke, alim: alim, physical: physical, alcohol: alcohol });
     };
-    const myAvatarSick = new Avatar({ sick: "yes" });
-    const myAvatar = new Avatar({ sick: "no" });
+
 
 
     const [doctorInfo, setDoctorInfo] = useState({
@@ -124,7 +123,16 @@ export default function Results() {
         const docRef = await addDoc(collection(db, "doctorAccess"), { "doctorId": doctorInfo.id, "surveyId": params.id, "userID": idUser, "doctorAccept": 0, date: new Date() });
     }
 
+    if(user === undefined)
+    {
+        return ( <div>waiting</div> );
+    }
+    else{
+        
+        const myAvatarSick = new Avatar({ sick: "yes" , avatarURL : user.avatarUrl });
+        const myAvatar = new Avatar({ sick: "no" , avatarURL : user.avatarUrl  });
     return (
+        
         <div className="App">
 
             <div className="result-line">
@@ -162,6 +170,7 @@ export default function Results() {
         </div>
 
     );
+    }
 }
 
 
@@ -181,20 +190,20 @@ function ResultContainer({ title, infarctus, cancer, diabete, urlHealthy, urlSic
             <div>
                 infarctus risk : {infarctus.toFixed(1)} %
 
-                <div class="progress">
-                    <div class="progress-bar bg-warning" role="progressbar" style={{ "width": infarctus + "%" }} aria-valuenow={infarctus} aria-valuemin="0" aria-valuemax="100"></div>
+                <div className="progress">
+                    <div className="progress-bar bg-warning" role="progressbar" style={{ "width": infarctus + "%" }} aria-valuenow={infarctus} aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
                 cancer risk : {cancer.toFixed(1)} %
 
-                <div class="progress">
+                <div className="progress">
 
-                    <div class="progress-bar bg-success" role="progressbar" style={{ "width": cancer + "%" }} aria-valuenow={cancer} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar bg-success" role="progressbar" style={{ "width": cancer + "%" }} aria-valuenow={cancer} aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
                 diabete risk : {diabete.toFixed(1)} %
-                <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" style={{ "width": diabete + "%" }} aria-valuenow={diabete} aria-valuemin="0" aria-valuemax="100"></div>
+                <div className="progress">
+                    <div className="progress-bar bg-danger" role="progressbar" style={{ "width": diabete + "%" }} aria-valuenow={diabete} aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
             </div>
@@ -212,7 +221,7 @@ function ChangeHabits({ habits, setHabits }) {
         <div className="results-div">
             <div className="results-title">what if you change your habits ...</div>
             <div className="select-div">
-                <label for="smoke">do you smoke:</label>
+                <label htmlFor="smoke">do you smoke:</label>
 
                 <select onChange={onChangeHandle} className="select-habits" name="smoke" id="smoke" value={habits.smoke}>
                     <option value="1">yes</option>
@@ -221,7 +230,7 @@ function ChangeHabits({ habits, setHabits }) {
             </div>
 
             <div className="select-div">
-                <label for="eating">eating habits</label>
+                <label htmlFor="eating">eating habits</label>
 
                 <select onChange={onChangeHandle} className="select-habits" name="alim" id="alim" value={habits.alim} >
                     <option value="0">very bad</option>
@@ -232,7 +241,7 @@ function ChangeHabits({ habits, setHabits }) {
             </div>
 
             <div className="select-div">
-                <label for="physical">physical activity</label>
+                <label htmlFor="physical">physical activity</label>
 
                 <select onChange={onChangeHandle} className="select-habits" name="physical" id="physical" value={habits.physical}>
                     <option value="0">i don't move a lot</option>
@@ -243,7 +252,7 @@ function ChangeHabits({ habits, setHabits }) {
             </div>
 
             <div className="select-div">
-                <label for="alcohol">do you drink alcohol:</label>
+                <label htmlFor="alcohol">do you drink alcohol:</label>
 
                 <select onChange={onChangeHandle} className="select-habits" name="alcohol" id="alcohol" value={habits.alcohol}>
                     <option value="0">every day</option>

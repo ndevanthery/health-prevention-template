@@ -5,6 +5,8 @@ import {auth, db} from "../initFirebase";
 
 export default class Avatar extends React.Component {
     constructor(props) {
+
+
         super(props);
         this.state = {
             top: "longHair",
@@ -17,14 +19,24 @@ export default class Avatar extends React.Component {
             mouth: "default",
             skin: "pale",
             sick: props.sick,
+            
             // avatarUrl: "",
+        }
+        this.onClose = (avatarUrl)=>{props.onClose(avatarUrl)}
+        if(!(this.props.avatarURL === undefined))
+        {
+            let properties = this.props.avatarURL.split("?")[1].split("&");
+            console.log(properties.length);
+            for(let i=0;i< properties.length ; i++)
+            {
+                let propertySplit = properties[i].split("=");
+                this.state[propertySplit[0]] =  propertySplit[1];
+
+            }
         }
     }
 
-    // componentDidMount() {
-    //     let cUser = auth.currentUser;
-    // }
-
+    onClose;
     //Testing for the results
     sick = [
         {value: "no", text: "No"},
@@ -179,12 +191,12 @@ export default class Avatar extends React.Component {
             await updateDoc(userRef, {
                 avatarUrl: this.state.avatarUrl
             });
+            this.onClose(this.state.avatarUrl);
 
     }
 
     buildApiUrl()
     {
-        console.log("Url from modal: ")
         let url;
         //Testing for resultpage
         if(this.state.sick === "yes") {
