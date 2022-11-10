@@ -4,10 +4,9 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import profileEdit from "../images/profileEdit.png";
 import ModalEditProfile from "../components/ModalEditProfile";
-import { async } from "@firebase/util";
 import { BeatLoader } from "react-spinners";
 import History from "./History";
-import home1 from "../images/home1.jpg";
+import "../Stylesheets/Profile.css";
 
 class User extends React.Component {
   constructor(props) {
@@ -22,8 +21,6 @@ class User extends React.Component {
       <>
         {/*<div className="userWelcome">{formattedWelcome}</div>*/}
         <div className="userDiv" >
-          <div className="User-header">
-
             <p>First name: {this.state.user.firstName}</p>
             <p>Last name: {this.state.user.lastName}</p>
             <p>Email address: {this.state.user.email}</p>
@@ -39,14 +36,7 @@ class User extends React.Component {
                   console.log("button edit clicked");
                 }}
               >
-                {/*<img*/}
-                {/*  src={profileEdit}*/}
-                {/*  alt="Edit profile"*/}
-                {/*  style={{ width: "30px" }}*/}
-                {/*/>*/}
-                {/*<label>Edit your profile</label>*/}
               </button>
-            </div>
           </div>
         </div>
       </>
@@ -78,7 +68,7 @@ function UserFormProfileAvatar({ user , onModalClose }) {
     console.log(avatarUrl);
   };
   return (
-    <>
+    <div className="profileInfosWrapper">
       <div className="profileInfos">
         {/*<User {...user}></User>*/}
 
@@ -95,7 +85,7 @@ function UserFormProfileAvatar({ user , onModalClose }) {
         onClose={onClose}
         user={user}
       />
-    </>
+    </div>
   );
 }
 
@@ -157,10 +147,10 @@ export default function Profile() {
             <div>
               <User user = {user}></User>
             </div>
-
           </div>
-          <div>
-            <img className="historyInProfile"/>
+
+          <div className="historyInProfile">
+            <History />
           </div>
 
         </div>
