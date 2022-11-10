@@ -1,23 +1,29 @@
-import {collection, doc, Firestore, getDoc, getDocs, limit, query, where} from "firebase/firestore";
+import {collection, getDocs, query, where} from "firebase/firestore";
 import {useEffect, useState} from "react";
 import {auth, db} from "../initFirebase";
-import {Link, resolvePath} from "react-router-dom";
+import {Link} from "react-router-dom";
 import icon from "../images/iconHistory.png";
 
 export default function History() {
-
-
-    const idUser = auth.currentUser.uid;
-    /*  let [user, setUser] = useState([]);
- */
-
     let [myDocs, setMyDocs] = useState([]);
-    const myQuery = query(collection(db, "questionnaires"), where("userID", "==", idUser));
+    const myQuery = query(collection(db, "questionnaires"), where("userID", "==", auth.currentUser.uid));
 
-    //then is handling the async function
-    getMyDocs(myQuery).then(response => setMyDocs(response));
+    useEffect(() => {
+        getMyDocs(myQuery).then(response => setMyDocs(response));
+    }, [])
 
-    // return (<div>salut</div>);
+    const getMyDocs = async (myQuery) => {
+        let myList = [];
+        const querySnapshot = await getDocs(myQuery);
+        querySnapshot.forEach((doc) => {
+            let id = doc.id;
+            let data = doc.data();
+            myList.push({id, data});
+
+        });
+        return myList;
+    }
+
 
     if (myQuery.isLoading) {
         return (<div>loading ...</div>);
@@ -26,18 +32,16 @@ export default function History() {
             <>
                 <h1 className="mainTitleHistory">Your surveys history</h1>
                 <div>
-                    {myDocs.map((doc, index) => <HistLine infos={doc}/>)
+                    {myDocs.map((doc, index) => <HistLine infos={doc} id={index}/>)
                     }
                 </div>
             </>
         );
     }
-    ;
-
 }
 
 
-function HistLine({infos}) {
+function HistLine({infos, id}) {
     let myDate = new Date(null);
     myDate.setSeconds(infos.data.date.seconds);
     let year = myDate.getFullYear().toString().padStart(4, '0');
@@ -47,7 +51,7 @@ function HistLine({infos}) {
     let minutes = myDate.getMinutes().toString().padStart(2, '0');
     return (
         <>
-            <div className="historyList">
+            <div className="historyList" id={id}>
                 <img className="iconsHistory" src={icon}/>
                 <Link className="linksHistory" to={`/history/${infos.id}`} style={{textDecoration: 'none'}}>
                     {"Survey of " + day + "." + month + "." + year + " - " + hour + ":" + minutes}
@@ -57,16 +61,4 @@ function HistLine({infos}) {
         
     
     );
-}
-
-async function getMyDocs(myQuery) {
-    let myList = [];
-    const querySnapshot = await getDocs(myQuery);
-    querySnapshot.forEach((doc) => {
-        let id = doc.id;
-        let data = doc.data();
-        myList.push({id, data});
-
-    });
-    return myList;
 }
