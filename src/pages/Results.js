@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import {  useParams } from "react-router-dom";
 
-import { Cancer } from "../components/Cancer";
-import { Infarctus } from "../components/Infarctus";
-import { Diabete } from "../components/Diabete";
+import { Cancer } from "../algorithms/Cancer";
+import { Infarctus } from "../algorithms/Infarctus";
+import { Diabete } from "../algorithms/Diabete";
 import "../Stylesheets/Results.css";
 
 // Bootstrap CSS
