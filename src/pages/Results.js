@@ -69,8 +69,7 @@ export default function Results() {
     let setHabitsFunc = ({ smoke, alim, physical, alcohol }) => {
         setInfosModified({ ...myInfos_modified, smoke: smoke, alim: alim, physical: physical, alcohol: alcohol });
     };
-    const myAvatarSick = new Avatar({ sick: "yes" });
-    const myAvatar = new Avatar({ sick: "no" });
+
 
 
     const [doctorInfo, setDoctorInfo] = useState({
@@ -124,7 +123,16 @@ export default function Results() {
         const docRef = await addDoc(collection(db, "doctorAccess"), { "doctorId": doctorInfo.id, "surveyId": params.id, "userID": idUser, "doctorAccept": 0, date: new Date() });
     }
 
+    if(user === undefined)
+    {
+        return ( <div>waiting</div> );
+    }
+    else{
+        
+        const myAvatarSick = new Avatar({ sick: "yes" , avatarURL : user.avatarUrl });
+        const myAvatar = new Avatar({ sick: "no" , avatarURL : user.avatarUrl  });
     return (
+        
         <div className="App">
 
             <div className="result-line">
@@ -162,6 +170,7 @@ export default function Results() {
         </div>
 
     );
+    }
 }
 
 
