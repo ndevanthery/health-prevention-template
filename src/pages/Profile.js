@@ -1,21 +1,21 @@
 import { auth, db } from "../initFirebase";
-import { doc, getDoc } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
-import profileEdit from "../images/profileEdit.png";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import ModalEditProfile from "../components/ModalEditProfile";
 import { BeatLoader } from "react-spinners";
 import History from "./History";
 import "../Stylesheets/Profile.css";
+import {doc, getDoc} from "firebase/firestore";
 
+
+/**
+  This class handle the user profile and data to display.
+ **/
 class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {user : props.user};
   }
-
-  //handle events...
-
   render() {
     return (
       <>
@@ -44,6 +44,14 @@ class User extends React.Component {
   }
 }
 
+/**
+ *
+ * @param user
+ * @returns {JSX.Element}
+ * @constructor
+ *
+ * This function format the welcome message in case of none registered user
+ */
 function UserWelcomeTitle({user}) {
   let formattedWelcome;
   if (user.firstName != null) {
@@ -59,18 +67,27 @@ function UserWelcomeTitle({user}) {
   )
 }
 
+
+/**
+ *
+ * @param user
+ * @param onModalClose
+ * @returns {JSX.Element}
+ * @constructor
+ *
+ * This class handle the behavior (open or not) of the modal window used to
+ * create or update the user's avatar.
+ * Clicking on the avatar's image open the modal window to edit the avatar
+ */
 function UserFormProfileAvatar({ user , onModalClose }) {
   const [openModalAvatarEdit, setOpenModalAvatarEdit] = useState(false);
   const onClose = (avatarUrl) =>{
     setOpenModalAvatarEdit(false);
     onModalClose(avatarUrl);
-    console.log("user form profile");
-    console.log(avatarUrl);
   };
   return (
     <div className="profileInfosWrapper">
       <div className="profileInfos">
-        {/*<User {...user}></User>*/}
 
         <img
           className="imgProfile"
@@ -89,45 +106,53 @@ function UserFormProfileAvatar({ user , onModalClose }) {
   );
 }
 
+/**
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ * The main function. Called from Route.
+ * Responsible to catch user's data from Firestore DB
+ * Display the web page components
+ */
 export default function Profile() {
-  const [user, setUser] = useState();
-  let idUser = auth.currentUser.uid;
+    const [user, setUser] = useState();
+    const navigate = useNavigate();
 
-  const fetchUser = async () => {
-    const docRef = doc(db, "users", idUser);
-    const docSnap = await getDoc(docRef);
+    let idUser;
+    const catchUser = () => {
+        if (auth.currentUser != null) {
+            idUser = auth.currentUser.uid;
+        } else return navigate('/login');
+    };
 
-    if (docSnap.exists()) {
-      setUser(docSnap.data());
-    } else {
-      setUser(null);
-      console.log("No such user!");
-    }
-  };
+    const fetchUser = async () => {
+        const docRef = doc(db, "users", idUser);
+        const docSnap = await getDoc(docRef);
 
+        if (docSnap.exists()) {
+            setUser(docSnap.data());
+        } else {
+            setUser(null);
+            console.log("No such user!");
+        }
+    };
 
-  const catchUser = () => {
-    if (auth.currentUser == null) return <Navigate to="/Login" />;
-  };
-
-  useEffect(() => {
-    catchUser();
-    fetchUser();
-  }, []);
-
-
-  const onModalClose = (avatarUrl) =>{
-    if(!(avatarUrl === undefined) && !(avatarUrl === null))
-    {
-        let newUser = user;
-        newUser.avatarUrl = avatarUrl;
-        setUser(newUser);
-    }
-    
-  };
+    useEffect(() => {
+        catchUser();
+        fetchUser();
+    }, []);
 
 
-    console.log("user is defined now :)")
+    const onModalClose = (avatarUrl) =>{
+        if(!(avatarUrl === undefined) && !(avatarUrl === null))
+        {
+            let newUser = user;
+            newUser.avatarUrl = avatarUrl;
+            setUser(newUser);
+        }
+
+    };
+
     return user === undefined ? (<div className="App">
     <header className="App-header">
       <div className="center">
@@ -156,8 +181,8 @@ export default function Profile() {
         </div>
       </>
       );
-  
-  
+
+
 }
 
 
