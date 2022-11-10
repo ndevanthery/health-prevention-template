@@ -1,18 +1,30 @@
 import {collection, getDocs, query, where} from "firebase/firestore";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {auth, db} from "../initFirebase";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import icon from "../images/iconHistory.png";
+import {RoleContext} from "../App";
 
 export default function History() {
     let [myDocs, setMyDocs] = useState([]);
-    const myQuery = query(collection(db, "questionnaires"), where("userID", "==", auth.currentUser.uid));
+    const navigate = useNavigate();
+    const role = useContext(RoleContext);
 
     useEffect(() => {
-        getMyDocs(myQuery).then(response => setMyDocs(response));
+        checkLogin();
+        getMyDocs().then(response => setMyDocs(response));
     }, [])
 
-    const getMyDocs = async (myQuery) => {
+    const checkLogin = () => {
+        if (auth.currentUser && role.idRole === 2) {
+
+        } else {
+            navigate("/")
+        }
+    }
+
+    const getMyDocs = async () => {
+        const myQuery = query(collection(db, "questionnaires"), where("userID", "==", auth.currentUser.uid));
         let myList = [];
         const querySnapshot = await getDocs(myQuery);
         querySnapshot.forEach((doc) => {
@@ -24,20 +36,15 @@ export default function History() {
         return myList;
     }
 
-
-    if (myQuery.isLoading) {
-        return (<div>loading ...</div>);
-    } else {
-        return (
-            <>
-                <h1 className="mainTitleHistory">Your surveys history</h1>
-                <div>
-                    {myDocs.map((doc, index) => <HistLine infos={doc} id={index}/>)
-                    }
-                </div>
-            </>
-        );
-    }
+    return (
+        <>
+            <h1 className="mainTitleHistory">Your surveys history</h1>
+            <div>
+                {myDocs.map((doc, index) => <HistLine infos={doc} id={index}/>)
+                }
+            </div>
+        </>
+    );
 }
 
 

@@ -1,15 +1,18 @@
 import {doc, getDoc} from "firebase/firestore";
-import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom"
-import {db} from "../initFirebase";
+import {useContext, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom"
+import {auth, db} from "../initFirebase";
 import { type } from "./Survey";
+import {RoleContext} from "../App";
 
 export default function SurveyDetails() {
-
+    const navigate = useNavigate();
+    const role = useContext(RoleContext);
     let params = useParams();
     let [data, setData] = useState([]);
 
     useEffect(() => {
+        checkLogin()
         fetchQuestionnaire()
     }, [])
 
@@ -19,6 +22,14 @@ export default function SurveyDetails() {
 
         if (docSnap.exists()) {
             setData(await docSnap.data())
+        }
+    }
+
+    const checkLogin = () => {
+        if (auth.currentUser && (role.idRole === 2 || role.idRole === 4)) {
+
+        } else {
+            navigate("/")
         }
     }
 
