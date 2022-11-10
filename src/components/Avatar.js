@@ -5,8 +5,6 @@ import {db} from "../initFirebase";
 
 export default class Avatar extends React.Component {
     constructor(props) {
-
-
         super(props);
         this.state = {
             top: "longHair",
@@ -20,9 +18,11 @@ export default class Avatar extends React.Component {
             skin: "pale",
             sick: props.sick,
             
-            // avatarUrl: "",
         }
+        //redefining the onClose method that is passed into props
         this.onClose = (avatarUrl)=>{props.onClose(avatarUrl)}
+
+        //destructuring the avatarURL to have every infos contained in it
         if(!(this.props.avatarURL === undefined))
         {
             let properties = this.props.avatarURL.split("?")[1].split("&");
@@ -167,6 +167,8 @@ export default class Avatar extends React.Component {
     changeSelection = event => {
         let choice = event.target.value;
         let name = event.target.name;
+
+        //sets the state of the input that changed
         this.setState({[name]: choice});
 
         return;
@@ -195,7 +197,7 @@ export default class Avatar extends React.Component {
     buildApiUrl()
     {
         let url;
-        //Testing for resultpage
+        //for resultpage
         if(this.state.sick === "yes") {
             url = "https://avatars.dicebear.com/api/avataaars/2.svg?top="+this.state.top
                 + "&hairColor="+this.state.topColor+ "&clothes=" + this.state.clothes
@@ -225,7 +227,6 @@ export default class Avatar extends React.Component {
 
     render() {
         return (
-            // btnSubmitAvatar
             <div className="avatarEditor">
 
                 <div>
