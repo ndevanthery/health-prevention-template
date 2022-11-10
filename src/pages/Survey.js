@@ -1,528 +1,523 @@
-import React, { useEffect, useState } from "react";
-import {  useNavigate } from "react-router-dom";
-import { getDocs, query, where } from "firebase/firestore";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {getDocs, query, where} from "firebase/firestore";
 import imgSurvey from "../images/Survey.jpg";
 
-import { auth, db } from "../initFirebase";
+import {auth, db} from "../initFirebase";
 import "../Stylesheets/Survey.css";
-import { collection, addDoc } from "firebase/firestore";
+import {collection, addDoc} from "firebase/firestore";
 import swal from "sweetalert";
-import { surveySchema } from "../Validation/SurveyValidation";
-import { useFormik } from "formik";
-import { isEmpty } from "@firebase/util";
+import {surveySchema} from "../Validation/SurveyValidation";
+import {useFormik} from "formik";
+import {isEmpty} from "@firebase/util";
 
 export const type = {
-  numeric: 0,
-  boolean: 1,
-  sex: 2,
-  sport: 3,
-  alcohol: 4,
-  alim: 5,
+    numeric: 0,
+    boolean: 1,
+    sex: 2,
+    sport: 3,
+    alcohol: 4,
+    alim: 5,
 };
 
 export default function Survey() {
-  const navigate = useNavigate();
-  var idUser = null;
-  try {
-    idUser = auth.currentUser.uid;
-  } catch (error) {
-    idUser = null;
-  }
-
-  const [survey, setSurvey] = useState(
-    {
-      sex: "0",
-      age: 40,
-      weight: 80,
-      height: 180,
-      systolic: "1",
-      chol: "1",
-      glyc: 3.5,
-      hdl: 1.9,
-      diabete: "0",
-      infarctus: "1",
-      afInfarctus: "1",
-      afCancer: "1",
-      smoke: "1",
-      alim: "3",
-      alcohol: "2",
-      physical: "3",
-    },
-    []
-  );
-
-  useEffect(() => {
-    getMyDoc(idUser).then((response) => setSurvey({ ...response }));
-
-    getMyDoc(idUser).then((response) => setSurvey({ ...response }));
-  }, []);
-
-  const onSubmit = async (values, { validate }) => {
-    //validate(values);
-    //alert(JSON.stringify(values, null, 2));
-
+    const navigate = useNavigate();
     var idUser = null;
     try {
-      idUser = auth.currentUser.uid;
+        idUser = auth.currentUser.uid;
     } catch (error) {
-      idUser = null;
+        idUser = null;
     }
-    let date = new Date();
-    console.log(values);
-    var surveyUser = { userID: idUser, date: date, ...values };
-    const docRef = await addDoc(collection(db, "questionnaires"), surveyUser);
 
-    console.log("Document written with ID: ", docRef.id);
-
-    // Add success pop up
-    swal(
-      "We receive your infos!",
-      "Thanks for completing the survey, please have a look at your result",
-      "success"
+    const [survey, setSurvey] = useState(
+        {
+            sex: "0",
+            age: 40,
+            weight: 80,
+            height: 180,
+            systolic: "1",
+            chol: "1",
+            glyc: 3.5,
+            hdl: 1.9,
+            diabete: "0",
+            infarctus: "1",
+            afInfarctus: "1",
+            afCancer: "1",
+            smoke: "1",
+            alim: "3",
+            alcohol: "2",
+            physical: "3",
+        },
+        []
     );
-    navigate(`/results/${docRef.id}`);
-  };
 
-  const questYouList = [
-    { text: "what is your sex?", var: "sex", type: type.sex },
-    { text: "how old are you?", var: "age", type: type.numeric },
-    {
-      text: "how much do you weight? (in kg)",
-      var: "weight",
-      type: type.numeric,
-    },
-    { text: "how tall are you? (in cm)", var: "height", type: type.numeric },
-    {
-      text: "are you known for high blood pressure ?",
-      var: "systolic",
-      type: type.boolean,
-    },
-    {
-      text: "are you known for high cholesterol ?",
-      var: "chol",
-      type: type.boolean,
-    },
-    { text: "what is your glyc level ?", var: "glyc", type: type.numeric },
-    { text: "what is your hdl level ?", var: "hdl", type: type.numeric },
+    useEffect(() => {
+        getMyDoc(idUser).then((response) => setSurvey({...response}));
 
-    { text: "are you diabetic ?", var: "diabete", type: type.boolean },
-    {
-      text: "have you ever had an infarctus ?",
-      var: "infarctus",
-      type: type.boolean,
-    },
-    //{ text: "have you ever had a cerebral attack ?", var: "AVC", type: type.boolean },
-  ];
+        getMyDoc(idUser).then((response) => setSurvey({...response}));
+    }, []);
 
-  let [position , setPosition] = useState(0);
+    const onSubmit = async (values, {validate}) => {
+        //validate(values);
+        //alert(JSON.stringify(values, null, 2));
 
-  const questFamilyList = [
-    {
-      text: "has one of your parent ever had an infarctus (dad before 55 and mom before 65?)",
-      var: "afInfarctus",
-      type: type.boolean,
-    },
-    {
-      text: "do you have a close relative who had cancer",
-      var: "afCancer",
-      type: type.boolean,
-    },
-  ];
+        var idUser = null;
+        try {
+            idUser = auth.currentUser.uid;
+        } catch (error) {
+            idUser = null;
+        }
+        let date = new Date();
+        console.log(values);
+        var surveyUser = {userID: idUser, date: date, ...values};
+        const docRef = await addDoc(collection(db, "questionnaires"), surveyUser);
 
-  const questHabitsList = [
-    {
-      text: "have you ever smoked regularly? ",
-      var: "smoke",
-      type: type.boolean,
-    },
-    {
-      text: "how often do you eat fruits, olive oil, nuts, fat fishes, less meat, less cream, less charcute  ",
-      var: "alim",
-      type: type.alim,
-    },
-    { text: "my physical activ is :", var: "physical", type: type.sport },
-    { text: "my alcohol consumption is :", var: "alcohol", type: type.alcohol },
-  ];
+        console.log("Document written with ID: ", docRef.id);
 
-  const formik = useFormik({
-    initialValues: survey,
-    validationSchema: surveySchema,
+        // Add success pop up
+        swal(
+            "We receive your infos!",
+            "Thanks for completing the survey, please have a look at your result",
+            "success"
+        );
+        navigate(`/results/${docRef.id}`);
+    };
 
-    /*  onSubmit: values => {
-             
-             alert(JSON.stringify(values, null, 2));
-      
-           }, */
-    onSubmit: onSubmit,
-  });
+    const questYouList = [
+        {text: "What is your sex?", var: "sex", type: type.sex},
+        {text: "How old are you?", var: "age", type: type.numeric},
+        {
+            text: "How much do you weight? (in kg)",
+            var: "weight",
+            type: type.numeric,
+        },
+        {text: "How tall are you? (in cm)", var: "height", type: type.numeric},
+        {
+            text: "Are you known for high Blood Pressure ?",
+            var: "systolic",
+            type: type.boolean,
+        },
+        {
+            text: "Are you known for high Cholesterol ?",
+            var: "chol",
+            type: type.boolean,
+        },
+        {text: "What is your glyc level ?", var: "glyc", type: type.numeric},
+        {text: "What is your hdl level ?", var: "hdl", type: type.numeric},
 
-  const nextPage =(event) =>{
-    event.preventDefault();
-    setPosition(position+1);
-  }
+        {text: "Are you diabetic ?", var: "diabete", type: type.boolean},
+        {
+            text: "Have you ever had an Infarctus ?",
+            var: "infarctus",
+            type: type.boolean,
+        },
+        //{ text: "have you ever had a cerebral attack ?", var: "AVC", type: type.boolean },
+    ];
 
-  const backPage = (event) =>{
-    event.preventDefault();
-    setPosition(position-1);
-  }
+    let [position, setPosition] = useState(0);
 
-  const displayQuest =() => {
-    if (position === 0) { // questions about you
-      return (
+    const questFamilyList = [
+        {
+            text: "Has one of your Parents ever had an Infarctus (Dad before 55 and Mom before 65)?",
+            var: "afInfarctus",
+            type: type.boolean,
+        },
+        {
+            text: "Do you have a close Relative who had Cancer?",
+            var: "afCancer",
+            type: type.boolean,
+        },
+    ];
+
+    const questHabitsList = [
+        {
+            text: "Have you ever smoked regularly?",
+            var: "smoke",
+            type: type.boolean,
+        },
+        {
+            text: "How often do you eat Fruits, Olive oil, Nuts, fat Fishes, less Meat, less Cream, less Charcute?",
+            var: "alim",
+            type: type.alim,
+        },
+        {text: "How often are you physically active?", var: "physical", type: type.sport},
+        {text: "How often do you drink alcohol?", var: "alcohol", type: type.alcohol},
+    ];
+
+    const formik = useFormik({
+        initialValues: survey,
+        validationSchema: surveySchema,
+
+        /*  onSubmit: values => {
+
+                 alert(JSON.stringify(values, null, 2));
+
+               }, */
+        onSubmit: onSubmit,
+    });
+
+    const nextPage = (event) => {
+        event.preventDefault();
+        setPosition(position + 1);
+    }
+
+    const backPage = (event) => {
+        event.preventDefault();
+        setPosition(position - 1);
+    }
+
+    const displayQuest = () => {
+        if (position === 0) { // questions about you
+            return (
+                <>
+                    <tr>
+                        <td colSpan="2">
+                            <h2 className="titleSurvey">Questions about you</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br></br>
+                        </td>
+                    </tr>
+                    {questYouList.map((question) => (
+                        <Question
+                            key={question.var}
+                            question={question}
+                            onInputChange={formik.handleChange}
+                            survey={formik.values}
+                            errors={formik.errors}
+                        />
+                    ))}
+                    <tr>
+                        <td>
+                            <br></br>
+                        </td>
+                    </tr>
+                </>
+            );
+        }
+        if (position === 1) {
+            return (
+                <>
+                    <tr>
+                        <td colSpan="2">
+                            <h2 className="titleSurvey">Questions about your family</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br></br>
+                        </td>
+                    </tr>
+
+                    {questFamilyList.map((question) => (
+                        <Question
+                            key={question.var}
+                            question={question}
+                            onInputChange={formik.handleChange}
+                            survey={formik.values}
+                            errors={formik.errors}
+                        />
+                    ))}
+                    <tr>
+                        <td>
+                            <br></br>
+                        </td>
+                    </tr>
+                </>
+            );
+        }
+        if (position === 2) {
+            return (
+                <>
+                    <tr>
+                        <td colSpan="2">
+                            <h2 className="titleSurvey">Questions about your habits</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br></br>
+                        </td>
+                    </tr>
+
+                    {questHabitsList.map((question) => (
+                        <Question
+                            key={question.var}
+
+                            question={question}
+                            onInputChange={formik.handleChange}
+                            survey={formik.values}
+                            errors={formik.errors}
+                        />
+                    ))}
+                </>
+            );
+        }
+    };
+
+    return (
         <>
-          <tr>
-            <td colSpan="2">
-              <h2 className="titleSurvey">Questions about you</h2>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <br></br>
-            </td>
-          </tr>
-          {questYouList.map((question) => (
-            <Question
-              key={question.var}
-              question={question}
-              onInputChange={formik.handleChange}
-              survey={formik.values}
-              errors={formik.errors}
-            />
-          ))}
-          <tr>
-            <td>
-              <br></br>
-            </td>
-          </tr>
-        </>
-      );
-    }
-    if(position === 1)
-    {
-        return (
-            <>
-            <tr>
-              <td colSpan="2">
-                <h2 className="titleSurvey">Questions about your family</h2>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <br></br>
-              </td>
-            </tr>
+            <h1 className="mainTitleSurvey">
+                Fill this survey to get your healt result!{" "}
+            </h1>
+            <hr></hr>
+            <div className="survey">
+                <form onSubmit={formik.handleSubmit}>
+                    <table className="table">
+                        <tbody>
+                        {displayQuest(position)}
 
-            {questFamilyList.map((question) => (
-              <Question
-              key={question.var}
-                question={question}
-                onInputChange={formik.handleChange}
-                survey={formik.values}
-                errors={formik.errors}
-              />
-            ))}
-            <tr>
-              <td>
-                <br></br>
-              </td>
-            </tr>
-            </>
-        );
-    }
-    if(position === 2)
-    {
-        return(
-            <>
-            <tr>
-              <td colSpan="2">
-                <h2 className="titleSurvey">Questions about your habits</h2>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <br></br>
-              </td>
-            </tr>
+                        </tbody>
 
-            {questHabitsList.map((question) => (
-              <Question
-              key={question.var}
 
-                question={question}
-                onInputChange={formik.handleChange}
-                survey={formik.values}
-                errors={formik.errors}
-              />
-            ))}
-            </>
-        );
-    }
-  };
+                    </table>
 
-  return (
-    <>
-      <h1 className="mainTitleSurvey">
-        Fill this survey to get your healt result!{" "}
-      </h1>
-      <hr></hr>
-      <div className="survey">
-        <form onSubmit={formik.handleSubmit}>
-          <table className="table">
-            <tbody>
-            {displayQuest(position)}
+                    <img
+                        src={imgSurvey}
+                        className="imageSurvey"
+                        alt="imageSurvey"
+                        style={{width: "30%"}}
+                    />
 
-            </tbody>
+                    <br></br>
+                    <br/>
 
-            
+                    <div className="btn-group">
+                        <button
+                            className="buttonSurvey"
+                            disabled={position === 0}
+                            onClick={backPage}
 
-            
-          </table>
+                        >back
+                        </button>
+                        <span> </span>
+                        <button
+                            className="buttonSurvey"
+                            hidden={position === 2}
+                            onClick={nextPage}
 
-          <img
-            src={imgSurvey}
-            className="imageSurvey"
-            alt="imageSurvey"
-            style={{ width: "30%" }}
-          />
+                        >Next page
+                        </button>
+                        <span> </span>
+                        <button
+                            type="submit"
 
-          <br></br>
-          <br />
+                            className="buttonSurvey2"
+                            disabled={
+                                formik.isSubmitting || !isEmpty(formik.errors) || !formik.dirty
+                            }
+                            hidden={position !== 2}
+                        >
+                            calculate results
+                        </button>
 
-        <div className="btn-group">
-            <button
-            className="buttonSurvey"
-            disabled={position === 0}
-            onClick={backPage}
-          
-          >back</button>
-          <span> </span>
-            <button
-            className="buttonSurvey"
-            hidden={position === 2}
-            onClick={nextPage}
-          
-          >Next page</button>
-          <span> </span>
-<button 
-            type="submit"
-            
-            className="buttonSurvey"
-            disabled={
-              formik.isSubmitting || !isEmpty(formik.errors) || !formik.dirty
-            }
-            hidden={position !== 2}
-          >
-            calculate results
-          </button>
+                    </div>
+                </form>
+                <br/>
 
             </div>
-      
-          
-        </form>
-        <br />
-
-      </div>
-    </>
-  );
+        </>
+    );
 }
-
 
 
 async function getMyDoc(idUser) {
-  const myQuery = query(
-    collection(db, "questionnaires"),
-    where("userID", "==", idUser)
-  );
+    const myQuery = query(
+        collection(db, "questionnaires"),
+        where("userID", "==", idUser)
+    );
 
-  let latestseconds = 0;
-  let resultData = null;
-  const querySnapshot = await getDocs(myQuery);
+    let latestseconds = 0;
+    let resultData = null;
+    const querySnapshot = await getDocs(myQuery);
 
-  querySnapshot.forEach((doc) => {
-    let data = doc.data();
-    if (data.date.seconds > latestseconds) {
-      latestseconds = data.date.seconds;
-      resultData = data;
+    querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        if (data.date.seconds > latestseconds) {
+            latestseconds = data.date.seconds;
+            resultData = data;
+        }
+    });
+
+    if (resultData === null) {
+        resultData = {
+            sex: 0,
+            age: 40,
+            weight: 80,
+            height: 180,
+            systolic: true,
+            chol: 3.5,
+            glyc: 3.5,
+            hdl: 1.9,
+            diabete: 0,
+            infarctus: 1,
+            afInfarctus: 1,
+            afCancer: 1,
+            smoke: 1,
+            alim: 3,
+            alcohol: 2,
+            physical: 3,
+        };
     }
-  });
 
-  if (resultData === null) {
-    resultData = {
-      sex: 0,
-      age: 40,
-      weight: 80,
-      height: 180,
-      systolic: true,
-      chol: 3.5,
-      glyc: 3.5,
-      hdl: 1.9,
-      diabete: 0,
-      infarctus: 1,
-      afInfarctus: 1,
-      afCancer: 1,
-      smoke: 1,
-      alim: 3,
-      alcohol: 2,
-      physical: 3,
-    };
-  }
-
-  return resultData;
+    return resultData;
 }
 
-function Question({ question, onInputChange, survey, errors }) {
-  let value = survey[question.var];
-  let error = errors[question.var];
-  return (
-    <tr className="row-question">
-      <td className="column-table">{question.text}</td>
-      <td>
-        <Answer
-          id={question.var}
-          typeAnswer={question.type}
-          inputChange={onInputChange}
-          value={value}
-          error={error}
-        />
-      </td>
-    </tr>
-  );
+function Question({question, onInputChange, survey, errors}) {
+    let value = survey[question.var];
+    let error = errors[question.var];
+    return (
+        <tr className="row-question">
+            <td className="column-table">{question.text}</td>
+            <td>
+                <Answer
+                    id={question.var}
+                    typeAnswer={question.type}
+                    inputChange={onInputChange}
+                    value={value}
+                    error={error}
+                />
+            </td>
+        </tr>
+    );
 }
 
-function Answer({ id, typeAnswer, inputChange, value, error }) {
-  switch (typeAnswer) {
-    case type.numeric:
-      return (
-        <>
-          <input
-            className={error ? "input-error" : "selectionSurvey"}
-            onChange={inputChange}
-            id={id}
-            name={id}
-            type="number"
-            value={value}
-          ></input>
-          {error && <p className="error">{error}</p>}
-        </>
-      );
+function Answer({id, typeAnswer, inputChange, value, error}) {
+    switch (typeAnswer) {
+        case type.numeric:
+            return (
+                <>
+                    <input
+                        className={error ? "input-error" : "selectionSurvey"}
+                        onChange={inputChange}
+                        id={id}
+                        name={id}
+                        type="number"
+                        value={value}
+                    ></input>
+                    {error && <p className="error">{error}</p>}
+                </>
+            );
 
-    case type.boolean:
-      return (
-        <>
-          <select
-            className={error ? "input-error" : "selectionSurvey"}
-            name={id}
-            id={id}
-            onChange={inputChange}
-            value={value}
-          >
-            <option value="none" selected disabled hidden>
-              Select an Option
-            </option>
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-          </select>
-          {error && <p className="error">{error}</p>}
-        </>
-      );
-    case type.sex:
-      return (
-        <>
-          <select
-            className={error ? "input-error" : "selectionSurvey"}
-            name={id}
-            id={id}
-            onChange={inputChange}
-            value={value}
-          >
-            <option value="none" selected disabled hidden>
-              Select an Option
-            </option>
-            <option value="0">Female</option>
-            <option value="1">Male</option>
-          </select>
-          {error && <p className="error">{error}</p>}
-        </>
-      );
-    case type.sport:
-      return (
-        <>
-          <select
-            className={error ? "input-error" : "selectionSurvey"}
-            name={id}
-            id={id}
-            onChange={inputChange}
-            value={value}
-          >
-            <option value="none" selected disabled hidden>
-              Select an Option
-            </option>
-            <option value="0">i don't move a lot</option>
-            <option value="1">half an hour 2-3 days a week</option>
-            <option value="2">half an hour 5 days a week</option>
-            <option value="3">more than 2 hours a week</option>
-          </select>
-          {error && <p className="error">{error}</p>}
-        </>
-      );
-    case type.alcohol:
-      return (
-        <>
-          <select
-            className={error ? "input-error" : "selectionSurvey"}
-            name={id}
-            id={id}
-            onChange={inputChange}
-            value={value}
-          >
-            <option value="none" selected disabled hidden>
-              Select an Option
-            </option>
-            <option value="0">every day</option>
-            <option value="1">3 to 6 days a week</option>
-            <option value="2">1 to 2 days a week</option>
-            <option value="3">less than once a week</option>
-            <option value="4">i don't drink</option>
-          </select>
-          {error && <p className="error">{error}</p>}
-        </>
-      );
+        case type.boolean:
+            return (
+                <>
+                    <select
+                        className={error ? "input-error" : "selectionSurvey"}
+                        name={id}
+                        id={id}
+                        onChange={inputChange}
+                        value={value}
+                    >
+                        <option value="none" selected disabled hidden>
+                            Select an Option
+                        </option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                    {error && <p className="error">{error}</p>}
+                </>
+            );
+        case type.sex:
+            return (
+                <>
+                    <select
+                        className={error ? "input-error" : "selectionSurvey"}
+                        name={id}
+                        id={id}
+                        onChange={inputChange}
+                        value={value}
+                    >
+                        <option value="none" selected disabled hidden>
+                            Select an Option
+                        </option>
+                        <option value="0">Female</option>
+                        <option value="1">Male</option>
+                    </select>
+                    {error && <p className="error">{error}</p>}
+                </>
+            );
+        case type.sport:
+            return (
+                <>
+                    <select
+                        className={error ? "input-error" : "selectionSurvey"}
+                        name={id}
+                        id={id}
+                        onChange={inputChange}
+                        value={value}
+                    >
+                        <option value="none" selected disabled hidden>
+                            Select an Option
+                        </option>
+                        <option value="0">I don't move a lot</option>
+                        <option value="1">Half an hour 2-3 days a week</option>
+                        <option value="2">Half an hour 5 days a week</option>
+                        <option value="3">More than 2 hours a week</option>
+                    </select>
+                    {error && <p className="error">{error}</p>}
+                </>
+            );
+        case type.alcohol:
+            return (
+                <>
+                    <select
+                        className={error ? "input-error" : "selectionSurvey"}
+                        name={id}
+                        id={id}
+                        onChange={inputChange}
+                        value={value}
+                    >
+                        <option value="none" selected disabled hidden>
+                            Select an Option
+                        </option>
+                        <option value="0">Every day</option>
+                        <option value="1">3 to 6 days a week</option>
+                        <option value="2">1 to 2 days a week</option>
+                        <option value="3">Less than once a week</option>
+                        <option value="4">I don't drink</option>
+                    </select>
+                    {error && <p className="error">{error}</p>}
+                </>
+            );
 
-    case type.alim:
-      return (
-        <>
-          <select
-            className={error ? "input-error" : "selectionSurvey"}
-            name={id}
-            id={id}
-            onChange={inputChange}
-            value={value}
-          >
-            <option value="none" selected disabled hidden>
-              Select an Option
-            </option>
-            <option value="0">never</option>
-            <option value="1">some times</option>
-            <option value="2">frequently</option>
-            <option value="3">most of the time</option>
-          </select>
-          {error && <p className="error">{error}</p>}
-        </>
-      );
+        case type.alim:
+            return (
+                <>
+                    <select
+                        className={error ? "input-error" : "selectionSurvey"}
+                        name={id}
+                        id={id}
+                        onChange={inputChange}
+                        value={value}
+                    >
+                        <option value="none" selected disabled hidden>
+                            Select an Option
+                        </option>
+                        <option value="0">Never</option>
+                        <option value="1">Some times</option>
+                        <option value="2">Frequently</option>
+                        <option value="3">Most of the time</option>
+                    </select>
+                    {error && <p className="error">{error}</p>}
+                </>
+            );
 
-      default :
-        return (
-          <>
-            <input
-              className={error ? "input-error" : "selectionSurvey"}
-              onChange={inputChange}
-              id={id}
-              name={id}
-              type="number"
-              value={value}
-            ></input>
-            {error && <p className="error">{error}</p>}
-          </>
-        );
-  }
+        default :
+            return (
+                <>
+                    <input
+                        className={error ? "input-error" : "selectionSurvey"}
+                        onChange={inputChange}
+                        id={id}
+                        name={id}
+                        type="number"
+                        value={value}
+                    ></input>
+                    {error && <p className="error">{error}</p>}
+                </>
+            );
+    }
 }
