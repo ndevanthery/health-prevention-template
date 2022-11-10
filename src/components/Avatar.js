@@ -235,7 +235,7 @@ export default class Avatar extends React.Component {
                 <div>
                     <img src={this.buildApiUrl()} height= "200px" alt="Sprite" />
                 </div>
-                    <button className="" onClick={this.handleUpdateURL}>Save Avatar</button>
+                    <button className="btnSubmitAvatar" onClick={this.handleUpdateURL}>Save Avatar</button>
 
                     <div className="avatarEditorOptions">
                     <div>
@@ -306,7 +306,7 @@ export default class Avatar extends React.Component {
                             ))}
                         </select>
                         <div className='avatarEditorLabel'>Sick</div>
-                        <div>(how it would look on the result page)</div>
+                        {/*<div>(how it would look on the result page)</div>*/}
                         <select onChange={this.changeSelection} name="sick" id="sick">
                             {this.sick.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -316,11 +316,6 @@ export default class Avatar extends React.Component {
                         </select>
                     </div>
                 </div>
-                <input
-                    type="checkbox"
-                    onChange={this.toggleSick}
-                />
-
             </div>
             // </form>
         )

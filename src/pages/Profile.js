@@ -6,6 +6,8 @@ import profileEdit from "../images/profileEdit.png";
 import ModalEditProfile from "../components/ModalEditProfile";
 import { async } from "@firebase/util";
 import { BeatLoader } from "react-spinners";
+import History from "./History";
+import home1 from "../images/home1.jpg";
 
 class User extends React.Component {
   constructor(props) {
@@ -16,24 +18,15 @@ class User extends React.Component {
   //handle events...
 
   render() {
-    let formattedWelcome;
-    if (this.props.firstName != null) {
-      formattedWelcome = (
-        <h2 style={{ color: "lightblue" }}>Welcome {this.state.user.firstName}!</h2>
-      );
-    } else {
-      formattedWelcome = <h2>Welcome dear guest!</h2>;
-    }
-
     return (
       <>
-        <div className="userDiv" style={{ backgroundColor: "gray" }}>
+        {/*<div className="userWelcome">{formattedWelcome}</div>*/}
+        <div className="userDiv" >
           <div className="User-header">
-            {formattedWelcome}
+
             <p>First name: {this.state.user.firstName}</p>
             <p>Last name: {this.state.user.lastName}</p>
             <p>Email address: {this.state.user.email}</p>
-            <p>ID: {this.props.uid}</p>
 
             <div>
               <Link to="/logout" className="App-link">
@@ -46,11 +39,11 @@ class User extends React.Component {
                   console.log("button edit clicked");
                 }}
               >
-                <img
-                  src={profileEdit}
-                  alt="Edit profile"
-                  style={{ width: "30px" }}
-                />
+                {/*<img*/}
+                {/*  src={profileEdit}*/}
+                {/*  alt="Edit profile"*/}
+                {/*  style={{ width: "30px" }}*/}
+                {/*/>*/}
                 {/*<label>Edit your profile</label>*/}
               </button>
             </div>
@@ -59,6 +52,21 @@ class User extends React.Component {
       </>
     );
   }
+}
+
+function UserWelcomeTitle({user}) {
+  let formattedWelcome;
+  if (user.firstName != null) {
+    formattedWelcome = (
+        <h2 style={{ color: "#8DC6FF" }}>Welcome {user.firstName}!</h2>
+    );
+  } else {
+    formattedWelcome = <h2>Welcome dear guest!</h2>;
+  }
+
+  return (
+      <div className="userWelcome">{formattedWelcome}</div>
+  )
 }
 
 function UserFormProfileAvatar({ user , onModalClose }) {
@@ -108,11 +116,6 @@ export default function Profile() {
   };
 
 
-
-  
-
-
-
   const catchUser = () => {
     if (auth.currentUser == null) return <Navigate to="/Login" />;
   };
@@ -133,8 +136,7 @@ export default function Profile() {
     
   };
 
-  
-  
+
     console.log("user is defined now :)")
     return user === undefined ? (<div className="App">
     <header className="App-header">
@@ -143,15 +145,26 @@ export default function Profile() {
       </div>
     </header>
   </div>) : (
-        <div>
-          <div>
-            <User user = {user}></User>
+      <>
+        <div className="profileGlobalContainer">
+
+            <UserWelcomeTitle user={user}/>
+
+          <div className="profileContainer">
+            <div>
+              <UserFormProfileAvatar user={user} onModalClose={onModalClose} />
+            </div>
+            <div>
+              <User user = {user}></User>
+            </div>
+
           </div>
-    
           <div>
-            <UserFormProfileAvatar user={user} onModalClose={onModalClose} />
+            <img className="historyInProfile"/>
           </div>
+
         </div>
+      </>
       );
   
   
