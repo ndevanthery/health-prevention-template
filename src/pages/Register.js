@@ -24,12 +24,12 @@ export default function Register() {
 
     const handleCreateNewUser = async (firstName, lastName, email) => {
 
-
         await setDoc(doc(db, "users", auth.currentUser.uid), {
             email: email,
             idRole: 2,
             firstName: firstName,
             lastName: lastName,
+            avatarUrl: "https://avatars.dicebear.com/api/avataaars/2.svg?top=longHair&hairColor=auburn&clothes=blazer&clothesColor=black&eyes=default&eyebrow=default&mouth=default&skin=pale"
         });
     };
 
