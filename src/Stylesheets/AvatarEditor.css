@@ -1,0 +1,35 @@
+.avatarEditorContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    WebkitJustifyContent: center;
+    justify-content: center;
+}
+
+.avatarEditorParam {
+    display:flex;
+    alignItems:center;
+    WebkitJustifyContent:center;
+    padding: 0
+}
+
+@media screen and (max-width: 920px) {
+    .avatarEditorContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        WebkitJustifyContent: center;
+        justify-content: center;
+        padding-bottom: 50px;
+    }
+
+    .avatarEditorParam {
+        position: relative;
+        alignItems:center;
+        WebkitJustifyContent:center;
+        justify-content: center;
+        padding-top: 20px;
+    }
+
+}
+

@@ -4,6 +4,7 @@ import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import swal from "sweetalert";
 import {RoleContext} from "../App";
+import "../Stylesheets/AvatarEditor.css";
 
 export default function AvatarEditor() {
     const navigate = useNavigate();
@@ -200,14 +201,14 @@ export default function AvatarEditor() {
     }
 
     return (
-        <div style={{display:'flex', alignItems:'center', WebkitJustifyContent:'center'}}>
-            <div>
+        <div className="avatarEditorContainer"  >
+            <div className="avatarEditorImg">
                 <img src={buildApiUrl()} height= "500px" alt="Sprite"/>
             </div>
             <div>
                 <div>
-                    <div style={{display:'flex', alignItems:'center', WebkitJustifyContent:'center', padding: 0}}>
-                        <div>
+                    <div className="avatarEditorParam" >
+                        <div className="avatarEditorSelectorCol_1">
                             <h2>Hair</h2>
                             <select onChange={changeSelection} name="top" id="top" value={settings.top}>
                                 {top.map((option, index) => (
@@ -242,7 +243,7 @@ export default function AvatarEditor() {
                             </select>
 
                         </div>
-                        <div style={{marginLeft: "50px"}}>
+                        <div className="avatarEditorSelectorCol_2" style={{marginLeft: "50px"}}>
                             <h2>Mouth</h2>
                             <select onChange={changeSelection} name="mouth" id="mouth" value={settings.mouth}>
                                 {mouth.map((option, index) => (

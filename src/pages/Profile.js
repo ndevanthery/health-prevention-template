@@ -24,16 +24,9 @@ class User extends React.Component {
             <p>Email address: {this.state.user.email}</p>
 
             <div>
-              <Link to="/logout" className="App-link">
+              <Link to="/logout" className="buttonSubmitForm" style={{margin:'0%'}}>
                 Logout
               </Link>
-              <button
-                type={"button"}
-                style={{ background: "none", border: "none" }}
-                onClick={(e) => {
-                }}
-              >
-              </button>
           </div>
         </div>
       </>
@@ -63,7 +56,6 @@ function UserWelcomeTitle({user}) {
       <div className="userWelcome">{formattedWelcome}</div>
   )
 }
-
 
 /**
  *
