@@ -1,4 +1,4 @@
-.results-div{
+.results-div {
     border-radius: 25px;
     padding: 20px;
     margin-top: 20px;
@@ -8,60 +8,58 @@
     font-size: 12px;
     align-content: center;
     text-align: center;
-    border: 2px solid black; 
-  }
-  
-  .results-title{
+    border: 2px solid black;
+}
+
+.user {
+    margin-bottom: 10%;
+}
+
+.results-title {
     font-size: 24px;
     padding: 0px 0px 20px 0px;
-  }
-  
-  .progress{
+}
+
+.progress {
     margin: 10px;
-  }
+}
 
-  @media screen and (min-width: 920px) {
-    .result-line{
-      width: 100%;
-      justify-content: space-evenly;
-      text-align: center;
-  /*     display: inline;
-   */    display:flex;
-      flex-direction: column;
-    }
-
-    @media screen and (min-width: 500px) {
-      .result-line{
-        width: 100%;
-        
-        text-align: center;
-    /*     display: inline;
-     */    display:flex;
-        flex-direction: row;
-      }
-      
-
-    }
-  }
- 
-
-  
-
-  
-  .select-habits{
+.select-habits {
     width: 120px;
     margin: 10px;
-  }
-  
-  .select-div{
+}
+
+.select-div {
     width: 100%;
     display: inline-block;
     align-items: flex-end;
     text-align: end;
     align-self: flex-end;
-  }
+}
 
-  .question{
+.question {
     display: inline-block;
 
-  }
+}
+
+@media screen and (min-width: 920px) {
+    .result-line {
+        width: 100%;
+        justify-content: space-evenly;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media screen and (min-width: 500px) {
+        .result-line {
+            width: 100%;
+
+            text-align: center;
+            /*     display: inline;
+             */
+            display: flex;
+            flex-direction: row;
+        }
+    }
+}

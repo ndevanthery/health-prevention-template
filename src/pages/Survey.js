@@ -257,7 +257,7 @@ export default function Survey() {
     return (
         <>
             <h1 className="mainTitleSurvey">
-                Fill this survey to get your healt result!{" "}
+                Fill this survey to get your health result!{" "}
             </h1>
             <hr></hr>
             <div className="survey">
@@ -287,7 +287,7 @@ export default function Survey() {
                             disabled={position === 0}
                             onClick={backPage}
 
-                        >back
+                        >Back
                         </button>
                         <span> </span>
                         <button
@@ -307,7 +307,7 @@ export default function Survey() {
                             }
                             hidden={position !== 2}
                         >
-                            calculate results
+                            Calculate results
                         </button>
 
                     </div>
