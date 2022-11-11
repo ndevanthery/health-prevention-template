@@ -13,6 +13,7 @@ export default function HomeAdmin() {
 
     useEffect(() => {
         checkLogin();
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const checkLogin = () => {
@@ -25,7 +26,6 @@ export default function HomeAdmin() {
 
 
     const handleClick = (e) => {
-        console.log(e.target.name)
         if (e.target.name === "editBtn") {
             navigate("/normalVal")
 
@@ -39,12 +39,12 @@ export default function HomeAdmin() {
             <h1>Welcome back Admin</h1>
             <h2>What do you want to do?</h2>
 
-            <button name="editBtn" className="buttonHome" role="button" onClick={handleClick}><img className="imgButton"
+            <button name="editBtn" className="buttonHome" onClick={handleClick}><img alt="edit" className="imgButton"
                                                                                                    src={edit}/><br/>Edit
                 normal Values
             </button>
-            <button name="doctorBtn" className="buttonHome" role="button" onClick={handleClick}><img
-                className="imgButton" src={doctor}/><br/>Create a new Doctor
+            <button name="doctorBtn" className="buttonHome" onClick={handleClick}><img
+                alt="doctor" className="imgButton" src={doctor}/><br/>Create a new Doctor
             </button>
         </div>
     )

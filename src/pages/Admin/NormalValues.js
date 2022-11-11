@@ -17,6 +17,7 @@ export default function NormalValues() {
     useEffect(() => {
         checkLogin()
         fetchValues();
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
 
@@ -34,7 +35,6 @@ export default function NormalValues() {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 setNValues({ ...docSnap.data() })
-                console.log("Document data:", docSnap.data());
             } else {
                 console.log("No such document!");
             }
@@ -48,11 +48,9 @@ export default function NormalValues() {
         const field = e.target.name;
         const value = e.target.value;
 
-        console.log(e.target.value)
         e.target.setAttribute("value",e.target.value)
 
         setNValues({[field]: value});
-        console.log("Change")
     }
 
 
@@ -105,7 +103,6 @@ export default function NormalValues() {
         })
 
         setAlertOpacity(1);
-        console.log("Submit")
     };
 
     return (

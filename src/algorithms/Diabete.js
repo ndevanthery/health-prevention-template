@@ -39,7 +39,7 @@ export class Diabete {
     }
 
     #getHighBloodPressurePoints (highBloodPressure) {
-        if(highBloodPressure == 1)
+        if(highBloodPressure === 1)
         {
             return 2;
         }
@@ -47,7 +47,7 @@ export class Diabete {
     }
 
     #getHighBloodSugarPoints(highBloodSugar) {
-        if(highBloodSugar == 1)
+        if(highBloodSugar === 1)
         {
             return 5;
         }

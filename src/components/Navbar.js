@@ -7,12 +7,11 @@ import "../Stylesheets/Navbar.css"
 import {auth} from "../initFirebase";
 
 export default function Navbar() {
+
+    //the navbar depends on the role the user have
     const role = useContext(RoleContext);
 
-
-
     const getButtons = (e) => {
-        console.log(role.idRole);
         if (auth.currentUser && role.idRole === 4) // user is a doctor
             {
                 return <ul className="nav-menu">
@@ -29,12 +28,15 @@ export default function Navbar() {
                         <Link className="nav-link" to="/questionnaires" style={{textDecoration: 'none'}}>See Patient Survey</Link>
                     </li>
                     <li className="nav-item">
+                        <Link className="nav-link" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
+                    </li>
+                    <li className="nav-item">
                         <Link className="nav-link" to="/logout" style={{textDecoration: 'none'}}>Logout</Link>
                     </li>
                 </ul>
             }
 
-            if (auth.currentUser && role.idRole === 5) /// admin
+            if (auth.currentUser && role.idRole === 5) /// user is an admin
             {
                 return <ul className="nav-menu">
                     <li className="nav-item">
@@ -52,7 +54,7 @@ export default function Navbar() {
                 </ul>
             }
 
-            if (auth.currentUser && role.idRole === 2) {
+            if (auth.currentUser && role.idRole === 2) { //user is a patient
                 return <ul className="nav-menu">
                     <li className="nav-item">
                         <Link className="nav-link" to="/home" style={{textDecoration: 'none'}}>Home</Link>
@@ -72,8 +74,8 @@ export default function Navbar() {
                 </ul>
 
             }
-
-            return <ul className="nav-menu">
+            // user is not logged in, so he is a guest
+            return <ul className="nav-menu"> 
                 <li className="nav-item">
                     <Link className="nav-link" to="/" style={{textDecoration: 'none'}}>Home</Link>
                 </li>
@@ -86,6 +88,7 @@ export default function Navbar() {
             </ul>
     };
 
+    
     return (
         <Container>
             <nav className="navbar">
@@ -103,7 +106,7 @@ export default function Navbar() {
     );
 }
 
-
+//to handle the hamburger behavior
 function mobileMenu() {
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");

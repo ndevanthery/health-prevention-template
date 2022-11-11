@@ -22,6 +22,7 @@ import NewRequests from "./pages/Doctor/NewRequests";
 import Page404 from "./pages/Page404";
 import Footer from './pages/Footer'
 import { BeatLoader } from "react-spinners";
+import AvatarEditor from "./pages/AvatarEditor";
 
 
 export const RoleContext = createContext({
@@ -41,7 +42,6 @@ export default function App() {
   /* Watch for authentication state changes */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      // console.log("User is", user);
       setCurrentUser(user);
     });
 
@@ -79,7 +79,8 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/account" element={<Profile currentUser={currentUser} />} />
+          <Route path="/account" element={<Profile />} />
+          <Route path="/avatarEditor" element={<AvatarEditor />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/results/:id" element={<Results/>} />

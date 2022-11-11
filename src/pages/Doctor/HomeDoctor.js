@@ -11,6 +11,7 @@ export default function HomeDoctor() {
 
     useEffect(() => {
         checkLogin();
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const checkLogin = () => {
@@ -23,7 +24,6 @@ export default function HomeDoctor() {
 
 
     const handleClick = (e) => {
-        console.log(e.target.name)
         if(e.target.name === "questionnairesBtn") {
             navigate("/questionnaires")
 
@@ -37,8 +37,8 @@ export default function HomeDoctor() {
             <h1>Welcome back</h1>
             <h2>What do you want to do?</h2>
 
-            <button name="questionnairesBtn" className="buttonHome" role="button" onClick={handleClick}><img className="imgButton" src={edit}/><br/>Patient Questionnaires</button>
-            <button name="requestBtn" className="buttonHome" role="button" onClick={handleClick}><img className="imgButton" src={check}/><br/>Check new Requests</button>
+            <button name="questionnairesBtn" className="buttonHome"  onClick={handleClick}><img alt="edit" className="imgButton" src={edit}/><br/>Patient Questionnaires</button>
+            <button name="requestBtn" className="buttonHome"  onClick={handleClick}><img alt="check" className="imgButton" src={check}/><br/>Check new Requests</button>
         </div>
     )
 }

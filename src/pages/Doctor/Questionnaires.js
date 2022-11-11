@@ -13,6 +13,7 @@ export default function Questionnaires() {
     useEffect(() => {
         checkLogin()
         fetchQuestionnaire()
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const checkLogin = () => {

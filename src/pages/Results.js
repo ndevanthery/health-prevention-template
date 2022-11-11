@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import image1 from '../images/questionnaire.jpg'
+import {  useParams } from "react-router-dom";
 
-import { Cancer } from "../components/Cancer";
-import { Infarctus } from "../components/Infarctus";
-import { Diabete } from "../components/Diabete";
-import { NonInfarctus } from "../components/NonInfarctus";
+import { Cancer } from "../algorithms/Cancer";
+import { Infarctus } from "../algorithms/Infarctus";
+import { Diabete } from "../algorithms/Diabete";
 import "../Stylesheets/Results.css";
 
 // Bootstrap CSS
@@ -13,8 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Avatar from "../components/Avatar";
-import { CheckBox } from "react-native-web";
-import { addDoc, collection, doc, DocumentSnapshot, getDoc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../initFirebase";
 import add from '../images/add.png'
 
@@ -51,7 +48,7 @@ export default function Results() {
     useEffect(() => {
         fetchUser();
         fetchSurvey(params.id);
-
+   // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [myInfos_modified, setInfosModified] = useState(survey);
@@ -79,7 +76,6 @@ export default function Results() {
     })
 
     const fetchSurvey = async (idQuestionnary) => {
-        console.log(idQuestionnary);
         const docRef = doc(db, "questionnaires", idQuestionnary);
         const docSnap = await getDoc(docRef);
     
@@ -103,7 +99,6 @@ export default function Results() {
             });
 
             if (querySnapshot.empty) {
-                console.log("Empty")
                 setDoctorInfo({
                     firstName: "",
                     lastName: "",
@@ -117,10 +112,7 @@ export default function Results() {
     }
 
     const addDoctor = async (e) => {
-        console.log("doctor added");
-        console.log(doctorInfo.id);
-        console.log(params.id);
-        const docRef = await addDoc(collection(db, "doctorAccess"), { "doctorId": doctorInfo.id, "surveyId": params.id, "userID": idUser, "doctorAccept": 0, date: new Date() });
+         await addDoc(collection(db, "doctorAccess"), { "doctorId": doctorInfo.id, "surveyId": params.id, "userID": idUser, "doctorAccept": 0, date: new Date() });
     }
 
     if(user === undefined)
@@ -136,15 +128,14 @@ export default function Results() {
         <div className="App">
 
             <div className="result-line">
-                <ResultContainer title="your result" infarctus={myInfarctus.resultCalc()} cancer={myCancer.resultCalc()} diabete={myDiabete.resultCalc()} urlHealthy={myAvatar.buildApiUrl()} urlSick={myAvatarSick.buildApiUrl()} />
+                <ResultContainer title="Your result" infarctus={myInfarctus.resultCalc()} cancer={myCancer.resultCalc()} diabete={myDiabete.resultCalc()} urlHealthy={myAvatar.buildApiUrl()} urlSick={myAvatarSick.buildApiUrl()} />
                 <ChangeHabits habits={myInfos_modified} setHabits={setHabitsFunc} />
-                <ResultContainer title="your future results" infarctus={myInfarctus_2.resultCalc()} cancer={myCancer_2.resultCalc()} diabete={myDiabete_2.resultCalc()} urlHealthy={myAvatar.buildApiUrl()} urlSick={myAvatarSick.buildApiUrl()} />
+                <ResultContainer title="Your future results" infarctus={myInfarctus_2.resultCalc()} cancer={myCancer_2.resultCalc()} diabete={myDiabete_2.resultCalc()} urlHealthy={myAvatar.buildApiUrl()} urlSick={myAvatarSick.buildApiUrl()} />
 
             </div>
             <form onSubmit={fetchDoctor}>
                 <div className="userSearch">
-                    <h2>send your results to a doctor</h2>
-
+                    <h2>Send your results to a doctor</h2>
                     <input className="effect" type="text" placeholder="Enter E-Mail Address" />
                     <input className="buttonHome" style={{ height: "50px" }} type="submit" value="Search User" />
                 </div>
@@ -188,20 +179,20 @@ function ResultContainer({ title, infarctus, cancer, diabete, urlHealthy, urlSic
             <div className="results-title">{title}</div>
             <img src={url} width={100} alt="my avatar" />
             <div>
-                infarctus risk : {infarctus.toFixed(1)} %
+                Infarctus risk: {infarctus.toFixed(1)} %
 
                 <div className="progress">
                     <div className="progress-bar bg-warning" role="progressbar" style={{ "width": infarctus + "%" }} aria-valuenow={infarctus} aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
-                cancer risk : {cancer.toFixed(1)} %
+                Cancer risk: {cancer.toFixed(1)} %
 
                 <div className="progress">
 
                     <div className="progress-bar bg-success" role="progressbar" style={{ "width": cancer + "%" }} aria-valuenow={cancer} aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
-                diabete risk : {diabete.toFixed(1)} %
+                Diabete risk: {diabete.toFixed(1)} %
                 <div className="progress">
                     <div className="progress-bar bg-danger" role="progressbar" style={{ "width": diabete + "%" }} aria-valuenow={diabete} aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -219,86 +210,53 @@ function ChangeHabits({ habits, setHabits }) {
     };
     return (
         <div className="results-div">
-            <div className="results-title">what if you change your habits ...</div>
+            <div className="results-title">What if you change your habits ...</div>
             <div className="select-div">
-                <label htmlFor="smoke">do you smoke:</label>
+                <label htmlFor="smoke">Do you smoke:</label>
 
                 <select onChange={onChangeHandle} className="select-habits" name="smoke" id="smoke" value={habits.smoke}>
-                    <option value="1">yes</option>
-                    <option value="0">no</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
                 </select>
             </div>
 
             <div className="select-div">
-                <label htmlFor="eating">eating habits</label>
+                <label htmlFor="eating">Eating habits</label>
 
                 <select onChange={onChangeHandle} className="select-habits" name="alim" id="alim" value={habits.alim} >
-                    <option value="0">very bad</option>
-                    <option value="1">pretty bad</option>
-                    <option value="2">pretty good</option>
-                    <option value="3">very good</option>
+                    <option value="0">Very bad</option>
+                    <option value="1">Pretty bad</option>
+                    <option value="2">Pretty good</option>
+                    <option value="3">Very good</option>
                 </select>
             </div>
 
             <div className="select-div">
-                <label htmlFor="physical">physical activity</label>
+                <label htmlFor="physical">Physical activity</label>
 
                 <select onChange={onChangeHandle} className="select-habits" name="physical" id="physical" value={habits.physical}>
-                    <option value="0">i don't move a lot</option>
-                    <option value="1">sport 3 days / week</option>
-                    <option value="2">sport 5 days / week</option>
-                    <option value="3">sport every day</option>
+                    <option value="0">I don't move a lot</option>
+                    <option value="1">Sport 3 days / week</option>
+                    <option value="2">Sport 5 days / week</option>
+                    <option value="3">Sport every day</option>
                 </select>
             </div>
 
             <div className="select-div">
-                <label htmlFor="alcohol">do you drink alcohol:</label>
+                <label htmlFor="alcohol">Do you drink alcohol:</label>
 
                 <select onChange={onChangeHandle} className="select-habits" name="alcohol" id="alcohol" value={habits.alcohol}>
-                    <option value="0">every day</option>
+                    <option value="0">Every day</option>
                     <option value="1">3-6 times a week</option>
                     <option value="2">1-2 times a week</option>
-                    <option value="3">less than once a week</option>
-                    <option value="4">i don't drink</option>
+                    <option value="3">Less than once a week</option>
+                    <option value="4">I don't drink</option>
                 </select>
             </div>
 
             <div>
-
             </div>
-
-
-
 
         </div>
     );
 }
-
-/* async function getMyDoc(idUser) {
-    const myQuery = query(collection(db, "questionnaires"), where("userID", "==", idUser));
-
-    let latestseconds = 0;
-    let resultData  = null;
-    const querySnapshot = await getDocs(myQuery);
-
-    querySnapshot.forEach((doc) => {
-        let data =  doc.data();
-        let id =  doc.id;
-        if(data.date.seconds>latestseconds)
-        {
-            latestseconds = data.date.seconds;
-            resultData = id;
-        }
-        
-
-    });
-    if(resultData === null)
-    {
-        resultData ={ sex: 0, age: 40, weight: 80, height: 180, systolic: true, chol: 3.5, glyc: 3.5, hdl: 1.9, diabete: 0, infarctus: 1, afInfarctus: 1, afCancer: 1, smoke: 1, alim: 3, alcohol: 2, physical: 3};
-
-    }
-
-    return resultData;
-} */
-
-

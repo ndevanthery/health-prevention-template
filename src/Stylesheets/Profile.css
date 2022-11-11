@@ -1,0 +1,196 @@
+/*******************************************
+                Profile page CSS
+/******************************************/
+.profileGlobalContainer {
+    position: absolute;
+    top: 20%;
+    height: 100%;
+    width: 100%;
+    background-color: #eeefff;
+}
+
+.profileContainer {
+    position: absolute;
+    left: 25%;
+    top: 20%;
+}
+
+.userWelcome {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+}
+
+.userDiv {
+    float: left;
+    margin-top: 15px;
+    margin-bottom: 35px;
+    font-size: 18px;
+    color: #1167b1;
+    accent-color: #61dafb;
+}
+
+.imgProfile {
+    background-color: #8DC6FF;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.btnProfileLogout {
+
+}
+
+.historyInProfile {
+    float: right;
+    margin-right: 25%;
+    margin-top: 10%;
+}
+
+.profileInfosWrapper {
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+.profileInfos {
+    display: flex;
+    top: 40%;
+}
+
+@media only screen and (max-width: 1300px) {
+
+    .historyInProfile {
+        margin-right: 10%;
+        /*margin-top: 50px;*/
+    }
+    .imgProfile {
+        margin-left: 5%;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+
+    .profileGlobalContainer {
+        display:flex;
+        flex-direction: column;
+        text-align-all: center;
+    }
+
+    .userWelcome{
+    }
+
+    .userDiv {
+        position: relative;
+        margin-left: 10%;
+        margin-right: 0;
+    }
+
+    .profileContainer {
+        position: relative;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .historyInProfile {
+        flex-direction: column;
+        position: relative;
+        margin-left: 15%;
+        margin-right: 0;
+        padding-top: 15%;
+        padding-bottom: 200px;
+    }
+
+    .profileInfos{
+        margin-left: 10%;
+        margin-right: 0;
+        justify-self: center;
+    }
+}
+
+.avatarEditorOptions{
+    display:flex;
+    alignItems:center;
+    WebkitJustifyContent:center;
+    padding: 0;
+    font-size:14px ;
+}
+
+.avatarEditor {
+    display: flex;
+    width: 100%;
+    alignItems: center;
+    WebkitJustifyContent: center;
+}
+
+.avatarEditorLabel {
+    font-size: 25px;
+    font-family: Gadugi;
+}
+
+
+.btnSubmitAvatar {
+    width: 18%;
+    position: fixed;
+    right: 2.5%;
+    bottom: 3%;
+    overflow: hidden;
+    border: none;
+    color: lightblue;
+    display: inline-block;
+    font-size: 15px;
+    line-height: 15px;
+    padding: 18px 18px 17px;
+    text-decoration: none;
+    cursor: pointer;
+    background: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btnSubmitAvatar span:first-child {
+    position: relative;
+    transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+}
+
+.btnSubmitAvatar span:last-child {
+    color: white;
+    display: inline;
+    position: absolute;
+    bottom: 0;
+    transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+    z-index: 100;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translateY(225%) translateX(-50%);
+    height: 14px;
+    line-height: 13px;
+}
+
+.btnSubmitAvatar:after {
+    content: "";
+    position: absolute;
+    bottom: -50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: lightblue;
+    transform-origin: bottom center;
+    transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+    transform: skewY(9.3deg) scaleY(0);
+    z-index: 50;
+}
+
+.btnSubmitAvatar:hover:after {
+    transform-origin: bottom center;
+    transform: skewY(9.3deg) scaleY(2);
+}
+
+.btnSubmitAvatar:hover span:last-child {
+    transform: translateX(-50%) translateY(-150%);
+    opacity: 1;
+    transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+}
+

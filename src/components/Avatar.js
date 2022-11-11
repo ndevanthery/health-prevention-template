@@ -1,12 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {doc, updateDoc} from "firebase/firestore";
-import {auth, db} from "../initFirebase";
+import {db} from "../initFirebase";
 
 
 export default class Avatar extends React.Component {
     constructor(props) {
-
-
         super(props);
         this.state = {
             top: "longHair",
@@ -20,13 +18,14 @@ export default class Avatar extends React.Component {
             skin: "pale",
             sick: props.sick,
             
-            // avatarUrl: "",
         }
+        //redefining the onClose method that is passed into props
         this.onClose = (avatarUrl)=>{props.onClose(avatarUrl)}
+
+        //destructuring the avatarURL to have every infos contained in it
         if(!(this.props.avatarURL === undefined))
         {
             let properties = this.props.avatarURL.split("?")[1].split("&");
-            console.log(properties.length);
             for(let i=0;i< properties.length ; i++)
             {
                 let propertySplit = properties[i].split("=");
@@ -168,6 +167,8 @@ export default class Avatar extends React.Component {
     changeSelection = event => {
         let choice = event.target.value;
         let name = event.target.name;
+
+        //sets the state of the input that changed
         this.setState({[name]: choice});
 
         return;
@@ -178,12 +179,10 @@ export default class Avatar extends React.Component {
     handleUpdateURL = async (event) => {
             event.preventDefault();
 
-            console.log("User id from props: " +auth.currentUser.uid);
             let newURL = this.buildApiUrl();
 
             await this.updateURL(newURL);
 
-            console.log("Encore un test d'url... " +this.state.avatarUrl);
 
             //handle update of db
             const userRef = doc(db, "users", this.props.idUser);
@@ -198,12 +197,11 @@ export default class Avatar extends React.Component {
     buildApiUrl()
     {
         let url;
-        //Testing for resultpage
+        //for resultpage
         if(this.state.sick === "yes") {
             url = "https://avatars.dicebear.com/api/avataaars/2.svg?top="+this.state.top
                 + "&hairColor="+this.state.topColor+ "&clothes=" + this.state.clothes
-                + "&clothesColor="+ this.state.clothesColor + "&eyes=cry"
-                + "&eyebrow=sad" + "&mouth=sad" + "&skin=" + this.state.skin
+                + "&clothesColor="+ this.state.clothesColor + "&eyes=cry&eyebrow=sad&mouth=sad&skin=" + this.state.skin
                 + "&background=red";
 
             return url;
@@ -229,13 +227,12 @@ export default class Avatar extends React.Component {
 
     render() {
         return (
-            // btnSubmitAvatar
             <div className="avatarEditor">
 
                 <div>
                     <img src={this.buildApiUrl()} height= "200px" alt="Sprite" />
                 </div>
-                    <button className="" onClick={this.handleUpdateURL}>Save Avatar</button>
+                    <button className="btnSubmitAvatar" onClick={this.handleUpdateURL}>Save Avatar</button>
 
                     <div className="avatarEditorOptions">
                     <div>
@@ -306,7 +303,7 @@ export default class Avatar extends React.Component {
                             ))}
                         </select>
                         <div className='avatarEditorLabel'>Sick</div>
-                        <div>(how it would look on the result page)</div>
+                        {/*<div>(how it would look on the result page)</div>*/}
                         <select onChange={this.changeSelection} name="sick" id="sick">
                             {this.sick.map((option, index) => (
                                 <option key={index} value={option.value} name={option.text}>
@@ -316,11 +313,6 @@ export default class Avatar extends React.Component {
                         </select>
                     </div>
                 </div>
-                <input
-                    type="checkbox"
-                    onChange={this.toggleSick}
-                />
-
             </div>
             // </form>
         )

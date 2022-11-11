@@ -1,59 +1,33 @@
 import { auth, db } from "../initFirebase";
-import { doc, getDoc } from "firebase/firestore";
-import React, { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
-import profileEdit from "../images/profileEdit.png";
-import ModalEditProfile from "../components/ModalEditProfile";
-import { async } from "@firebase/util";
+import React, {useState, useEffect, useContext} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import { BeatLoader } from "react-spinners";
+import History from "./History";
+import "../Stylesheets/Profile.css";
+import {doc, getDoc} from "firebase/firestore";
+import {RoleContext} from "../App";
 
+
+/**
+  This class handle the user profile and data to display.
+ **/
 class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {user : props.user};
   }
-
-  //handle events...
-
   render() {
-    let formattedWelcome;
-    if (this.props.firstName != null) {
-      formattedWelcome = (
-        <h2 style={{ color: "lightblue" }}>Welcome {this.state.user.firstName}!</h2>
-      );
-    } else {
-      formattedWelcome = <h2>Welcome dear guest!</h2>;
-    }
-
     return (
       <>
-        <div className="userDiv" style={{ backgroundColor: "gray" }}>
-          <div className="User-header">
-            {formattedWelcome}
+        <div className="userDiv" >
             <p>First name: {this.state.user.firstName}</p>
             <p>Last name: {this.state.user.lastName}</p>
             <p>Email address: {this.state.user.email}</p>
-            <p>ID: {this.props.uid}</p>
 
             <div>
-              <Link to="/logout" className="App-link">
+              <Link to="/logout" className="buttonSubmitForm" style={{margin:'0%'}}>
                 Logout
               </Link>
-              <button
-                type={"button"}
-                style={{ background: "none", border: "none" }}
-                onClick={(e) => {
-                  console.log("button edit clicked");
-                }}
-              >
-                <img
-                  src={profileEdit}
-                  alt="Edit profile"
-                  style={{ width: "30px" }}
-                />
-                {/*<label>Edit your profile</label>*/}
-              </button>
-            </div>
           </div>
         </div>
       </>
@@ -61,81 +35,96 @@ class User extends React.Component {
   }
 }
 
-function UserFormProfileAvatar({ user , onModalClose }) {
-  const [openModalAvatarEdit, setOpenModalAvatarEdit] = useState(false);
-  const onClose = (avatarUrl) =>{
-    setOpenModalAvatarEdit(false);
-    onModalClose(avatarUrl);
-    console.log("user form profile");
-    console.log(avatarUrl);
-  };
+/**
+ *
+ * @param user
+ * @returns {JSX.Element}
+ * @constructor
+ *
+ * This function format the welcome message in case of none registered user
+ */
+function UserWelcomeTitle({user}) {
+  let formattedWelcome;
+  if (user.firstName != null) {
+    formattedWelcome = (
+        <h2 style={{ color: "#8DC6FF" }}>Welcome {user.firstName}!</h2>
+    );
+  } else {
+    formattedWelcome = <h2>Welcome dear guest!</h2>;
+  }
+
   return (
-    <>
+      <div className="userWelcome">{formattedWelcome}</div>
+  )
+}
+
+/**
+ *
+ * @param user
+ * @param onModalClose
+ * @returns {JSX.Element}
+ * @constructor
+ *
+ * This class handle the behavior (open or not) of the modal window used to
+ * create or update the user's avatar.
+ * Clicking on the avatar's image open the modal window to edit the avatar
+ */
+function UserFormProfileAvatar({ user , onModalClose }) {
+  const navigate = useNavigate();
+
+  return (
+    <div className="profileInfosWrapper">
       <div className="profileInfos">
-        {/*<User {...user}></User>*/}
 
         <img
           className="imgProfile"
           src={user.avatarUrl}
           height="200px"
           alt="Avatar"
-          onClick={() => setOpenModalAvatarEdit(true)}
+          onClick={() => navigate('/avatarEditor')}
         />
       </div>
-      <ModalEditProfile
-        open={openModalAvatarEdit}
-        onClose={onClose}
-        user={user}
-      />
-    </>
+    </div>
   );
 }
 
+/**
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ * The main function. Called from Route.
+ * Responsible to catch user's data from Firestore DB
+ * Display the web page components
+ */
 export default function Profile() {
-  const [user, setUser] = useState();
-  let idUser = auth.currentUser.uid;
+    const [user, setUser] = useState();
+    const navigate = useNavigate();
+    const role = useContext(RoleContext);
 
-  const fetchUser = async () => {
-    const docRef = doc(db, "users", idUser);
-    const docSnap = await getDoc(docRef);
+    const catchUser = () => {
+        if (auth.currentUser && (role.idRole === 2 || role.idRole === 4)) {
 
-    if (docSnap.exists()) {
-      setUser(docSnap.data());
-    } else {
-      setUser(null);
-      console.log("No such user!");
+        } else {
+            navigate("/")
+        }
     }
-  };
 
+    const fetchUser = async () => {
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
 
+        if (docSnap.exists()) {
+            setUser(docSnap.data());
+        } else {
+            setUser(null);
+        }
+    };
 
-  
+    useEffect(() => {
+        catchUser();
+        fetchUser();
+    }, []);
 
-
-
-  const catchUser = () => {
-    if (auth.currentUser == null) return <Navigate to="/Login" />;
-  };
-
-  useEffect(() => {
-    catchUser();
-    fetchUser();
-  }, []);
-
-
-  const onModalClose = (avatarUrl) =>{
-    if(!(avatarUrl === undefined) && !(avatarUrl === null))
-    {
-        let newUser = user;
-        newUser.avatarUrl = avatarUrl;
-        setUser(newUser);
-    }
-    
-  };
-
-  
-  
-    console.log("user is defined now :)")
     return user === undefined ? (<div className="App">
     <header className="App-header">
       <div className="center">
@@ -143,18 +132,27 @@ export default function Profile() {
       </div>
     </header>
   </div>) : (
-        <div>
-          <div>
-            <User user = {user}></User>
+      <>
+        <div className="profileGlobalContainer">
+
+            <UserWelcomeTitle user={user}/>
+
+          <div className="profileContainer">
+            <div>
+              <UserFormProfileAvatar user={user}  />
+            </div>
+            <div>
+              <User user = {user}></User>
+            </div>
           </div>
-    
-          <div>
-            <UserFormProfileAvatar user={user} onModalClose={onModalClose} />
+
+          <div className="historyInProfile">
+            <History />
           </div>
+
         </div>
+      </>
       );
-  
-  
 }
 
 
