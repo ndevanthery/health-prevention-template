@@ -1,7 +1,8 @@
 .results-div{
     border-radius: 25px;
     padding: 20px;
-    margin: 100px 50px 50px 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     width: 300px;
     height: 400px;
     font-size: 12px;
@@ -18,10 +19,34 @@
   .progress{
     margin: 10px;
   }
-  
-  .result-line{
-    display:inline-flex;
+
+  @media screen and (min-width: 920px) {
+    .result-line{
+      width: 100%;
+      justify-content: space-evenly;
+      text-align: center;
+  /*     display: inline;
+   */    display:flex;
+      flex-direction: column;
+    }
+
+    @media screen and (min-width: 500px) {
+      .result-line{
+        width: 100%;
+        
+        text-align: center;
+    /*     display: inline;
+     */    display:flex;
+        flex-direction: row;
+      }
+      
+
+    }
   }
+ 
+
+  
+
   
   .select-habits{
     width: 120px;
