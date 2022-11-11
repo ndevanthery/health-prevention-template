@@ -1,7 +1,6 @@
 import { auth, db } from "../initFirebase";
 import React, { useState, useEffect } from "react";
-import {Link,  useNavigate} from "react-router-dom";
-import ModalEditProfile from "../components/ModalEditProfile";
+import {Link, useNavigate} from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import History from "./History";
 import "../Stylesheets/Profile.css";
@@ -19,7 +18,6 @@ class User extends React.Component {
   render() {
     return (
       <>
-        {/*<div className="userWelcome">{formattedWelcome}</div>*/}
         <div className="userDiv" >
             <p>First name: {this.state.user.firstName}</p>
             <p>Last name: {this.state.user.lastName}</p>
@@ -79,11 +77,8 @@ function UserWelcomeTitle({user}) {
  * Clicking on the avatar's image open the modal window to edit the avatar
  */
 function UserFormProfileAvatar({ user , onModalClose }) {
-  const [openModalAvatarEdit, setOpenModalAvatarEdit] = useState(false);
-  const onClose = (avatarUrl) =>{
-    setOpenModalAvatarEdit(false);
-    onModalClose(avatarUrl);
-  };
+  const navigate = useNavigate();
+
   return (
     <div className="profileInfosWrapper">
       <div className="profileInfos">
@@ -93,14 +88,9 @@ function UserFormProfileAvatar({ user , onModalClose }) {
           src={user.avatarUrl}
           height="200px"
           alt="Avatar"
-          onClick={() => setOpenModalAvatarEdit(true)}
+          onClick={() => navigate('/avatarEditor')}
         />
       </div>
-      <ModalEditProfile
-        open={openModalAvatarEdit}
-        onClose={onClose}
-        user={user}
-      />
     </div>
   );
 }
@@ -138,19 +128,7 @@ export default function Profile() {
     useEffect(() => {
         catchUser();
         fetchUser();
-           // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
-    const onModalClose = (avatarUrl) =>{
-        if(!(avatarUrl === undefined) && !(avatarUrl === null))
-        {
-            let newUser = user;
-            newUser.avatarUrl = avatarUrl;
-            setUser(newUser);
-        }
-
-    };
 
     return user === undefined ? (<div className="App">
     <header className="App-header">
@@ -166,7 +144,7 @@ export default function Profile() {
 
           <div className="profileContainer">
             <div>
-              <UserFormProfileAvatar user={user} onModalClose={onModalClose} />
+              <UserFormProfileAvatar user={user}  />
             </div>
             <div>
               <User user = {user}></User>
@@ -180,8 +158,6 @@ export default function Profile() {
         </div>
       </>
       );
-
-
 }
 
 
