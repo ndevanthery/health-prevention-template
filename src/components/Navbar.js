@@ -28,6 +28,9 @@ export default function Navbar() {
                         <Link className="nav-link" to="/questionnaires" style={{textDecoration: 'none'}}>See Patient Survey</Link>
                     </li>
                     <li className="nav-item">
+                        <Link className="nav-link" to="/survey" style={{textDecoration: 'none'}}>Take a Survey</Link>
+                    </li>
+                    <li className="nav-item">
                         <Link className="nav-link" to="/logout" style={{textDecoration: 'none'}}>Logout</Link>
                     </li>
                 </ul>

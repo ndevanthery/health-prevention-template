@@ -1,10 +1,11 @@
 import { auth, db } from "../initFirebase";
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import History from "./History";
 import "../Stylesheets/Profile.css";
 import {doc, getDoc} from "firebase/firestore";
+import {RoleContext} from "../App";
 
 
 /**
@@ -98,19 +99,22 @@ function UserFormProfileAvatar({ user , onModalClose }) {
 export default function Profile() {
     const [user, setUser] = useState();
     const navigate = useNavigate();
+    const role = useContext(RoleContext);
 
-    let idUser;
     const catchUser = () => {
-        if (auth.currentUser != null) {
-            idUser = auth.currentUser.uid;
-        } else return navigate('/login');
-    };
+        if (auth.currentUser && (role.idRole === 2 || role.idRole === 4)) {
+
+        } else {
+            navigate("/")
+        }
+    }
 
     const fetchUser = async () => {
-        const docRef = doc(db, "users", idUser);
+        const docRef = doc(db, "users", auth.currentUser.uid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
+            console.log(docSnap.data())
             setUser(docSnap.data());
         } else {
             setUser(null);

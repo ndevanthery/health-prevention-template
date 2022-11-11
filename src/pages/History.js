@@ -17,7 +17,7 @@ export default function History() {
     }, [])
 
     const checkLogin = () => {
-        if (auth.currentUser && role.idRole === 2) {
+        if (auth.currentUser && (role.idRole === 2 || role.idRole === 4)) {
 
         } else {
             navigate("/")

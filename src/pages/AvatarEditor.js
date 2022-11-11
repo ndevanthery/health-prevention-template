@@ -23,7 +23,7 @@ export default function AvatarEditor() {
 
 
     useEffect(() => {
-        //checkLogin()
+        checkLogin()
         fetchSettings()
     }, [])
 
