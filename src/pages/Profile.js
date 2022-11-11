@@ -114,7 +114,6 @@ export default function Profile() {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-            console.log(docSnap.data())
             setUser(docSnap.data());
         } else {
             setUser(null);
